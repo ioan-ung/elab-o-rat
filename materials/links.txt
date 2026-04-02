@@ -1,0 +1,7 @@
+Textures:
+https://opengameart.org/art-search-advanced?keys=simple&title=&field_art_tags_tid_op=or&field_art_tags_tid=tileset&name=&field_art_type_tid%5B0%5D=9&sort_by=count&sort_order=DESC&items_per_page=48&Collection=
+https://itch.io/game-assets/free/tag-tileset
+
+
+Tutorials:
+https://www.youtube.com/watch?v=ZwaomOYGuYo&list=PLu4oc9P-ABcOXNOyoAvnMyUwn_kkiVA5B
