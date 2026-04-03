@@ -12,7 +12,7 @@ import static java.lang.System.exit;
  */
 public class ImageLoader
 {
-    /*! \fn  public static BufferedImage loadImage(String path)
+    /*! \fn  public static BufferedImage loadImag`e(String path)
         \brief Incarca o imagine intr-un obiect BufferedImage si returneaza o referinta catre acesta.
 
         \param path Calea relativa pentru localizarea fisierul imagine.
