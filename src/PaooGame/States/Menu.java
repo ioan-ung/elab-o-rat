@@ -14,6 +14,7 @@ import java.io.File;
  */
 public class Menu
 {
+    private String currentPlayerName = "";
     public enum GameState { MENU, PLAYING }
 
     private GameState currentState = GameState.MENU;
@@ -95,7 +96,15 @@ public class Menu
     {
         switch(getHoveredButton(mx, my, wndW, wndH))
         {
-            case 0: case 1: currentState = GameState.PLAYING; break;
+            case 0:
+                String name = PlayerNameDialog.show();
+                if(name != null)
+                {
+                    currentPlayerName = name;
+                    currentState = GameState.PLAYING;
+                }
+                break;
+            case 1: currentState = GameState.PLAYING; break;
             case 2: /* TODO: optiuni */ break;
             case 3: System.exit(0); break;
         }
