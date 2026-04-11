@@ -4,7 +4,7 @@ import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.States.Menu;
 import PaooGame.States.Menu.GameState;
-
+import PaooGame.States.Playing;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -16,6 +16,7 @@ public class Game implements Runnable
     private BufferStrategy  bs;
     private Graphics        g;
     private Menu            menu;
+    private Playing         playing;
 
     public Game(String title, int width, int height)
     {
@@ -29,6 +30,7 @@ public class Game implements Runnable
         wnd.BuildGameWindow();
         Assets.Init();
         menu = new Menu(wnd.GetCanvas(), wnd.GetWndWidth(), wnd.GetWndHeight());
+        playing = new Playing();
     }
 
     public void run()
@@ -75,7 +77,7 @@ public class Game implements Runnable
     {
         if(menu.getState() == GameState.PLAYING)
         {
-            // TODO: update logica jocului
+            playing.Update();
         }
     }
 
@@ -97,12 +99,7 @@ public class Game implements Runnable
         }
         else if(menu.getState() == GameState.PLAYING)
         {
-            // TODO: deseneaza harta, player etc.
-            g.setColor(Color.DARK_GRAY);
-            g.fillRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
-            g.setColor(Color.CYAN);
-            g.setFont(new Font("Monospaced", Font.BOLD, 24));
-            g.drawString("Game started!", 300, 300);
+            playing.Draw(g, wnd.GetWndWidth(), wnd.GetWndHeight());
         }
 
         bs.show();

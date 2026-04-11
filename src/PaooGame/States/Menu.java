@@ -60,6 +60,7 @@ public class Menu
             @Override
             public void mouseClicked(MouseEvent e)
             {
+                if(currentState != GameState.MENU) return;
                 handleClick(e.getX(), e.getY(), wndWidth, wndHeight);
             }
         });
@@ -69,6 +70,8 @@ public class Menu
             @Override
             public void mouseMoved(MouseEvent e)
             {
+                if(currentState != GameState.MENU) return;
+
                 hoveredBtn = getHoveredButton(e.getX(), e.getY(), wndWidth, wndHeight);
                 // mouse-ul are acum animatie cand ii dau hover--acea mana
                 if(hoveredBtn != -1)
@@ -77,6 +80,7 @@ public class Menu
                     canvas.setCursor(Cursor.getDefaultCursor());
             }
         });
+
     }
 
     public GameState getState() { return currentState; }
