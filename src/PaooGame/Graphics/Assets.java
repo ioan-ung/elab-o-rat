@@ -1,55 +1,58 @@
 package PaooGame.Graphics;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*! \class public class Assets
-    \brief Clasa incarca fiecare element grafic necesar jocului.
-
-    Game assets include tot ce este folosit intr-un joc: imagini, sunete, harti etc.
+    \brief Clasa incarca toate elementele grafice necesare jocului O'Rat.
+           Toate referintele sunt statice — incarcate o singura data in memorie.
  */
 public class Assets
 {
-        /// Referinte catre elementele grafice (dale) utilizate in joc.
+    /*! Referinte catre tile-urile hartii */
+    public static BufferedImage floor;
+    public static BufferedImage wall;
+    public static BufferedImage door;
+    public static BufferedImage cheese;
+
+    /*! Referinte catre sprite-urile playerului */
     public static BufferedImage playerLeft;
     public static BufferedImage playerRight;
-    public static BufferedImage soil;
-    public static BufferedImage grass;
-    public static BufferedImage mountain;
-    public static BufferedImage townGrass;
-    public static BufferedImage townGrassDestroyed;
-    public static BufferedImage townSoil;
-    public static BufferedImage water;
-    public static BufferedImage rockUp;
-    public static BufferedImage rockDown;
-    public static BufferedImage rockLeft;
-    public static BufferedImage rockRight;
-    public static BufferedImage tree;
+    public static BufferedImage playerUp;
+    public static BufferedImage playerDown;
 
     /*! \fn public static void Init()
-        \brief Functia initializaza referintele catre elementele grafice utilizate.
-
-        Aceasta functie poate fi rescrisa astfel incat elementele grafice incarcate/utilizate
-        sa fie parametrizate. Din acest motiv referintele nu sunt finale.
+        \brief Initializeaza toate referintele grafice.
+               Trebuie apelata o singura data la pornirea jocului (in InitGame()).
      */
     public static void Init()
     {
-            /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/PaooGameSpriteSheet.png"));
+        try
+        {
+            BufferedImage sheetImg = ImageIO.read(new File("maps/SpreetSheet.png"));
+            System.out.println("[Assets] SpreetSheet incarcat: "
+                    + sheetImg.getWidth() + "x" + sheetImg.getHeight());
 
-            /// Se obtin subimaginile corespunzatoare elementelor necesare.
-        grass = sheet.crop(0, 0);
-        soil = sheet.crop(1, 0);
-        water = sheet.crop(2, 0);
-        mountain = sheet.crop(3, 0);
-        townGrass = sheet.crop(0, 1);
-        townGrassDestroyed = sheet.crop(1, 1);
-        townSoil = sheet.crop(2, 1);
-        tree = sheet.crop(3, 1);
-        playerLeft = sheet.crop(0, 2);
-        playerRight = sheet.crop(1, 2);
-        rockUp = sheet.crop(2, 2);
-        rockDown = sheet.crop(3, 2);
-        rockLeft = sheet.crop(0, 3);
-        rockRight = sheet.crop(1, 3);
+            SpriteSheet sheet = new SpriteSheet(sheetImg);
+
+            // --- Tile-uri harta ---
+            floor  = sheet.crop(1, 7);// 1 7
+            wall   = sheet.crop(1, 1);
+            door   = sheet.crop(3, 6);// 3 6
+            cheese = sheet.crop(9, 8);//9 8
+
+            // --- Sprite-uri player ---
+//            playerLeft  = sheet.crop(8, 6);
+//            playerRight = sheet.crop(8, 7);
+//            playerUp    = sheet.crop(9, 6);
+//            playerDown  = sheet.crop(9, 7);
+        }
+        catch(IOException e)
+        {
+            System.out.println("[Assets] EROARE: SpreetSheet.png nu a fost gasit!");
+            e.printStackTrace();
+        }
     }
 }
