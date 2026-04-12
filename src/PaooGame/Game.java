@@ -7,6 +7,7 @@ import PaooGame.States.Menu.GameState;
 import PaooGame.States.Playing;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import PaooGame.Tiles.Tile;
 
 public class Game implements Runnable
 {
@@ -28,9 +29,10 @@ public class Game implements Runnable
     {
         wnd = new GameWindow(title, width, height);
         wnd.BuildGameWindow();
-        Assets.Init();
+        Assets.Init();   // ← 1. încarcă imaginile
+        Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
+        playing = new Playing();  // ← 3. încarcă harta
         menu = new Menu(wnd.GetCanvas(), wnd.GetWndWidth(), wnd.GetWndHeight());
-        playing = new Playing();
     }
 
     public void run()

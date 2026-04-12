@@ -168,31 +168,9 @@ public class Menu
         g2d.setStroke(new BasicStroke(1.5f));
         g2d.drawRect(lbX, lbY, lbW, lbH);
 
-        int fontSize = Math.max(9, (int)(lbW * 0.12));
-        g2d.setFont(new Font("Monospaced", Font.BOLD, fontSize));
-        g2d.setColor(new Color(245, 200, 66));
-        FontMetrics tfm = g2d.getFontMetrics();
-        g2d.drawString("LEADERBOARD", lbX + lbW/2 - tfm.stringWidth("LEADERBOARD")/2, lbY + fontSize + 4);
-
-        g2d.setColor(new Color(100, 100, 150, 180));
-        g2d.drawLine(lbX + 4, lbY + fontSize + 8, lbX + lbW - 4, lbY + fontSize + 8);
-
-        int entryFont = Math.max(8, (int)(lbW * 0.105));
-        g2d.setFont(new Font("Monospaced", Font.PLAIN, entryFont));
-        int rowH = (lbH - fontSize - 14) / lbNames.length;
-        for(int i = 0; i < lbNames.length; i++)
-        {
-            int rowY = lbY + fontSize + 14 + i * rowH + entryFont;
-            g2d.setColor(i == 0 ? new Color(245, 200, 66) : new Color(200, 240, 255));
-            g2d.drawString("#" + (i+1) + " " + lbNames[i], lbX + 5, rowY);
-            String sc = String.valueOf(lbScores[i]);
-            g2d.setColor(new Color(80, 220, 255));
-            g2d.drawString(sc, lbX + lbW - 5 - g2d.getFontMetrics().stringWidth(sc), rowY);
-        }
 
         // --- Version ---
         g2d.setFont(new Font("Monospaced", Font.PLAIN, 11));
         g2d.setColor(new Color(80, 60, 40, 180));
-        g2d.drawString("v0.1.0 - PAOO 2026", wndWidth - 145, wndHeight - 8);
     }
 }
