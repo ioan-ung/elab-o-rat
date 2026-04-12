@@ -42,9 +42,10 @@ public class Menu
     private final int[]    lbScores = {260, 180, 120};
 
     private int hoveredBtn = -1;
-
+    private final Canvas canvas;
     public Menu(Canvas canvas, int wndWidth, int wndHeight)
     {
+        this.canvas = canvas;
         BufferedImage tmp = null;
         try {
             File f = new File("materials/meniu.png");
@@ -101,7 +102,7 @@ public class Menu
         switch(getHoveredButton(mx, my, wndW, wndH))
         {
             case 0:
-                String name = PlayerNameDialog.show();
+                String name = PlayerNameDialog.show(canvas);
                 if(name != null)
                 {
                     currentPlayerName = name;

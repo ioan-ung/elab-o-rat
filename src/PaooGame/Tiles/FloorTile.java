@@ -11,7 +11,7 @@ public class FloorTile extends Tile
     /*! \fn public FloorTile(int id)
         \brief Constructorul de initializare al clasei.
 
-        \param id Id-ul dalei util in desenarea hartii.
+        param id Id-ul dalei util in desenarea hartii.
      */
     public FloorTile(int id)
     {

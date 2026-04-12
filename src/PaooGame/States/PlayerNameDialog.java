@@ -1,9 +1,11 @@
 package PaooGame.States;
 
 import javax.swing.*;
+import java.awt.*;
+
 public class PlayerNameDialog
 {
-    public static String show()
+    public static String show(Component parent)
     {
         String name = JOptionPane.showInputDialog(
                 null,
@@ -13,6 +15,6 @@ public class PlayerNameDialog
         );
         if(name != null && !name.trim().isEmpty())
             return name.trim();
-        return null;  // player a dat Cancel
+        return null;
     }
 }
