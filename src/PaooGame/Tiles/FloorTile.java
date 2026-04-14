@@ -1,21 +1,23 @@
 package PaooGame.Tiles;
 
-import PaooGame.Graphics.Assets;
+import java.awt.image.BufferedImage;
 
 /*! \class public class FloorTile extends Tile
     \brief Abstractizeaza notiunea de dala de tip podea.
            Playerul poate merge pe aceasta dala (nu e solida).
+           Suporta mai multe variante vizuale (podea normala, cu fire etc.)
  */
 public class FloorTile extends Tile
 {
-    /*! \fn public FloorTile(int id)
+    /*! \fn public FloorTile(int id, BufferedImage img)
         \brief Constructorul de initializare al clasei.
 
-        param id Id-ul dalei util in desenarea hartii.
+        \param id  Id-ul dalei util in desenarea hartii.
+        \param img Imaginea corespunzatoare variantei de podea.
      */
-    public FloorTile(int id)
+    public FloorTile(int id, BufferedImage img)
     {
-        super(Assets.floor, id);
+        super(img, id);
     }
 
     /*! \fn public boolean IsSolid()
