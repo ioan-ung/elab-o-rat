@@ -25,6 +25,7 @@
    <wangtile tileid="20" wangid="2,2,2,2,2,2,2,2"/>
    <wangtile tileid="21" wangid="2,1,1,1,2,2,2,2"/>
    <wangtile tileid="22" wangid="2,1,2,1,2,2,2,2"/>
+   <wangtile tileid="23" wangid="2,1,2,1,2,1,2,1"/>
    <wangtile tileid="24" wangid="2,2,2,2,2,1,2,1"/>
    <wangtile tileid="28" wangid="2,2,2,1,2,1,1,1"/>
    <wangtile tileid="29" wangid="2,1,2,2,2,1,2,2"/>
@@ -72,6 +73,7 @@
    <wangtile tileid="20" wangid="1,1,1,1,1,1,1,1"/>
    <wangtile tileid="21" wangid="1,0,0,0,1,1,1,1"/>
    <wangtile tileid="22" wangid="1,0,1,0,1,1,1,1"/>
+   <wangtile tileid="23" wangid="1,0,1,0,1,0,1,0"/>
    <wangtile tileid="24" wangid="1,1,1,1,1,0,1,0"/>
    <wangtile tileid="28" wangid="1,1,1,0,1,0,0,0"/>
    <wangtile tileid="29" wangid="1,0,1,1,1,0,1,1"/>
