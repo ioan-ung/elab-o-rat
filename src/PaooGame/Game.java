@@ -11,11 +11,9 @@ import PaooGame.Tiles.Tile;
 
 public class Game implements Runnable
 {
-    private GameWindow      wnd;
+    private GameWindow      window;
     private boolean         runState;
     private Thread          gameThread;
-    private BufferStrategy  bs;
-    private Graphics        g;
     private Menu            menu;
     private Playing         playing;
 
@@ -27,30 +25,66 @@ public class Game implements Runnable
 
     private void InitGame(String title, int width, int height)
     {
-        wnd = new GameWindow(title, width, height);
-        wnd.BuildGameWindow();
+        window = new GameWindow(title, width, height);
+        window.BuildGameWindow();
         Assets.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        playing = new Playing(wnd);
-        menu = new Menu(wnd.GetCanvas(), wnd.GetWndWidth(), wnd.GetWndHeight());
+        playing = new Playing(window);
+        menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
-    public void run()
-    {
-        long oldTime = System.nanoTime();
-        long curentTime;
+//    public void run()
+//    {
+//        long oldTime = System.nanoTime();
+//        long curentTime;
+//
+//        final int    framesPerSecond = 60;
+//        final double timeFrame       = 1000000000.0 / framesPerSecond;
+//
+//        while(runState)
+//        {
+//            curentTime = System.nanoTime();
+//            if((curentTime - oldTime) > timeFrame)
+//            {
+//                Update();
+//                Draw();
+//                oldTime = curentTime;
+//            }
+//        }
+//    }
+    /// Testing different run methods to understand where the lag comes from
+    public void run() {
+        long lastTime = System.nanoTime();
+        long now;
+        double delta = 0;
 
-        final int    framesPerSecond = 60;
-        final double timeFrame       = 1000000000.0 / framesPerSecond;
+        final int framesPerSecond = 60;
+        final double timePerTick = 1000000000.0 / framesPerSecond;
 
-        while(runState == true)
-        {
-            curentTime = System.nanoTime();
-            if((curentTime - oldTime) > timeFrame)
-            {
+        while(runState) {
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+            lastTime = now;
+
+            // 🚨 THE SAFETY VALVE: Prevent the Death Spiral
+            // If the game lags so hard it falls 5 frames behind, cap it.
+            if (delta > 5) {
+                delta = 5;
+            }
+
+            while(delta >= 1) {
                 Update();
-                Draw();
-                oldTime = curentTime;
+                delta--;
+            }
+
+            Draw();
+
+            // 🚨 CPU BREATHER: Give the CPU 1 millisecond to rest
+            // If you don't do this, the while loop runs millions of times a second and fries your core.
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -85,26 +119,30 @@ public class Game implements Runnable
 
     private void Draw()
     {
-        bs = wnd.GetCanvas().getBufferStrategy();
+        BufferStrategy bs = window.GetCanvas().getBufferStrategy();
         if(bs == null)
         {
-            try { wnd.GetCanvas().createBufferStrategy(3); return; }
-            catch(Exception e) { e.printStackTrace(); }
+            try {
+                window.GetCanvas().createBufferStrategy(3);
+                return;
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        g = bs.getDrawGraphics();
-        g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
-
+        Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
+        g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
         if(menu.getState() == GameState.MENU)
         {
-            menu.Draw(g, wnd.GetWndWidth(), wnd.GetWndHeight());
+            menu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
         else if(menu.getState() == GameState.PLAYING)
         {
-            playing.Draw(g, wnd.GetWndWidth(), wnd.GetWndHeight());
+            playing.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
         bs.show();
-        g.dispose();
+        g2.dispose();
     }
 }

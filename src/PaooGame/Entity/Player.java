@@ -2,6 +2,7 @@ package PaooGame.Entity;
 
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyHandler;
+import PaooGame.States.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,10 +24,10 @@ public class Player extends Entity{
     }
     /// Method for setting default position and speed
     private void setDefaultValues() {
-        x = 32;
-        y = 32;
-        speed = 4;
-        direction = "south";
+        x = 96;
+        y = 864;
+        speed = 5;
+        direction = "east";
     }
     /// Method for setting player sprites
     private void setPlayerSprites() {
@@ -71,6 +72,6 @@ public class Player extends Entity{
                 image = west;
                 break;
         }
-        g2.drawImage(image,x,y,32,32, null);
+        g2.drawImage(image,x,y,Assets.TILE_SIZE,Assets.TILE_SIZE, null);
     }
 }
