@@ -1,5 +1,7 @@
 package PaooGame.States;
 
+import PaooGame.Graphics.ImageLoader;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -46,15 +48,7 @@ public class Menu
     public Menu(Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
-        BufferedImage tmp = null;
-        try {
-            File f = new File("materials/meniu.png");
-            System.out.println("[Menu] Trying: " + f.getAbsolutePath());
-            tmp = ImageIO.read(f);
-        } catch(Exception e) {
-            System.out.println("[Menu] EROARE: imaginea nu a fost gasita!");
-        }
-        bgImage = tmp;
+        bgImage = ImageLoader.LoadImage("/meniu.png");
 
         canvas.addMouseListener(new MouseAdapter()
         {

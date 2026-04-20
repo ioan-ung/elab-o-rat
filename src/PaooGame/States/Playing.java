@@ -1,6 +1,9 @@
 package PaooGame.States;
 
 import PaooGame.Camera;
+import PaooGame.Entity.Player;
+import PaooGame.GameWindow.GameWindow;
+import PaooGame.Input.KeyHandler;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
 import java.io.File;
@@ -21,6 +24,9 @@ public class Playing
     private int mapHeight;
 
     private Camera camera;
+
+    private KeyHandler keyH;
+    private Player player;
 
     //latimea mapei 64x32 lasa imposibil sa incadrez tileuri 32x32 pe canvas 800x600
     //camera momentan trebuie setata manual prin coordonate user
@@ -55,15 +61,20 @@ public class Playing
 //// Zona dreapta-jos
 //    playerX = 1800; playerY = 800;
 
-    public Playing(int wndWidth, int wndHeight)
+    public Playing(GameWindow gameWindow)
     {
+        /// Initialize player
+        keyH = new KeyHandler();
+        player = new Player(gameWindow.GetCanvas(), keyH);
+
         loadMap();
+        /// Camera work
         camera = new Camera(
-                wndWidth, wndHeight,
+                gameWindow.GetWndWidth(), gameWindow.GetWndHeight(),
                 mapWidth  * TILE_SIZE,
                 mapHeight * TILE_SIZE
         );
-        camera.centerOn(playerX, playerY);
+        camera.centerOn(player.getX(), player.getY());
     }
     private boolean contains(int[] arr, int val)
     {
@@ -264,7 +275,10 @@ public class Playing
         // 1. Desenam floor + background
         drawLayer(g, tileMapFloor, camX, camY, wndWidth, wndHeight);
 
-        // 2. TODO: desenam playerul aici
+        // 2. Desenam playerul aici
+        Graphics2D g2 = (Graphics2D)g;
+        player.draw(g2);
+        g2.dispose();
 
         // 3. Desenam obiectele de deasupra (branza etc.)
         drawLayer(g, tileMapAbove, camX, camY, wndWidth, wndHeight);
@@ -273,7 +287,8 @@ public class Playing
 
     public void Update()
     {
-        camera.centerOn(playerX, playerY);
+        player.update();
+        camera.centerOn(player.getX(), player.getY());
     }
 
     public void setPlayerPosition(float x, float y)

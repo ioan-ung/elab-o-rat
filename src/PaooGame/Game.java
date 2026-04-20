@@ -31,7 +31,7 @@ public class Game implements Runnable
         wnd.BuildGameWindow();
         Assets.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        playing = new Playing(wnd.GetWndWidth(), wnd.GetWndHeight());
+        playing = new Playing(wnd);
         menu = new Menu(wnd.GetCanvas(), wnd.GetWndWidth(), wnd.GetWndHeight());
     }
 

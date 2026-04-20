@@ -66,66 +66,65 @@ public class Assets
      */
     public static void Init()
     {
-        try
-        {
-            BufferedImage sheetImg = ImageIO.read(new File("maps/SpreetSheet.png"));
-            System.out.println("[Assets] SpreetSheet incarcat: "
-                    + sheetImg.getWidth() + "x" + sheetImg.getHeight());
 
-            SpriteSheet sheet = new SpriteSheet(sheetImg);
+        BufferedImage sheetImg = ImageLoader.LoadImage("/textures/SpriteSheet.png");
+        System.out.println("[Assets] SpriteSheet incarcat: "
+                            + sheetImg.getWidth()
+                            + "x"
+                            + sheetImg.getHeight()
+                            );
+        SpriteSheet sheet = new SpriteSheet(sheetImg);
 
-            // --- Tile-uri harta ---
-            floor  = sheet.crop(1, 7);// 1 7
-            floorWireHorizontal = sheet.crop(1,6);
-            floorWireVertical = sheet.crop(0,7);
-            floorWireSW = sheet.crop(2,6);
-            floorWireSE = sheet.crop(0,6);
-            floorWireNW = sheet.crop(3,8);
-            floorWireNE = sheet.crop(0,8);
-
-
-
-            wall   = sheet.crop(6, 1);
-
-            doorL   = sheet.crop(3, 6);
-            doorR   = sheet.crop(4, 6);
-            doorB   = sheet.crop(4, 7);
-            doorT   = sheet.crop(4, 8);
-            doorNoKeyV = sheet.crop(8, 4);
-            doorNoKeyH = sheet.crop(8, 5);
-
-            cheese = sheet.crop(9, 8);
-            box = sheet.crop(8, 8);
-
-            ratT = sheet.crop(9, 6);
-            ratB = sheet.crop(9, 7);
-            ratL = sheet.crop(8, 6);
-            ratR = sheet.crop(8, 7);
+        floor  = sheet.crop(1, 7);// 1 7
+        floorWireHorizontal = sheet.crop(1,6);
+        floorWireVertical = sheet.crop(0,7);
+        floorWireSW = sheet.crop(2,6);
+        floorWireSE = sheet.crop(0,6);
+        floorWireNW = sheet.crop(3,8);
+        floorWireNE = sheet.crop(0,8);
 
 
 
-            boxButtonWireTop = sheet.crop(2,5);
-            boxButtonWireLeft = sheet.crop(1,4);
-            boxButtonWireRight = sheet.crop(0,4);
-            boxButtonWireBottom = sheet.crop(2,4);
+        wall   = sheet.crop(6, 1);
+
+        doorL   = sheet.crop(3, 6);
+        doorR   = sheet.crop(4, 6);
+        doorB   = sheet.crop(4, 7);
+        doorT   = sheet.crop(4, 8);
+        doorNoKeyV = sheet.crop(8, 4);
+        doorNoKeyH = sheet.crop(8, 5);
+
+        cheese = sheet.crop(9, 8);
+        box = sheet.crop(8, 8);
+
+        ratT = sheet.crop(9, 6);
+        ratB = sheet.crop(9, 7);
+        ratL = sheet.crop(8, 6);
+        ratR = sheet.crop(8, 7);
 
 
-            timedButtonWireTop = sheet.crop(6,5);
-            timedButtonWireLeft = sheet.crop(5,4);
-            timedButtonWireRight = sheet.crop(4,4);
-            timedButtonWireBottom = sheet.crop(6,4);
+
+        boxButtonWireTop = sheet.crop(2,5);
+        boxButtonWireLeft = sheet.crop(1,4);
+        boxButtonWireRight = sheet.crop(0,4);
+        boxButtonWireBottom = sheet.crop(2,4);
 
 
-            basicButtonWireTop = sheet.crop(2,7);
-            basicButtonWireLeft = sheet.crop(1,8);
-            basicButtonWireRight = sheet.crop(2,8);
-            basicButtonWireBottom = sheet.crop(3,7);
+        timedButtonWireTop = sheet.crop(6,5);
+        timedButtonWireLeft = sheet.crop(5,4);
+        timedButtonWireRight = sheet.crop(4,4);
+        timedButtonWireBottom = sheet.crop(6,4);
 
-        }
-        catch(IOException e)
-        {
-            System.out.println("[Assets] EROARE: SpreetSheet.png nu a fost gasit!");
-            e.printStackTrace();
-        }
+
+        basicButtonWireTop = sheet.crop(2,7);
+        basicButtonWireLeft = sheet.crop(1,8);
+        basicButtonWireRight = sheet.crop(2,8);
+        basicButtonWireBottom = sheet.crop(3,7);
+
+
+        playerUp = sheet.crop(9,6);
+        playerRight = sheet.crop(8,7);
+        playerDown = sheet.crop(9,7);
+        playerLeft = sheet.crop(8,6);
     }
 }
