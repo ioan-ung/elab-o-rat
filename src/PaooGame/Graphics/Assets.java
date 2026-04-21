@@ -1,8 +1,5 @@
 package PaooGame.Graphics;
 
-import PaooGame.States.Playing;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /*! \class public class Assets
@@ -59,10 +56,7 @@ public class Assets
     public static BufferedImage boxButtonWireBottom;
 
     /*! Referinte catre sprite-urile playerului */
-    public static BufferedImage playerLeft;
-    public static BufferedImage playerRight;
-    public static BufferedImage playerUp;
-    public static BufferedImage playerDown;
+    public static BufferedImage playerWest, playerEast, playerNorth, playerNorthWest, playerNorthEast, playerSouth, playerSouthWest, playerSouthEast;
 
     /*! \fn public static void Init()
         \brief Initializeaza toate referintele grafice.
@@ -126,9 +120,13 @@ public class Assets
         basicButtonWireBottom = SpriteSheetCutter.cropAndScale(3,7);
 
 
-        playerUp = SpriteSheetCutter.cropAndScale(9,6);
-        playerRight = SpriteSheetCutter.cropAndScale(8,7);
-        playerDown = SpriteSheetCutter.cropAndScale(9,7);
-        playerLeft = SpriteSheetCutter.cropAndScale(8,6);
+        playerNorth = SpriteSheetCutter.cropAndScale(9,6);
+        playerEast = SpriteSheetCutter.cropAndScale(8,7);
+        playerSouth = SpriteSheetCutter.cropAndScale(9,7);
+        playerWest = SpriteSheetCutter.cropAndScale(8,6);
+        playerNorthEast = SpriteSheetCutter.cropAndScale(10,7);
+        playerNorthWest = SpriteSheetCutter.cropAndScale(11,7);
+        playerSouthEast = SpriteSheetCutter.cropAndScale(10,6);
+        playerSouthWest = SpriteSheetCutter.cropAndScale(11,6);
     }
 }

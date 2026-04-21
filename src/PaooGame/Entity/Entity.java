@@ -3,13 +3,14 @@ package PaooGame.Entity;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-    /// Coordinates and speed
+    // Coordinates and speed
     protected int x;
     protected int y;
     protected int speed;
-    /// Directional sprites
+    // Directional sprites
     protected BufferedImage north, northeast, east, southeast, south, southwest, west, northwest;
-    protected String direction;
+    protected BufferedImage lastImage;
+    protected byte xSign, ySign;
 
     public int getX() {
         return x;

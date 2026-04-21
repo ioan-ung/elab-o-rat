@@ -65,7 +65,9 @@ public class Playing
     {
         /// Initialize player
         this.keyH = keyH;
-        player = new Player(gameWindow.GetCanvas(), keyH);
+        gameWindow.GetCanvas().addKeyListener(keyH);
+        gameWindow.GetCanvas().setFocusable(true);
+        player = new Player(keyH);
 
         loadMap();
         /// Camera work
