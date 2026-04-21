@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
  */
 public class SpriteSheet
 {
-    private BufferedImage       spriteSheet;              /*!< Referinta catre obiectul BufferedImage ce contine sprite sheet-ul.*/
-    private static final int    tileWidth   = 32;   /*!< Latimea unei dale din sprite sheet.*/
-    private static final int    tileHeight  = 32;   /*!< Inaltime unei dale din sprite sheet.*/
+    private final BufferedImage       spriteSheet;              /*!< Referinta catre obiectul BufferedImage ce contine sprite sheet-ul.*/
+    private static final int    tileWidth   = Assets.TILE_ACTUAL_SIZE;   /*!< Latimea unei dale din sprite sheet.*/
+    private static final int    tileHeight  = Assets.TILE_ACTUAL_SIZE;   /*!< Inaltime unei dale din sprite sheet.*/
 
     /*! \fn public SpriteSheet(BufferedImage sheet)
         \brief Constructor, initializeaza spriteSheet.

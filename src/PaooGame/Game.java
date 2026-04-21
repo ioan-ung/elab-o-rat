@@ -2,6 +2,7 @@ package PaooGame;
 
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
+import PaooGame.Input.KeyHandler;
 import PaooGame.States.Menu;
 import PaooGame.States.Menu.GameState;
 import PaooGame.States.Playing;
@@ -16,6 +17,7 @@ public class Game implements Runnable
     private Thread          gameThread;
     private Menu            menu;
     private Playing         playing;
+    private KeyHandler      keyH;
 
     public Game(String title, int width, int height)
     {
@@ -25,62 +27,38 @@ public class Game implements Runnable
 
     private void InitGame(String title, int width, int height)
     {
+        keyH = new KeyHandler();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
         Assets.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        playing = new Playing(window);
+        playing = new Playing(window, keyH);
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
-//    public void run()
-//    {
-//        long oldTime = System.nanoTime();
-//        long curentTime;
-//
-//        final int    framesPerSecond = 60;
-//        final double timeFrame       = 1000000000.0 / framesPerSecond;
-//
-//        while(runState)
-//        {
-//            curentTime = System.nanoTime();
-//            if((curentTime - oldTime) > timeFrame)
-//            {
-//                Update();
-//                Draw();
-//                oldTime = curentTime;
-//            }
-//        }
-//    }
-    /// Testing different run methods to understand where the lag comes from
     public void run() {
         long lastTime = System.nanoTime();
-        long now;
-        double delta = 0;
+        long currentTime;
+        double delta = 0;   // No. of frames
 
-        final int framesPerSecond = 60;
-        final double timePerTick = 1000000000.0 / framesPerSecond;
+        final int FPS = 60;
+        final double timePerTick = 1000000000.0 / FPS;
 
         while(runState) {
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            lastTime = now;
+            // Calculate No. of frames to update
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / timePerTick;
+            lastTime = currentTime;
 
-            // 🚨 THE SAFETY VALVE: Prevent the Death Spiral
-            // If the game lags so hard it falls 5 frames behind, cap it.
-            if (delta > 5) {
-                delta = 5;
-            }
-
+            // Update the game delta times before drawing
+            if (delta > 5) delta = 5;
             while(delta >= 1) {
                 Update();
                 delta--;
             }
-
             Draw();
 
-            // 🚨 CPU BREATHER: Give the CPU 1 millisecond to rest
-            // If you don't do this, the while loop runs millions of times a second and fries your core.
+            // Put thread to sleeep for 1ms
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -132,17 +110,34 @@ public class Game implements Runnable
         }
 
         Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
+
+        // DEBUG_A
+        long drawStart = 0;
+        if (keyH.debugOn) {
+            drawStart = System.nanoTime();
+        }
+
+        // Clear window
         g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
-        if(menu.getState() == GameState.MENU)
-        {
+        if(menu.getState() == GameState.MENU) {
+            // Draw main menu
             menu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
-        else if(menu.getState() == GameState.PLAYING)
-        {
+        else if(menu.getState() == GameState.PLAYING) {
+            // Draw playing area
             playing.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
+        // DEBUG_A
+        if (keyH.debugOn) {
+            long drawEnd = System.nanoTime();
+            long drawTime = drawEnd - drawStart;
+            g2.setColor(Color.white);
+            g2.drawString("Draw time: " + drawTime, 10, 10);
+            System.out.println("Draw time: " + drawTime);
+        }
         bs.show();
+
         g2.dispose();
     }
 }

@@ -24,9 +24,9 @@ public class Player extends Entity{
     }
     /// Method for setting default position and speed
     private void setDefaultValues() {
-        x = 96;
-        y = 864;
-        speed = 5;
+        x = 96*Assets.SCALE;
+        y = 864*Assets.SCALE;
+        speed = 3*Assets.SCALE;
         direction = "east";
     }
     /// Method for setting player sprites

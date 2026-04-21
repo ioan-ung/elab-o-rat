@@ -61,10 +61,10 @@ public class Playing
 //// Zona dreapta-jos
 //    playerX = 1800; playerY = 800;
 
-    public Playing(GameWindow gameWindow)
+    public Playing(GameWindow gameWindow, KeyHandler keyH)
     {
         /// Initialize player
-        keyH = new KeyHandler();
+        this.keyH = keyH;
         player = new Player(gameWindow.GetCanvas(), keyH);
 
         loadMap();
