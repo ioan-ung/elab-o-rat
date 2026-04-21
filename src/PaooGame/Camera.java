@@ -6,8 +6,8 @@ package PaooGame;
  */
 public class Camera
 {
-    private float xOffset;  /*!< Offsetul pe X al camerei */
-    private float yOffset;  /*!< Offsetul pe Y al camerei */
+    private double xOffset;  /*!< Offsetul pe X al camerei */
+    private double yOffset;  /*!< Offsetul pe Y al camerei */
 
     private final int mapWidthPx;   /*!< Latimea hartii in pixeli */
     private final int mapHeightPx;  /*!< Inaltimea hartii in pixeli */
@@ -28,19 +28,17 @@ public class Camera
         \brief Centreaza camera pe player.
                Limiteaza camera sa nu iasa din boundele hartii.
      */
-    public void centerOn(float playerX, float playerY)
+    public void centerOn(double playerX, double playerY)
     {
         // centreaza camera pe player
-        xOffset = playerX - wndWidth  / 2f;
-        yOffset = playerY - wndHeight / 2f;
+        xOffset = playerX - wndWidth  / 2.0;
+        yOffset = playerY - wndHeight / 2.0;
 
         // limiteaza camera la boundele hartii
-        if(xOffset < 0)                      xOffset = 0;
-        if(yOffset < 0)                      yOffset = 0;
-        if(xOffset > mapWidthPx  - wndWidth)  xOffset = mapWidthPx  - wndWidth;
-        if(yOffset > mapHeightPx - wndHeight) yOffset = mapHeightPx - wndHeight;
+        xOffset = Math.max(0, Math.min(xOffset, mapWidthPx - wndWidth));
+        yOffset = Math.max(0, Math.min(yOffset, mapHeightPx - wndHeight));
     }
 
-    public int getXOffset() { return (int) xOffset; }
+    public int getXOffset() {return (int) xOffset; }
     public int getYOffset() { return (int) yOffset; }
 }

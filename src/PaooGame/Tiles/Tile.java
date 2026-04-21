@@ -1,6 +1,7 @@
 package PaooGame.Tiles;
 
 import PaooGame.Graphics.Assets;
+import PaooGame.States.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -95,9 +96,6 @@ public class Tile
 
     }
 
-    public static final int TILE_WIDTH  = 32;
-    public static final int TILE_HEIGHT = 32;
-
     protected BufferedImage img;
     protected final int id;
 
@@ -112,7 +110,7 @@ public class Tile
 
     public void Draw(Graphics g, int x, int y)
     {
-        g.drawImage(img, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(img, x, y, Assets.TILE_SIZE, Assets.TILE_SIZE, null);
     }
 
     public boolean IsSolid() { return false; }

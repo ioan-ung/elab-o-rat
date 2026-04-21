@@ -1,6 +1,10 @@
 package PaooGame.States;
 
 import PaooGame.Camera;
+import PaooGame.Entity.Player;
+import PaooGame.GameWindow.GameWindow;
+import PaooGame.Graphics.Assets;
+import PaooGame.Input.KeyHandler;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
 import java.io.File;
@@ -13,7 +17,6 @@ import org.w3c.dom.*;
 
 public class Playing
 {
-    private static final int    TILE_SIZE = 32;
     private static final String MAP_PATH  = "maps/Tutorial.tmx";
 
     private int[][] tileMap;
@@ -21,6 +24,9 @@ public class Playing
     private int mapHeight;
 
     private Camera camera;
+
+    private KeyHandler keyH;
+    private Player player;
 
     //latimea mapei 64x32 lasa imposibil sa incadrez tileuri 32x32 pe canvas 800x600
     //camera momentan trebuie setata manual prin coordonate user
@@ -55,15 +61,22 @@ public class Playing
 //// Zona dreapta-jos
 //    playerX = 1800; playerY = 800;
 
-    public Playing(int wndWidth, int wndHeight)
+    public Playing(GameWindow gameWindow, KeyHandler keyH)
     {
+        /// Initialize player
+        this.keyH = keyH;
+        gameWindow.GetCanvas().addKeyListener(keyH);
+        gameWindow.GetCanvas().setFocusable(true);
+        player = new Player(keyH);
+
         loadMap();
+        /// Camera work
         camera = new Camera(
-                wndWidth, wndHeight,
-                mapWidth  * TILE_SIZE,
-                mapHeight * TILE_SIZE
+                gameWindow.getWindowWidth(), gameWindow.getWindowHeight(),
+                mapWidth  * Assets.TILE_SIZE,
+                mapHeight * Assets.TILE_SIZE
         );
-        camera.centerOn(playerX, playerY);
+        camera.centerOn(player.getX(), player.getY());
     }
     private boolean contains(int[] arr, int val)
     {
@@ -167,14 +180,14 @@ public class Playing
         }
     }
 
-    private void drawLayer(Graphics g, int[][] map, int camX, int camY, int wndWidth, int wndHeight)
+    private void drawLayer(Graphics g, int[][] map, int camX, int camY, int windowWidth, int windowHeight)
     {
         if(map == null) return;
 
-        int startCol = Math.max(0, camX / TILE_SIZE);
-        int startRow = Math.max(0, camY / TILE_SIZE);
-        int endCol   = Math.min(startCol + wndWidth  / TILE_SIZE + 2, mapWidth);
-        int endRow   = Math.min(startRow + wndHeight / TILE_SIZE + 2, mapHeight);
+        int startCol = Math.max(0, camX / Assets.TILE_SIZE);
+        int startRow = Math.max(0, camY / Assets.TILE_SIZE);
+        int endCol   = Math.min(startCol + windowWidth  / Assets.TILE_SIZE + 2, mapWidth);
+        int endRow   = Math.min(startRow + windowHeight / Assets.TILE_SIZE + 2, mapHeight);
 
         for(int row = startRow; row < endRow; row++)
         {
@@ -186,8 +199,8 @@ public class Playing
                 Tile tile = Tile.tiles[tileIdx];
                 if(tile == null) continue;
 
-                int drawX = col * TILE_SIZE - camX;
-                int drawY = row * TILE_SIZE - camY;
+                int drawX = col * Assets.TILE_SIZE - camX;
+                int drawY = row * Assets.TILE_SIZE - camY;
 
                 tile.Draw(g, drawX, drawY);
             }
@@ -254,7 +267,7 @@ public class Playing
         return 0;
     }
 
-    public void Draw(Graphics g, int wndWidth, int wndHeight)
+    public void Draw(Graphics g, int windowWidth, int windowHeight)
     {
         if(tileMapFloor == null) return;
 
@@ -262,26 +275,22 @@ public class Playing
         int camY = camera.getYOffset();
 
         // 1. Desenam floor + background
-        drawLayer(g, tileMapFloor, camX, camY, wndWidth, wndHeight);
+        drawLayer(g, tileMapFloor, camX, camY, windowWidth, windowHeight);
 
-        // 2. TODO: desenam playerul aici
+        // 2. Desenam playerul aici
+        Graphics2D g2 = (Graphics2D)g;
+        g2.translate(-camX, -camY);
+        player.draw(g2);
+        g2.translate(camX, camY);
 
         // 3. Desenam obiectele de deasupra (branza etc.)
-        drawLayer(g, tileMapAbove, camX, camY, wndWidth, wndHeight);
+        drawLayer(g, tileMapAbove, camX, camY, windowWidth, windowHeight);
     }
 
 
     public void Update()
     {
-        camera.centerOn(playerX, playerY);
+        player.update();
+        camera.centerOn(player.getX(), player.getY());
     }
-
-    public void setPlayerPosition(float x, float y)
-    {
-        playerX = x;
-        playerY = y;
-    }
-
-    public Camera getCamera() { return camera; }
-
 }
