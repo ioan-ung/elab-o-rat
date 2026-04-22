@@ -3,6 +3,8 @@ package PaooGame;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Map.GameMap;
+import PaooGame.Map.TmxParser;
 import PaooGame.States.Menu;
 import PaooGame.States.Menu.GameState;
 import PaooGame.States.Playing;
@@ -32,7 +34,8 @@ public class Game implements Runnable
         window.BuildGameWindow();
         Assets.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        playing = new Playing(window, keyH);
+        GameMap gameMap = TmxParser.loadMap(GameMap.MAP_PATH);  // ← încarci harta
+        playing = new Playing(window, keyH,gameMap);
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
