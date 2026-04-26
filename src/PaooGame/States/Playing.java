@@ -28,12 +28,6 @@ public class Playing
     private KeyHandler keyH;
     private Player player;
 
-    //latimea mapei 64x32 lasa imposibil sa incadrez tileuri 32x32 pe canvas 800x600
-    //camera momentan trebuie setata manual prin coordonate user
-    //MODIFICA --cand faci deplasarea soarecelui
-    private float playerX = 1024;
-    private float playerY = 512;
-
 //    // Zona stânga-sus
 //    playerX = 200;  playerY = 200;
 //

@@ -37,32 +37,50 @@ public class Game implements Runnable
     }
 
     public void run() {
-        long lastTime = System.nanoTime();
-        long currentTime;
+        long currentTime, lastTime = System.nanoTime();
         double delta = 0;   // No. of frames
+        int sleepTime;
 
         final int FPS = 60;
-        final double timePerTick = 1000000000.0 / FPS;
+        final double nsPerFrame = 1000_000_000.0 / FPS;
 
         while(runState) {
             // Calculate No. of frames to update
             currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / timePerTick;
+            delta += (currentTime - lastTime) / nsPerFrame;
             lastTime = currentTime;
+
+//            // DEBUG: COMMENT THIS LATER
+//            System.out.print(delta + " ");
 
             // Update the game delta times before drawing
             if (delta > 5) delta = 5;
             while(delta >= 1) {
-                Update();
+                update();
                 delta--;
             }
-            Draw();
+            draw();
 
-            // Put thread to sleeep for 1ms
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+//            // DEBUG: COMMENT THIS LATER
+//            System.out.println(delta);
+
+            // Calculate how much time is left in the current frame
+            sleepTime = (int) ((nsPerFrame - (System.nanoTime() - currentTime))/1000_000);    // In milliseconds
+
+            if (sleepTime > 0) {
+                try {
+                    if (sleepTime > 2) {
+                        Thread.sleep(sleepTime-2);
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+                    e.printStackTrace();
+                }
+
+                // Wait until the frame is over
+                while (System.nanoTime() - currentTime < nsPerFrame) {
+                    Thread.yield(); // Better than an empty loop
+                }
             }
         }
     }
@@ -87,7 +105,7 @@ public class Game implements Runnable
         }
     }
 
-    private void Update()
+    private void update()
     {
         if(menu.getState() == GameState.PLAYING)
         {
@@ -95,7 +113,7 @@ public class Game implements Runnable
         }
     }
 
-    private void Draw()
+    private void draw()
     {
         BufferStrategy bs = window.GetCanvas().getBufferStrategy();
         if(bs == null)
@@ -133,11 +151,12 @@ public class Game implements Runnable
             long drawEnd = System.nanoTime();
             long drawTime = drawEnd - drawStart;
             g2.setColor(Color.white);
-            g2.drawString("Draw time: " + drawTime, 10, 10);
-            System.out.println("Draw time: " + drawTime);
+            g2.drawString("Draw time: " + drawTime/1000_000.0 + "ms", 10, 10);
+            System.out.println("Draw time: " + drawTime/1000_000.0 + "ms");
         }
         bs.show();
-
+        // Force the OS to synchronize the graphics pipeline
+        Toolkit.getDefaultToolkit().sync();
         g2.dispose();
     }
 }
