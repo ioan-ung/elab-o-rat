@@ -1,17 +1,17 @@
 package PaooGame.Entity;
 
-import PaooGame.Graphics.Assets;
-import PaooGame.Input.KeyHandler;
+import PaooGame.Graphics.AssetManager;
+import PaooGame.Input.KeyManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends Entity{
+public class Mouse extends Entity{
 
-    private KeyHandler keyH;
+    private KeyManager keyH;
 
     /// Constructor of Player
-    public Player (KeyHandler keyH) {
+    public Mouse(KeyManager keyH) {
         this.keyH = keyH;
 
         setDefaultValues();
@@ -19,23 +19,23 @@ public class Player extends Entity{
     }
     /// Method for setting default position and speed
     private void setDefaultValues() {
-        x = 96*Assets.SCALE;
-        y = 864*Assets.SCALE;
-        speed = 3*Assets.SCALE;
+        x = 96* AssetManager.SCALE;
+        y = 864* AssetManager.SCALE;
+        speed = 3* AssetManager.SCALE;
         xSign = 1; // Looking in the positive x direction
         ySign = 0;
-        lastImage = Assets.playerEast;
+        lastImage = AssetManager.playerEast;
     }
     /// Method for setting player sprites
     private void setPlayerSprites() {
-        north = Assets.playerNorth;
-        east = Assets.playerEast;
-        south = Assets.playerSouth;
-        west = Assets.playerWest;
-        northwest = Assets.playerNorthWest;
-        northeast = Assets.playerNorthEast;
-        southeast = Assets.playerSouthEast;
-        southwest = Assets.playerSouthWest;
+        north = AssetManager.playerNorth;
+        east = AssetManager.playerEast;
+        south = AssetManager.playerSouth;
+        west = AssetManager.playerWest;
+        northwest = AssetManager.playerNorthWest;
+        northeast = AssetManager.playerNorthEast;
+        southeast = AssetManager.playerSouthEast;
+        southwest = AssetManager.playerSouthWest;
     }
     /// Update player position
     public void update() {
@@ -75,6 +75,6 @@ public class Player extends Entity{
             else image = lastImage;
         }
         lastImage = image;
-        g2.drawImage(image,x,y,Assets.TILE_SIZE,Assets.TILE_SIZE, null);
+        g2.drawImage(image,x,y, AssetManager.TILE_SIZE, AssetManager.TILE_SIZE, null);
     }
 }

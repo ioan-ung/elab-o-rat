@@ -47,10 +47,10 @@ public class TmxParser {
 
         if(gid == 122) return 50;  // cheese
         if(gid == 121) return 51;  // box
-        if(gid == 94)  return 52;  // ratT
-        if(gid == 108) return 53;  // ratB
-        if(gid == 93)  return 54;  // ratL
-        if(gid == 107) return 55;  // ratR
+        if(gid == 94)  return 52;  // mouseT
+        if(gid == 108) return 53;  // mouseB
+        if(gid == 93)  return 54;  // mouseL
+        if(gid == 107) return 55;  // mouseR
 
 
         // WALL

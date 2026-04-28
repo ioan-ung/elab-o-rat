@@ -1,7 +1,5 @@
 package PaooGame.Graphics;
 
-import PaooGame.States.Playing;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

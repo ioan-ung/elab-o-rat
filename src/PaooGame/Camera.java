@@ -1,18 +1,15 @@
 package PaooGame;
 
-/*! \class Camera
-    \brief Gestioneaza viewport-ul jocului.
-           Camera urmareste playerul si calculeaza offsetul de desenare.
- */
+// urmareste playerul si calculeaza offsetul de desenare
 public class Camera
 {
-    private double xOffset;  /*!< Offsetul pe X al camerei */
-    private double yOffset;  /*!< Offsetul pe Y al camerei */
+    private double xOffset;
+    private double yOffset;
 
-    private final int mapWidthPx;   /*!< Latimea hartii in pixeli */
-    private final int mapHeightPx;  /*!< Inaltimea hartii in pixeli */
-    private final int wndWidth;     /*!< Latimea ferestrei */
-    private final int wndHeight;    /*!< Inaltimea ferestrei */
+    private final int mapWidthPx;
+    private final int mapHeightPx;
+    private final int wndWidth;
+    private final int wndHeight;
 
     public Camera(int wndWidth, int wndHeight, int mapWidthPx, int mapHeightPx)
     {
@@ -24,10 +21,7 @@ public class Camera
         this.yOffset     = 0;
     }
 
-    /*! \fn public void centerOn(float playerX, float playerY)
-        \brief Centreaza camera pe player.
-               Limiteaza camera sa nu iasa din boundele hartii.
-     */
+    // centreaza pe player si clameaza la limitele hartii
     public void centerOn(double playerX, double playerY)
     {
         // centreaza camera pe player

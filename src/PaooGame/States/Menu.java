@@ -1,5 +1,7 @@
 package PaooGame.States;
 
+import PaooGame.GameManager;
+import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.ImageLoader;
 
 import javax.imageio.ImageIO;
@@ -17,8 +19,6 @@ import java.io.File;
 public class Menu
 {
     private String currentPlayerName = "";
-    public enum GameState { MENU, PLAYING }
-
     private GameState currentState = GameState.MENU;
 
     private final BufferedImage bgImage;

@@ -1,7 +1,6 @@
 package PaooGame.Tiles;
 
-import PaooGame.Graphics.Assets;
-import PaooGame.States.Playing;
+import PaooGame.Graphics.AssetManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,10 +21,10 @@ public class Tile
 
     public static Tile cheese;
     public static Tile box;
-    public static Tile ratT;
-    public static Tile ratB;
-    public static Tile ratL;
-    public static Tile ratR;
+    public static Tile mouseT;
+    public static Tile mouseB;
+    public static Tile mouseL;
+    public static Tile mouseR;
 
 
     public static Tile basicButtonWireTop;
@@ -53,46 +52,46 @@ public class Tile
 
     public static void Init()
     {
-        floor  = new FloorTile(0,Assets.floor);
-        floorWireHorizontal = new FloorTile(1,Assets.floorWireHorizontal);
-        floorWireVertical = new FloorTile(2,Assets.floorWireVertical);
-        floorWireSW = new FloorTile(3,Assets.floorWireSW);
-        floorWireSE = new FloorTile(4,Assets.floorWireSE);
-        floorWireNW = new FloorTile(5,Assets.floorWireNW);
-        floorWireNE = new FloorTile(6,Assets.floorWireNE);
+        floor  = new FloorTile(0, AssetManager.getInstance().getSprite("floor", 1, 7));
+        floorWireHorizontal = new FloorTile(1, AssetManager.getInstance().getSprite("floorWireHorizontal", 1, 6));
+        floorWireVertical = new FloorTile(2, AssetManager.getInstance().getSprite("floorWireVertical", 0, 7));
+        floorWireSW = new FloorTile(3, AssetManager.getInstance().getSprite("floorWireSW", 2, 6));
+        floorWireSE = new FloorTile(4, AssetManager.getInstance().getSprite("floorWireSE", 0, 6));
+        floorWireNW = new FloorTile(5, AssetManager.getInstance().getSprite("floorWireNW", 3, 8));
+        floorWireNE = new FloorTile(6, AssetManager.getInstance().getSprite("floorWireNE", 0, 8));
 
         wallTile   = new WallTile(10);
 
 
-        doorL   = new DoorTile(20,Assets.doorL);
-        doorR   = new DoorTile(21,Assets.doorR);
-        doorT   = new DoorTile(22,Assets.doorT);
-        doorB   = new DoorTile(23,Assets.doorB);
-        doorNoKeyV  = new DoorTile(24,Assets.doorNoKeyV);
-        doorNoKeyH  = new DoorTile(25,Assets.doorNoKeyH);
+        doorL   = new DoorTile(20, AssetManager.getInstance().getSprite("doorL", 3, 6));
+        doorR   = new DoorTile(21, AssetManager.getInstance().getSprite("doorR", 4, 6));
+        doorT   = new DoorTile(22, AssetManager.getInstance().getSprite("doorT", 4, 8));
+        doorB   = new DoorTile(23, AssetManager.getInstance().getSprite("doorB", 4, 7));
+        doorNoKeyV  = new DoorTile(24, AssetManager.getInstance().getSprite("doorNoKeyV", 8, 4));
+        doorNoKeyH  = new DoorTile(25, AssetManager.getInstance().getSprite("doorNoKeyH", 8, 5));
 
-        boxButtonWireTop = new ButtonTile(30, Assets.boxButtonWireTop);
-        boxButtonWireLeft = new ButtonTile(31,Assets.boxButtonWireLeft);
-        boxButtonWireRight = new ButtonTile(32,Assets.boxButtonWireRight);
-        boxButtonWireBottom = new ButtonTile(33,Assets.boxButtonWireBottom);
+        boxButtonWireTop = new ButtonTile(30, AssetManager.getInstance().getSprite("boxButtonWireTop", 2, 5));
+        boxButtonWireLeft = new ButtonTile(31, AssetManager.getInstance().getSprite("boxButtonWireLeft", 1, 4));
+        boxButtonWireRight = new ButtonTile(32, AssetManager.getInstance().getSprite("boxButtonWireRight", 0, 4));
+        boxButtonWireBottom = new ButtonTile(33, AssetManager.getInstance().getSprite("boxButtonWireBottom", 2, 4));
 
-        timedButtonWireTop = new ButtonTile(34, Assets.timedButtonWireTop);
-        timedButtonWireLeft = new ButtonTile(35, Assets.timedButtonWireLeft);
-        timedButtonWireRight = new ButtonTile(36, Assets.timedButtonWireRight);
-        timedButtonWireBottom = new ButtonTile(37, Assets.timedButtonWireBottom);
+        timedButtonWireTop = new ButtonTile(34, AssetManager.getInstance().getSprite("timedButtonWireTop", 6, 5));
+        timedButtonWireLeft = new ButtonTile(35, AssetManager.getInstance().getSprite("timedButtonWireLeft", 5, 4));
+        timedButtonWireRight = new ButtonTile(36, AssetManager.getInstance().getSprite("timedButtonWireRight", 4, 4));
+        timedButtonWireBottom = new ButtonTile(37, AssetManager.getInstance().getSprite("timedButtonWireBottom", 6, 4));
 
-        basicButtonWireTop = new ButtonTile(40, Assets.basicButtonWireTop);
-        basicButtonWireLeft = new ButtonTile(41, Assets.basicButtonWireLeft);
-        basicButtonWireRight = new ButtonTile(42, Assets.basicButtonWireRight);
-        basicButtonWireBottom = new ButtonTile(43, Assets.basicButtonWireBottom);
+        basicButtonWireTop = new ButtonTile(40, AssetManager.getInstance().getSprite("basicButtonWireTop", 2, 7));
+        basicButtonWireLeft = new ButtonTile(41, AssetManager.getInstance().getSprite("basicButtonWireLeft", 1, 8));
+        basicButtonWireRight = new ButtonTile(42, AssetManager.getInstance().getSprite("basicButtonWireRight", 2, 8));
+        basicButtonWireBottom = new ButtonTile(43, AssetManager.getInstance().getSprite("basicButtonWireBottom", 3, 7));
 
         cheese = new CheeseTile(50);
         box = new BoxTile(51);
 
-        ratT = new RatTile(52,Assets.ratT);
-        ratB = new RatTile(53,Assets.ratB);
-        ratL = new RatTile(54,Assets.ratL);
-        ratR = new RatTile(55,Assets.ratR);
+        mouseT = new MouseTile(52, AssetManager.getInstance().getSprite("mouseT", 9, 6));
+        mouseB = new MouseTile(53, AssetManager.getInstance().getSprite("mouseB", 9, 7));
+        mouseL = new MouseTile(54, AssetManager.getInstance().getSprite("mouseL", 8, 6));
+        mouseR = new MouseTile(55, AssetManager.getInstance().getSprite("mouseR", 8, 7));
 
     }
 
@@ -110,7 +109,7 @@ public class Tile
 
     public void Draw(Graphics g, int x, int y)
     {
-        g.drawImage(img, x, y, Assets.TILE_SIZE, Assets.TILE_SIZE, null);
+        g.drawImage(img, x, y, AssetManager.TILE_SIZE, AssetManager.TILE_SIZE, null);
     }
 
     public boolean IsSolid() { return false; }
