@@ -27,7 +27,7 @@ public class LevelManager {
     public Level getLevel(LevelType type,GameWindow gw, KeyManager keyH) {
         switch(type) {
             case TUTORIAL:   return new TutorialLevel(gw, keyH);
-//            case LABYRINTH:  return new LabyrinthLevel(gw, keyH);
+            case LABYRINTH:  return new LaboratoryLevel(gw, keyH);
 //            case MAZE:       return new MazeLevel(gw, keyH);
             default:         return new TutorialLevel(gw, keyH);
         }
@@ -36,6 +36,7 @@ public class LevelManager {
     public void Update(GameWindow gw, KeyManager keyH) {
         if(currentLevel.isCompleted()) {
             currentLevelIndex++;
+            keyH.escapePressed = false; // resetam flag-ul--nu vrem sa facem switch decat o data
             if(currentLevelIndex < levelOrder.length)
                 currentLevel = getLevel(levelOrder[currentLevelIndex],gw, keyH);
         } else {

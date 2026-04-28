@@ -7,6 +7,7 @@ public class KeyManager implements KeyListener{
 
     private boolean upPressed, rightPressed, downPressed, leftPressed;
     public boolean deletePressed;
+    public boolean escapePressed; // folosit pentru tranzitia la nivelul urmator
     // DEBUG KEY
     public boolean debugOn = false;
 
@@ -49,6 +50,9 @@ public class KeyManager implements KeyListener{
         if (keyCode == KeyEvent.VK_DELETE) {
             deletePressed = true;
         }
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            escapePressed = true;
+        }
 
         // DEBUG KEY
         if (keyCode == KeyEvent.VK_F3) {
@@ -76,6 +80,9 @@ public class KeyManager implements KeyListener{
         }
         if (keyCode == KeyEvent.VK_DELETE) {
             deletePressed = false;
+        }
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            escapePressed = false;
         }
     }
 }

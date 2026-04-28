@@ -15,6 +15,6 @@ public class TutorialLevel extends Level {
     //logica de schimb a nivelului
     @Override
     public boolean isCompleted() {
-        return keyH.deletePressed;
+        return keyH.escapePressed;
     }
 }

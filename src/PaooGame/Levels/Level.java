@@ -22,6 +22,8 @@ public abstract class Level {
         this.keyH = keyH;
         gameWindow.GetCanvas().addKeyListener(keyH);
         gameWindow.GetCanvas().setFocusable(true);
+        // necesar la tranzitia intre nivele — constructorul noului nivel recapata focusul pentru canvas
+        gameWindow.GetCanvas().requestFocusInWindow();
         player = new Mouse(keyH);
         map = TmxParser.loadMap(mapPath);
         initCamera();

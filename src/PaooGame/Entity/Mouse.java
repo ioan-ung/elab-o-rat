@@ -20,7 +20,7 @@ public class Mouse extends Entity{
     /// Method for setting default position and speed
     private void setDefaultValues() {
         x = 96* AssetManager.SCALE;
-        y = 864* AssetManager.SCALE;
+        y = 32* AssetManager.SCALE;
         speed = 3* AssetManager.SCALE;
         xSign = 1; // Looking in the positive x direction
         ySign = 0;
