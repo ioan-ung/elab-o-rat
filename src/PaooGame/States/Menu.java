@@ -1,5 +1,7 @@
 package PaooGame.States;
 
+import PaooGame.GameManager;
+import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.ImageLoader;
 
 import javax.imageio.ImageIO;
@@ -17,8 +19,6 @@ import java.io.File;
 public class Menu
 {
     private String currentPlayerName = "";
-    public enum GameState { MENU, PLAYING }
-
     private GameState currentState = GameState.MENU;
 
     private final BufferedImage bgImage;
@@ -101,9 +101,11 @@ public class Menu
                 {
                     currentPlayerName = name;
                     currentState = GameState.PLAYING;
+                    // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
+                    canvas.requestFocusInWindow();
                 }
                 break;
-            case 1: currentState = GameState.PLAYING; break;
+            case 1: currentState = GameState.PLAYING; canvas.requestFocusInWindow(); break; // idem Continue
             case 2: /* TODO: optiuni */ break;
             case 3: System.exit(0); break;
         }
