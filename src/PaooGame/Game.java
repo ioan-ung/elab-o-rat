@@ -1,11 +1,11 @@
 package PaooGame;
 
-import PaooGame.GameWindow.GameWindow;
-import PaooGame.Graphics.Assets;
+import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Levels.LevelManager;
+
+import PaooGame.GameManager.GameState;
 import PaooGame.States.Menu;
-import PaooGame.States.Menu.GameState;
-import PaooGame.States.Playing;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import PaooGame.Tiles.Tile;
@@ -16,8 +16,8 @@ public class Game implements Runnable
     private boolean         runState;
     private Thread          gameThread;
     private Menu            menu;
-    private Playing         playing;
-    private KeyHandler      keyH;
+    private LevelManager levelManager;
+    private KeyHandler keyH;
 
     public Game(String title, int width, int height)
     {
@@ -30,9 +30,9 @@ public class Game implements Runnable
         keyH = new KeyHandler();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
-        Assets.Init();   // ← 1. încarcă imaginile
+        AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        playing = new Playing(window, keyH);
+        levelManager = new LevelManager(window, keyH);
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
@@ -50,13 +50,10 @@ public class Game implements Runnable
             delta += (currentTime - lastTime) / nsPerFrame;
             lastTime = currentTime;
 
-//            // DEBUG: COMMENT THIS LATER
-//            System.out.print(delta + " ");
-
             // Update the game delta times before drawing
             if (delta > 5) delta = 5;
             while(delta >= 1) {
-                update();
+                update(window,keyH);
                 delta--;
             }
             draw();
@@ -105,11 +102,11 @@ public class Game implements Runnable
         }
     }
 
-    private void update()
+    private void update(GameWindow gw, KeyHandler Kh)
     {
         if(menu.getState() == GameState.PLAYING)
         {
-            playing.Update();
+            levelManager.Update(gw,Kh);
         }
     }
 
@@ -143,7 +140,7 @@ public class Game implements Runnable
         }
         else if(menu.getState() == GameState.PLAYING) {
             // Draw playing area
-            playing.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            levelManager.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
         // DEBUG_A

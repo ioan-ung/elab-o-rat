@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     // Coordinates and speed
-    protected int x, y, speed;
+    protected int x, y;
+    protected int speed;
     // Direction variables
     protected byte xSign, ySign;
     // Directional sprites

@@ -1,6 +1,5 @@
 package PaooGame.Tiles;
 
-import PaooGame.Graphics.Assets;
 import java.awt.image.BufferedImage;
 
 /*! \class public class DoorTile extends Tile

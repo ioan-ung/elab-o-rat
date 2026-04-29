@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
     private boolean upPressed, rightPressed, downPressed, leftPressed;
+    public boolean escapePressed; // folosit pentru tranzitia la nivelul urmator
     // DEBUG KEY
     public boolean debugOn = false;
 
@@ -45,6 +46,10 @@ public class KeyHandler implements KeyListener{
             leftPressed = true;
         }
 
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            escapePressed = true;
+        }
+
         // DEBUG KEY
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
@@ -68,6 +73,9 @@ public class KeyHandler implements KeyListener{
         }
         if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
             leftPressed = false;
+        }
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            escapePressed = false;
         }
     }
 }
