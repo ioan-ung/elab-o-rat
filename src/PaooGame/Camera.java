@@ -3,13 +3,13 @@ package PaooGame;
 // urmareste playerul si calculeaza offsetul de desenare
 public class Camera
 {
-    private double xOffset;
-    private double yOffset;
+    private double xOffset;  /*!< Offsetul pe X al camerei */
+    private double yOffset;  /*!< Offsetul pe Y al camerei */
 
-    private final int mapWidthPx;
-    private final int mapHeightPx;
-    private final int wndWidth;
-    private final int wndHeight;
+    private final int mapWidthPx;   /*!< Latimea hartii in pixeli */
+    private final int mapHeightPx;  /*!< Inaltimea hartii in pixeli */
+    private final int wndWidth;     /*!< Latimea ferestrei */
+    private final int wndHeight;    /*!< Inaltimea ferestrei */
 
     public Camera(int wndWidth, int wndHeight, int mapWidthPx, int mapHeightPx)
     {

@@ -4,14 +4,15 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     // Coordinates and speed
-    protected int x;
-    protected int y;
+    protected int x, y;
     protected int speed;
+    // Direction variables
+    protected byte xSign, ySign;
     // Directional sprites
     protected BufferedImage north, northeast, east, southeast, south, southwest, west, northwest;
-    protected BufferedImage lastImage;
-    protected byte xSign, ySign;
+    protected BufferedImage lastImage;      // Used when no input is given
 
+    // Getters
     public int getX() {
         return x;
     }

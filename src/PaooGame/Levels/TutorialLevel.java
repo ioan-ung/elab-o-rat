@@ -1,13 +1,13 @@
 package PaooGame.Levels;
 
 import PaooGame.GameWindow;
-import PaooGame.Input.KeyManager;
+import PaooGame.Input.KeyHandler;
 
 public class TutorialLevel extends Level {
 
-    private static final String MAP_PATH = "maps/Tutorial.tmx";
+    private static final String MAP_PATH = "res/maps/Tutorial.tmx";
 
-    public TutorialLevel(GameWindow gw, KeyManager keyH) {
+    public TutorialLevel(GameWindow gw, KeyHandler keyH) {
         super(gw, keyH, MAP_PATH);
     }
 

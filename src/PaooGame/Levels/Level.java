@@ -4,7 +4,7 @@ import PaooGame.Camera;
 import PaooGame.Entity.Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Input.KeyManager;
+import PaooGame.Input.KeyHandler;
 import PaooGame.Map.GameMap;
 import PaooGame.Map.TmxParser;
 import PaooGame.Tiles.Tile;
@@ -14,10 +14,10 @@ public abstract class Level {
     protected GameMap map;
     protected Camera camera;
     protected Mouse player;
-    protected KeyManager keyH;
+    protected KeyHandler keyH;
     protected GameWindow gameWindow;
 
-    public Level(GameWindow gw, KeyManager keyH, String mapPath) {
+    public Level(GameWindow gw, KeyHandler keyH, String mapPath) {
         this.gameWindow = gw;
         this.keyH = keyH;
         gameWindow.GetCanvas().addKeyListener(keyH);

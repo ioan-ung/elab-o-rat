@@ -1,7 +1,7 @@
 package PaooGame.Levels;
 
 import PaooGame.GameWindow;
-import PaooGame.Input.KeyManager;
+import PaooGame.Input.KeyHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ public class LevelManager {
             LevelType.MAZE
     };
 
-    public LevelManager(GameWindow gw, KeyManager keyH) {
+    public LevelManager(GameWindow gw, KeyHandler keyH) {
         levels = new ArrayList<>();
         TutorialLevel tutorial = new TutorialLevel(gw, keyH);
         levels.add(tutorial);
         currentLevel = tutorial;
     }
 
-    public Level getLevel(LevelType type,GameWindow gw, KeyManager keyH) {
+    public Level getLevel(LevelType type,GameWindow gw, KeyHandler keyH) {
         switch(type) {
             case TUTORIAL:   return new TutorialLevel(gw, keyH);
             case LABYRINTH:  return new LaboratoryLevel(gw, keyH);
@@ -33,7 +33,7 @@ public class LevelManager {
         }
     }
 
-    public void Update(GameWindow gw, KeyManager keyH) {
+    public void Update(GameWindow gw, KeyHandler keyH) {
         if(currentLevel.isCompleted()) {
             currentLevelIndex++;
             keyH.escapePressed = false; // resetam flag-ul--nu vrem sa facem switch decat o data

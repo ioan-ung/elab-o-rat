@@ -1,17 +1,17 @@
 package PaooGame.Entity;
 
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Input.KeyManager;
+import PaooGame.Input.KeyHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Mouse extends Entity{
 
-    private KeyManager keyH;
+    private KeyHandler keyH;
 
     /// Constructor of Player
-    public Mouse(KeyManager keyH) {
+    public Mouse(KeyHandler keyH) {
         this.keyH = keyH;
 
         setDefaultValues();

@@ -1,7 +1,7 @@
 package PaooGame;
 
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Input.KeyManager;
+import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
@@ -17,7 +17,7 @@ public class Game implements Runnable
     private Thread          gameThread;
     private Menu            menu;
     private LevelManager levelManager;
-    private KeyManager keyH;
+    private KeyHandler keyH;
 
     public Game(String title, int width, int height)
     {
@@ -27,7 +27,7 @@ public class Game implements Runnable
 
     private void InitGame(String title, int width, int height)
     {
-        keyH = new KeyManager();
+        keyH = new KeyHandler();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
@@ -37,32 +37,47 @@ public class Game implements Runnable
     }
 
     public void run() {
-        long lastTime = System.nanoTime();
-        long currentTime;
+        long currentTime, lastTime = System.nanoTime();
         double delta = 0;   // No. of frames
+        int sleepTime;
 
         final int FPS = 60;
-        final double timePerTick = 1000000000.0 / FPS;
+        final double nsPerFrame = 1000_000_000.0 / FPS;
 
         while(runState) {
             // Calculate No. of frames to update
             currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / timePerTick;
+            delta += (currentTime - lastTime) / nsPerFrame;
             lastTime = currentTime;
 
             // Update the game delta times before drawing
             if (delta > 5) delta = 5;
             while(delta >= 1) {
-                Update(window,keyH);
+                update(window,keyH);
                 delta--;
             }
-            Draw();
+            draw();
 
-            // Put thread to sleeep for 1ms
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+//            // DEBUG: COMMENT THIS LATER
+//            System.out.println(delta);
+
+            // Calculate how much time is left in the current frame
+            sleepTime = (int) ((nsPerFrame - (System.nanoTime() - currentTime))/1000_000);    // In milliseconds
+
+            if (sleepTime > 0) {
+                try {
+                    if (sleepTime > 2) {
+                        Thread.sleep(sleepTime-2);
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+                    e.printStackTrace();
+                }
+
+                // Wait until the frame is over
+                while (System.nanoTime() - currentTime < nsPerFrame) {
+                    Thread.yield(); // Better than an empty loop
+                }
             }
         }
     }
@@ -87,7 +102,7 @@ public class Game implements Runnable
         }
     }
 
-    private void Update(GameWindow gw,KeyManager Kh)
+    private void update(GameWindow gw, KeyHandler Kh)
     {
         if(menu.getState() == GameState.PLAYING)
         {
@@ -95,7 +110,7 @@ public class Game implements Runnable
         }
     }
 
-    private void Draw()
+    private void draw()
     {
         BufferStrategy bs = window.GetCanvas().getBufferStrategy();
         if(bs == null)
@@ -133,11 +148,12 @@ public class Game implements Runnable
             long drawEnd = System.nanoTime();
             long drawTime = drawEnd - drawStart;
             g2.setColor(Color.white);
-            g2.drawString("Draw time: " + drawTime, 10, 10);
-            System.out.println("Draw time: " + drawTime);
+            g2.drawString("Draw time: " + drawTime/1000_000.0 + "ms", 10, 10);
+            System.out.println("Draw time: " + drawTime/1000_000.0 + "ms");
         }
         bs.show();
-
+        // Force the OS to synchronize the graphics pipeline
+        Toolkit.getDefaultToolkit().sync();
         g2.dispose();
     }
 }
