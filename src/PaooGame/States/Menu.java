@@ -79,7 +79,7 @@ public class Menu
     }
 
     public GameState getState() { return currentState; }
-
+    /// TODO: MAKE BUTTON CLASS (maybe use rectangle class)
     private int[] scaledBtn(int idx, int wndW, int wndH)
     {
         double sx = (double) wndW / SRC_W;

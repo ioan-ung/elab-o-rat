@@ -104,10 +104,10 @@ public class Game implements Runnable
 
     private void update(GameWindow gw, KeyHandler Kh)
     {
-        if(menu.getState() == GameState.PLAYING)
-        {
+        if(menu.getState() == GameState.PLAYING){
             levelManager.Update(gw,Kh);
         }
+        if (keyH.debugOn) Debuger.reset();
     }
 
     private void draw()
@@ -145,11 +145,7 @@ public class Game implements Runnable
 
         // DEBUG_A
         if (keyH.debugOn) {
-            long drawEnd = System.nanoTime();
-            long drawTime = drawEnd - drawStart;
-            g2.setColor(Color.white);
-            g2.drawString("Draw time: " + drawTime/1000_000.0 + "ms", 10, 10);
-            System.out.println("Draw time: " + drawTime/1000_000.0 + "ms");
+            Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

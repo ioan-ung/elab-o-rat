@@ -1,5 +1,7 @@
 package PaooGame;
 
+import PaooGame.Graphics.AssetManager;
+
 // urmareste playerul si calculeaza offsetul de desenare
 public class Camera
 {
@@ -25,8 +27,8 @@ public class Camera
     public void centerOn(double playerX, double playerY)
     {
         // centreaza camera pe player
-        xOffset = playerX - wndWidth  / 2.0;
-        yOffset = playerY - wndHeight / 2.0;
+        xOffset = playerX * AssetManager.SCALE - wndWidth  / 2.0;
+        yOffset = playerY * AssetManager.SCALE - wndHeight / 2.0;
 
         // limiteaza camera la boundele hartii
         xOffset = Math.max(0, Math.min(xOffset, mapWidthPx - wndWidth));

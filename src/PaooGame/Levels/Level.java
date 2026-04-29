@@ -1,6 +1,8 @@
 package PaooGame.Levels;
 
 import PaooGame.Camera;
+import PaooGame.CollisionChecker;
+import PaooGame.Debuger;
 import PaooGame.Entity.Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
@@ -11,7 +13,7 @@ import PaooGame.Tiles.Tile;
 import java.awt.*;
 
 public abstract class Level {
-    protected GameMap map;
+    public GameMap map;
     protected Camera camera;
     protected Mouse player;
     protected KeyHandler keyH;
@@ -24,7 +26,7 @@ public abstract class Level {
         gameWindow.GetCanvas().setFocusable(true);
         // necesar la tranzitia intre nivele — constructorul noului nivel recapata focusul pentru canvas
         gameWindow.GetCanvas().requestFocusInWindow();
-        player = new Mouse(keyH);
+        player = new Mouse(keyH,this);
         map = TmxParser.loadMap(mapPath);
         initCamera();
     }
@@ -35,7 +37,7 @@ public abstract class Level {
                 map.mapWidth  * AssetManager.TILE_SIZE,
                 map.mapHeight * AssetManager.TILE_SIZE
         );
-        camera.centerOn(player.getX(), player.getY());
+        camera.centerOn(player.getXPos(), player.getYPos());
     }
 
     protected void drawLayer(Graphics g, int[][] layer, int camX, int camY, int windowWidth, int windowHeight) {
@@ -44,7 +46,7 @@ public abstract class Level {
         int startRow = Math.max(0, camY / AssetManager.TILE_SIZE);
         int endCol   = Math.min(startCol + windowWidth  / AssetManager.TILE_SIZE + 2, map.mapWidth);
         int endRow   = Math.min(startRow + windowHeight / AssetManager.TILE_SIZE + 2, map.mapHeight);
-
+        /// TODO: Stop rendering outside the camera
         for(int row = startRow; row < endRow; row++)
             for(int col = startCol; col < endCol; col++) {
                 int tileIdx = layer[row][col];
@@ -61,7 +63,7 @@ public abstract class Level {
 
     public void update() {
         player.update();
-        camera.centerOn(player.getX(), player.getY());
+        camera.centerOn(player.getXPos(), player.getYPos());
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {
@@ -75,6 +77,9 @@ public abstract class Level {
         g2.translate(-camX, -camY);
         player.draw(g2);
         g2.translate(camX, camY);
+        // DEBUG
+        if (keyH.debugOn) Debuger.drawCoordinates(g2,"Player: ", player.getXPos(), player.getYPos());// DEBUG
+        if (keyH.debugOn) Debuger.drawCoordinates(g2,"Camera: ", camX, camY);
 
         drawLayer(g, map.tileMapAbove, camX, camY, windowWidth, windowHeight);
     }
