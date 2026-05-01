@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.12.1" name="SpreetSheet" tilewidth="32" tileheight="32" tilecount="126" columns="14">
+<tileset version="1.10" tiledversion="1.12.1" name="SpriteSheet" tilewidth="32" tileheight="32" tilecount="126" columns="14">
  <image source="SpreetSheet.png" width="448" height="288"/>
  <wangsets>
   <wangset name="EraseWalls" type="mixed" tile="-1">

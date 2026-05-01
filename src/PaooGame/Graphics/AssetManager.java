@@ -1,7 +1,5 @@
 package PaooGame.Graphics;
 
-import PaooGame.Tiles.Tile;
-
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +12,7 @@ public class AssetManager
 {
     // Size and scale of the tiles
     public static final int    TILE_ACTUAL_SIZE = 32;
-    public static final int    SCALE = 2;
+    public static final int    SCALE = 4;
     public static final int    TILE_SIZE = TILE_ACTUAL_SIZE*SCALE;
     private Map<String, BufferedImage> cache = new HashMap<>();
     /*! Referinte catre tile-urile hartii */
@@ -42,11 +40,6 @@ public class AssetManager
     public static BufferedImage cheese;
     public static BufferedImage box;
 
-    public static BufferedImage mouseT;
-    public static BufferedImage mouseB;
-    public static BufferedImage mouseL;
-    public static BufferedImage mouseR;
-
     public static BufferedImage basicButtonWireTop;
     public static BufferedImage basicButtonWireLeft;
     public static BufferedImage basicButtonWireRight;
@@ -62,8 +55,8 @@ public class AssetManager
     public static BufferedImage boxButtonWireRight;
     public static BufferedImage boxButtonWireBottom;
 
-    /*! Referinte catre sprite-urile playerului */
-    public static BufferedImage playerWest, playerEast, playerNorth, playerNorthWest, playerNorthEast, playerSouth, playerSouthWest, playerSouthEast;
+    /*! Referinte catre sprite-urile mouseului */
+    public static BufferedImage mouseWest, mouseEast, mouseNorth, mouseNorthWest, mouseNorthEast, mouseSouth, mouseSouthWest, mouseSouthEast;
 
     private AssetManager(){}; //constructor private--conventie singleton
 
@@ -117,10 +110,6 @@ public class AssetManager
         cheese = AssetManager.getInstance().getSprite("cheese", 9, 8);
         box = AssetManager.getInstance().getSprite("box", 8, 8);
 
-        mouseT = AssetManager.getInstance().getSprite("mouseT", 9, 6);
-        mouseB = AssetManager.getInstance().getSprite("mouseB", 9, 7);
-        mouseL = AssetManager.getInstance().getSprite("mouseL", 8, 6);
-        mouseR = AssetManager.getInstance().getSprite("mouseR", 8, 7);
 
 
 
@@ -142,13 +131,13 @@ public class AssetManager
         basicButtonWireBottom = AssetManager.getInstance().getSprite("basicButtonWireBottom", 3, 7);
 
 
-        playerNorth = AssetManager.getInstance().getSprite("playerNorth", 9, 6);
-        playerEast = AssetManager.getInstance().getSprite("playerEast", 8, 7);
-        playerSouth = AssetManager.getInstance().getSprite("playerSouth", 9, 7);
-        playerWest = AssetManager.getInstance().getSprite("playerWest", 8, 6);
-        playerNorthEast = AssetManager.getInstance().getSprite("playerNorthEast", 10, 7);
-        playerNorthWest = AssetManager.getInstance().getSprite("playerNorthWest", 11, 7);
-        playerSouthEast = AssetManager.getInstance().getSprite("playerSouthEast", 10, 6);
-        playerSouthWest = AssetManager.getInstance().getSprite("playerSouthWest", 11, 6);
+        mouseNorth = AssetManager.getInstance().getSprite("mouseNorth", 9, 6);
+        mouseEast = AssetManager.getInstance().getSprite("mouseEast", 8, 7);
+        mouseSouth = AssetManager.getInstance().getSprite("mouseSouth", 9, 7);
+        mouseWest = AssetManager.getInstance().getSprite("mouseWest", 8, 6);
+        mouseNorthEast = AssetManager.getInstance().getSprite("mouseNorthEast", 10, 7);
+        mouseNorthWest = AssetManager.getInstance().getSprite("mouseNorthWest", 11, 7);
+        mouseSouthEast = AssetManager.getInstance().getSprite("mouseSouthEast", 10, 6);
+        mouseSouthWest = AssetManager.getInstance().getSprite("mouseSouthWest", 11, 6);
     }
 }

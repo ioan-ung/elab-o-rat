@@ -3,14 +3,19 @@ package PaooGame.Levels;
 import PaooGame.Camera;
 import PaooGame.CollisionChecker;
 import PaooGame.Debuger;
-import PaooGame.Entity.Mouse;
+import PaooGame.GameObjects.Button;
+import PaooGame.GameObjects.GameObject;
+import PaooGame.GameObjects.Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Map.GameMap;
 import PaooGame.Map.TmxParser;
+import PaooGame.Tiles.Direction;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
+
+import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public abstract class Level {
     public GameMap map;
@@ -18,6 +23,7 @@ public abstract class Level {
     protected Mouse player;
     protected KeyHandler keyH;
     protected GameWindow gameWindow;
+    protected GameObject[] gameObjects;
 
     public Level(GameWindow gw, KeyHandler keyH, String mapPath) {
         this.gameWindow = gw;
@@ -37,7 +43,7 @@ public abstract class Level {
                 map.mapWidth  * AssetManager.TILE_SIZE,
                 map.mapHeight * AssetManager.TILE_SIZE
         );
-        camera.centerOn(player.getXPos(), player.getYPos());
+        camera.centerOn(player.getX(), player.getY());
     }
 
     protected void drawLayer(Graphics g, int[][] layer, int camX, int camY, int windowWidth, int windowHeight) {
@@ -63,7 +69,9 @@ public abstract class Level {
 
     public void update() {
         player.update();
-        camera.centerOn(player.getXPos(), player.getYPos());
+        camera.centerOn(player.getX(), player.getY());
+        gameObjects[0].update();
+        CollisionChecker.checkObjects(gameObjects,player);
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {
@@ -74,12 +82,19 @@ public abstract class Level {
         drawLayer(g, map.tileMapFloor, camX, camY, windowWidth, windowHeight);
 
         Graphics2D g2 = (Graphics2D) g;
+
         g2.translate(-camX, -camY);
+        gameObjects[0].draw(g2);
         player.draw(g2);
         g2.translate(camX, camY);
+
         // DEBUG
-        if (keyH.debugOn) Debuger.drawCoordinates(g2,"Player: ", player.getXPos(), player.getYPos());// DEBUG
-        if (keyH.debugOn) Debuger.drawCoordinates(g2,"Camera: ", camX, camY);
+        if (keyH.debugOn) {
+            Debuger.background(g);
+            Debuger.drawCoordinates(g2, "X/Y: ", player.getX(), player.getY());
+            Debuger.drawCoordinates(g2, "Tile: ", (player.getX() + TILE_ACTUAL_SIZE / 2) / TILE_ACTUAL_SIZE, (player.getY() + TILE_ACTUAL_SIZE / 2) / TILE_ACTUAL_SIZE);
+            Debuger.drawCoordinates(g2, "Cam: ", camX, camY);
+        }
 
         drawLayer(g, map.tileMapAbove, camX, camY, windowWidth, windowHeight);
     }

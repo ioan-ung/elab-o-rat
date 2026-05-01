@@ -8,7 +8,7 @@ public class KeyHandler implements KeyListener{
     private boolean upPressed, rightPressed, downPressed, leftPressed;
     public boolean escapePressed; // folosit pentru tranzitia la nivelul urmator
     // DEBUG KEY
-    public boolean debugOn = false;
+    public static boolean debugOn = false;
 
     public boolean isUpPressed() {
         return upPressed;

@@ -1,5 +1,7 @@
 package PaooGame.Map;
 
+import PaooGame.GameObjects.GameObject;
+import PaooGame.Levels.LevelManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -9,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Base64;
 
 
@@ -71,6 +74,38 @@ public class TmxParser {
         return 0;
     }
 
+    // Inside your TmxParser class
+    public ArrayList<GameObject> parseObjects(Document doc) {
+        ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+        // Find all object layers
+        NodeList objectGroups = doc.getElementsByTagName("objectgroup");
+
+        for (int i = 0; i < objectGroups.getLength(); i++) {
+            Node groupNode = objectGroups.item(i);
+            if (groupNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element groupElement = (Element) groupNode;
+
+                // Get all objects within this layer
+                NodeList objects = groupElement.getElementsByTagName("object");
+                for (int j = 0; j < objects.getLength(); j++) {
+                    Element objElement = (Element) objects.item(j);
+
+                    // Extract properties
+                    String type = objElement.getAttribute("class"); // Use "type" if using older Tiled
+                    float x = Float.parseFloat(objElement.getAttribute("x"));
+                    float y = Float.parseFloat(objElement.getAttribute("y"));
+
+                    // Route the data to an object factory
+                    GameObject newObject = LevelManager.createObject(type, x, y);
+                    if (newObject != null) {
+                        gameObjects.add(newObject);
+                    }
+                }
+            }
+        }
+        return gameObjects;
+    }
 
     public static GameMap loadMap(String mapPath)
     {

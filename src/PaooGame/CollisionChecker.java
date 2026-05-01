@@ -1,6 +1,7 @@
 package PaooGame;
 
-import PaooGame.Entity.Entity;
+import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.GameObject;
 import PaooGame.Levels.Level;
 import PaooGame.Tiles.Tile;
 
@@ -13,12 +14,21 @@ public class CollisionChecker {
     public CollisionChecker (Level lvl) {
         level = lvl;
     }
+    public static void checkObjects (GameObject[] objects, Entity player) {
+        Rectangle objectHitbox = new Rectangle();
+        Rectangle playerHitbox = new Rectangle(player.getX(),player.getY(),player.getRect().width,player.getRect().height);
+        for (GameObject obj : objects) {
+            objectHitbox.setBounds(obj.getX(),obj.getY(),obj.getRect().width,obj.getRect().height);
+            if (playerHitbox.intersects(objectHitbox)) obj.hasCollided();
+        }
+    }
+
     public boolean checkTile (Entity entity, int xSign, int ySign) {
         Rectangle rect = entity.getRect();
         // Hitbox coordinates
-        int leftX = entity.getXPos() + rect.x;
+        int leftX = entity.getX() + rect.x;
         int rightX = leftX + rect.width;
-        int topY = entity.getYPos() + rect.y;
+        int topY = entity.getY() + rect.y;
         int bottomY = topY + rect.height;
 
         int leftCol = leftX / TILE_ACTUAL_SIZE;

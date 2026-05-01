@@ -1,5 +1,7 @@
 package PaooGame.Levels;
 
+import PaooGame.Debuger;
+import PaooGame.GameObjects.GameObject;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
 
@@ -30,6 +32,17 @@ public class LevelManager {
             case LABYRINTH:  return new LaboratoryLevel(gw, keyH);
 //            case MAZE:       return new MazeLevel(gw, keyH);
             default:         return new TutorialLevel(gw, keyH);
+        }
+    }
+    public static GameObject createObject(String type, float x, float y) {
+        switch (type) {
+//            case "Mouse":
+//                return new Mouse(x, y); // Assuming your Mouse constructor takes x and y
+//            case "Button":
+//                return new Button(x, y);
+            default:
+                System.out.println("Unknown object type found in map: " + type);
+                return null;
         }
     }
 
