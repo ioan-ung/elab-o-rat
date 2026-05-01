@@ -109,7 +109,7 @@ public abstract class Level {
             Debuger.drawCoordinates(g2, "Cam: ", camX, camY);
         }
 
-        drawLayer(g, map.tileMapAbove, camX, camY, windowWidth, windowHeight);
+//        drawLayer(g, map.tileMapAbove, camX, camY, windowWidth, windowHeight);
     }
 
     protected void drawLayer(Graphics g, int[][] layer, int camX, int camY, int windowWidth, int windowHeight) {

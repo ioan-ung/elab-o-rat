@@ -16,7 +16,7 @@
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrAAAAAAAAAAAAAAAAAAAAegAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAegAAAHoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHoAAAAAAAAAegAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAegAAAAAAAAB6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAegAAAHoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAegAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   </data>
  </layer>
- <objectgroup id="4" name="Object Layer 1">
+ <objectgroup id="4" name="Object Layer 1" locked="1">
   <object id="1" name="SpawnPoint" type="Spawn" x="64" y="480" width="32" height="32"/>
   <object id="2" name="ButtonA1" type="Button west" x="288" y="416" width="32" height="32" rotation="359.857">
    <properties>
@@ -30,100 +30,100 @@
     <property name="doorY" type="int" value="15"/>
    </properties>
   </object>
-  <object id="5" name="ButtonB1" type="TimerButton west" x="320" y="192" width="32" height="32" rotation="359.857"/>
+  <object id="5" name="ButtonB1" type="TimerButton west" x="320" y="192" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
+    <property name="doorX" type="int" value="4"/>
+    <property name="doorY" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="6" name="ButtonB2" type="TimerButton east" x="320" y="64" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="13"/>
+    <property name="doorY" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="7" name="ButtonC1" type="Button east" x="512" y="384" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="17"/>
     <property name="doorY" type="int" value="9"/>
    </properties>
   </object>
-  <object id="6" name="ButtonB2" type="TimerButton east" x="320" y="64" width="32" height="32" rotation="359.857"/>
+  <object id="8" name="ButtonC3" type="BoxButton east" x="736" y="544" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
+    <property name="doorX" type="int" value="27"/>
+    <property name="doorY" type="int" value="17"/>
+   </properties>
+  </object>
+  <object id="9" name="ButtonC2" type="BoxButton west" x="736" y="384" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="20"/>
+    <property name="doorY" type="int" value="12"/>
+   </properties>
+  </object>
+  <object id="10" name="ButtonD1" type="Button west" x="512" y="192" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="13"/>
+    <property name="doorY" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="11" name="ButtonD2" type="Button north" x="608" y="160" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="20"/>
+    <property name="doorY" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="12" name="ButtonD3" type="Button south" x="672" y="64" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="27"/>
+    <property name="doorY" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="13" name="ButtonD4" type="TimerButton south" x="736" y="192" width="32" height="32" rotation="359.857">
+   <properties>
+    <property name="doorX" type="int" value="23"/>
     <property name="doorY" type="int" value="9"/>
    </properties>
   </object>
-  <object id="7" name="ButtonC1" type="Button east" x="512" y="384" width="32" height="32" rotation="359.857"/>
+  <object id="14" name="ButtonD2" type="TimerButton east" x="960" y="128" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="37"/>
+    <property name="doorY" type="int" value="14"/>
    </properties>
   </object>
-  <object id="8" name="ButtonC3" type="BoxButton east" x="736" y="544" width="32" height="32" rotation="359.857"/>
+  <object id="15" name="ButtonD1" type="Button west" x="928" y="192" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="27"/>
+    <property name="doorY" type="int" value="6"/>
    </properties>
   </object>
-  <object id="9" name="ButtonC2" type="BoxButton west" x="736" y="384" width="32" height="32" rotation="359.857"/>
+  <object id="16" name="ButtonD3" type="BoxButton east" x="960" y="64" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="33"/>
+    <property name="doorY" type="int" value="2"/>
    </properties>
   </object>
-  <object id="10" name="ButtonD1" type="Button west" x="512" y="192" width="32" height="32" rotation="359.857"/>
+  <object id="17" name="ButtonD4" type="BoxButton south" x="1152" y="128" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="33"/>
+    <property name="doorY" type="int" value="17"/>
    </properties>
   </object>
-  <object id="11" name="ButtonD2" type="Button north" x="608" y="160" width="32" height="32" rotation="359.857"/>
+  <object id="18" name="ButtonD5" type="Button west" x="928" y="384" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="27"/>
+    <property name="doorY" type="int" value="12"/>
    </properties>
   </object>
-  <object id="12" name="ButtonD3" type="Button south" x="672" y="64" width="32" height="32" rotation="359.857"/>
+  <object id="19" name="ButtonD6" type="Button south" x="1248" y="480" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="39"/>
+    <property name="doorY" type="int" value="16"/>
    </properties>
   </object>
-  <object id="13" name="ButtonD4" type="TimerButton south" x="736" y="192" width="32" height="32" rotation="359.857"/>
+  <object id="20" name="ButtonD7" type="Button west" x="1248" y="448" width="32" height="32" rotation="359.857">
    <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="14" name="ButtonD2" type="TimerButton east" x="960" y="128" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="15" name="ButtonD1" type="Button west" x="928" y="192" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="16" name="ButtonD3" type="BoxButton east" x="960" y="64" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="17" name="ButtonD4" type="BoxButton south" x="1152" y="128" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="18" name="ButtonD5" type="Button west" x="928" y="384" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="19" name="ButtonD6" type="Button south" x="1248" y="480" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
-   </properties>
-  </object>
-  <object id="20" name="ButtonD7" type="Button west" x="1248" y="448" width="32" height="32" rotation="359.857"/>
-   <properties>
-    <property name="doorX" type="int" value="6"/>
-    <property name="doorY" type="int" value="9"/>
+    <property name="doorX" type="int" value="38"/>
+    <property name="doorY" type="int" value="7"/>
    </properties>
   </object>
  </objectgroup>

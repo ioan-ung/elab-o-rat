@@ -39,12 +39,22 @@ public class LevelManager {
         try {
             switch (type) {
                 case "Spawn": return new Spawn(x,y);
-//            case "Mouse":
-//                return new Mouse(x, y); // Assuming your Mouse constructor takes x and y
+
                 case "Button north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+
+                case "TimerButton north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "TimerButton east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "TimerButton south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "TimerButton west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+
+                case "BoxButton north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+
                 default:
                     System.out.println("Unknown object type found in map: " + type);
             }

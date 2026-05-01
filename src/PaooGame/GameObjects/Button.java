@@ -46,7 +46,7 @@ public class Button extends GameObject{
                 return;
             case EAST:
                 baseImage = basicButtonWireRight;
-                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireRight", 6, 7);
+                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireRight", 5, 8);
                 return;
             case SOUTH:
                 baseImage = basicButtonWireBottom;
