@@ -105,7 +105,7 @@ public class Game implements Runnable
     private void update(GameWindow gw, KeyHandler Kh)
     {
         if(menu.getState() == GameState.PLAYING){
-            levelManager.Update(gw,Kh);
+            levelManager.update(gw,Kh);
         }
         if (keyH.debugOn) Debuger.reset();
     }
@@ -140,7 +140,7 @@ public class Game implements Runnable
         }
         else if(menu.getState() == GameState.PLAYING) {
             // Draw playing area
-            levelManager.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
         // DEBUG_A

@@ -9,13 +9,10 @@ import PaooGame.Tiles.Direction;
 
 public class TutorialLevel extends Level {
 
-    private static final String MAP_PATH = "res/maps/Tutorial.tmx";
+    private static final String MAP_PATH = "/maps/Tutorial.tmx";
 
     public TutorialLevel(GameWindow gw, KeyHandler keyH) {
         super(gw, keyH, MAP_PATH);
-        player.setDefaultValues(64,480);
-        gameObjects = new GameObject[1];
-        gameObjects[0] = new Button(4,14, Direction.NORTH);
     }
 
     //absolut provizoriu aici

@@ -12,7 +12,7 @@ public class AssetManager
 {
     // Size and scale of the tiles
     public static final int    TILE_ACTUAL_SIZE = 32;
-    public static final int    SCALE = 4;
+    public static final int    SCALE = 2;
     public static final int    TILE_SIZE = TILE_ACTUAL_SIZE*SCALE;
     private Map<String, BufferedImage> cache = new HashMap<>();
     /*! Referinte catre tile-urile hartii */
@@ -100,8 +100,8 @@ public class AssetManager
 
         wall   = AssetManager.getInstance().getSprite("wall", 6, 1);
 
-        doorL   = AssetManager.getInstance().getSprite("doorL", 3, 6);
-        doorR   = AssetManager.getInstance().getSprite("doorR", 4, 6);
+        doorR   = AssetManager.getInstance().getSprite("doorR", 3, 6);
+        doorL   = AssetManager.getInstance().getSprite("doorL", 4, 6);
         doorB   = AssetManager.getInstance().getSprite("doorB", 4, 7);
         doorT   = AssetManager.getInstance().getSprite("doorT", 4, 8);
         doorNoKeyV = AssetManager.getInstance().getSprite("doorNoKeyV", 8, 4);

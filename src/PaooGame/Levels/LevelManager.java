@@ -1,21 +1,22 @@
 package PaooGame.Levels;
 
-import PaooGame.Debuger;
-import PaooGame.GameObjects.GameObject;
+import PaooGame.GameObjects.*;
+import PaooGame.GameObjects.Button;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Tiles.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LevelManager {
-    private Level currentLevel;
+    public static Level currentLevel;
     private List<Level> levels;
     private int currentLevelIndex = 0;
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
-            LevelType.LABYRINTH,
+            LevelType.LABORATORY,
             LevelType.MAZE
     };
 
@@ -29,24 +30,31 @@ public class LevelManager {
     public Level getLevel(LevelType type,GameWindow gw, KeyHandler keyH) {
         switch(type) {
             case TUTORIAL:   return new TutorialLevel(gw, keyH);
-            case LABYRINTH:  return new LaboratoryLevel(gw, keyH);
+            case LABORATORY:  return new LaboratoryLevel(gw, keyH);
 //            case MAZE:       return new MazeLevel(gw, keyH);
             default:         return new TutorialLevel(gw, keyH);
         }
     }
-    public static GameObject createObject(String type, float x, float y) {
-        switch (type) {
+    public static GameObject createObject(String type, int x, int y, String[] prop) {
+        try {
+            switch (type) {
+                case "Spawn": return new Spawn(x,y);
 //            case "Mouse":
 //                return new Mouse(x, y); // Assuming your Mouse constructor takes x and y
-//            case "Button":
-//                return new Button(x, y);
-            default:
-                System.out.println("Unknown object type found in map: " + type);
-                return null;
+                case "Button north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "Button east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "Button south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "Button west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                default:
+                    System.out.println("Unknown object type found in map: " + type);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("TMX file missing object properties");
         }
+        return null;
     }
 
-    public void Update(GameWindow gw, KeyHandler keyH) {
+    public void update(GameWindow gw, KeyHandler keyH) {
         if(currentLevel.isCompleted()) {
             currentLevelIndex++;
             keyH.escapePressed = false; // resetam flag-ul--nu vrem sa facem switch decat o data
@@ -57,7 +65,7 @@ public class LevelManager {
         }
     }
 
-    public void Draw(Graphics g, int windowWidth, int windowHeight) {
+    public void draw(Graphics g, int windowWidth, int windowHeight) {
         if (currentLevel != null) {
             currentLevel.draw(g, windowWidth, windowHeight);
         }

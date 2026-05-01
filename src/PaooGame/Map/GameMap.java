@@ -1,12 +1,11 @@
 package PaooGame.Map;
 
-public class GameMap {
-    public static final String MAP_PATH  = "maps/Tutorial.tmx";
-//    public static final String LABYRINTH = "maps/Labyrinth.tmx";
-//    public static final String LAB       = "maps/Lab.tmx";
+import PaooGame.GameObjects.GameObject;
 
-    public int[][] tileMapFloor;
+public class GameMap {
+    public int[][] tileMap;
     public int[][] tileMapAbove;
     public int mapWidth;
     public int mapHeight;
+    public GameObject[] gameObjects;
 }

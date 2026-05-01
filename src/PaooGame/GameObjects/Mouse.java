@@ -14,7 +14,6 @@ public class Mouse extends Entity{
     // Constructor of Player
     public Mouse(KeyHandler keyH, Level level) {
         this.keyH = keyH;
-
         hitBox = new Rectangle(10,10,12,12);
         collisionChecker = new CollisionChecker(level);
         setSprites();
