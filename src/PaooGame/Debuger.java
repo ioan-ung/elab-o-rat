@@ -1,5 +1,9 @@
 package PaooGame;
 
+import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.Mouse;
+import PaooGame.Graphics.AssetManager;
+
 import java.awt.*;
 
 public class Debuger {
@@ -32,6 +36,6 @@ public class Debuger {
         g.setColor(Color.white);
         g.setFont(debugFont);
         g.drawString(message, fontSize, fontSize*++noMessages);
-//        System.out.println(message + x +" / "+ y);
+//        System.out.println(message);
     }
 }

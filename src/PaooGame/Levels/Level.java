@@ -13,6 +13,7 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
+import java.security.Key;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
@@ -20,20 +21,18 @@ public abstract class Level {
     public static GameMap map;
     protected Camera camera;
     protected Mouse player;
-    protected KeyHandler keyH;
     protected GameWindow gameWindow;
 
-    public Level(GameWindow gw, KeyHandler keyH, String mapPath) {
+    public Level(GameWindow gw, String mapPath) {
         this.gameWindow = gw;
         gameWindow.GetCanvas().requestFocusInWindow();// necesar la tranzitia intre nivele — constructorul noului nivel recapata focusul pentru canvas
         map = TmxParser.getMap(mapPath);
 
-        initKeys(keyH);
         initPlayer();
     }
 
     protected void initPlayer() {
-        player = new Mouse(keyH);
+        player = new Mouse(LevelManager.keyH);
         for (int i=0; i<map.gameObjects.length; ++i) {
             if (map.gameObjects[i] instanceof Spawn) {
                 player.setDefaultValues(map.gameObjects[i].getX(), map.gameObjects[i].getY());
@@ -51,12 +50,6 @@ public abstract class Level {
                 map.mapHeight * AssetManager.TILE_SIZE
         );
         camera.centerOn(player.getX(), player.getY());
-    }
-
-    protected void initKeys (KeyHandler keyH) {
-        this.keyH = keyH;
-        gameWindow.GetCanvas().addKeyListener(this.keyH);
-        gameWindow.GetCanvas().setFocusable(true);
     }
 
     public void openDoorAt(int col, int row) {
@@ -103,11 +96,15 @@ public abstract class Level {
         g2.translate(camX, camY);
 
         // DEBUG
-        if (keyH.debugOn) {
+        if (KeyHandler.debugOn) {
             Debuger.background(g);
             Debuger.drawCoordinates(g2, "X/Y: ", player.getX(), player.getY());
             Debuger.drawCoordinates(g2, "Tile: ", (player.getX() + TILE_ACTUAL_SIZE / 2) / TILE_ACTUAL_SIZE, (player.getY() + TILE_ACTUAL_SIZE / 2) / TILE_ACTUAL_SIZE);
             Debuger.drawCoordinates(g2, "Cam: ", camX, camY);
+            Debuger.drawText(g2,"Cheese left: " + Cheese.getCheeseLeft());
+            if (KeyHandler.movePlayer) {
+                player.move(player.getXSign() * AssetManager.TILE_ACTUAL_SIZE, player.getYSign() * AssetManager.TILE_ACTUAL_SIZE);
+            }
         }
 
 //        drawLayer(g, map.tileMapAbove, camX, camY, windowWidth, windowHeight);
@@ -131,5 +128,11 @@ public abstract class Level {
             }
     }
 
-    public abstract boolean isCompleted();
+    public boolean isCompleted() {
+        if (KeyHandler.debugOn && KeyHandler.nextLevel) {
+            KeyHandler.nextLevel = false;   // Reset the key input
+            return true;
+        }
+        return Cheese.getCheeseLeft() == 0;
+    }
 }

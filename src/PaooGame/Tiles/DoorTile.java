@@ -19,6 +19,10 @@ public class DoorTile extends Tile
         super(img, id);
     }
 
+    @Override
+    public boolean isOnXAxis() {
+        return id != 20 && id != 21;
+    }
     /*! \fn public boolean IsSolid()
         \brief Usa inchisa este solida.
      */
@@ -27,6 +31,7 @@ public class DoorTile extends Tile
     {
         return true;
     }
+    @Override
     public boolean IsBoxSolid()
     {
         return true; // Boxes cannot go through open doors

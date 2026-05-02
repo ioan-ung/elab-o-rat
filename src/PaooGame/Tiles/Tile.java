@@ -83,6 +83,7 @@ public class Tile
         g.drawImage(img, x, y, AssetManager.TILE_SIZE, AssetManager.TILE_SIZE, null);
     }
 
+    public boolean isOnXAxis() {return true;}
     public boolean IsSolid() { return false; }
     public boolean IsBoxSolid()
     {

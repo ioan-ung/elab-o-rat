@@ -32,7 +32,7 @@ public class Game implements Runnable
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        levelManager = new LevelManager(window, keyH);
+        levelManager = new LevelManager(window);
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
@@ -53,7 +53,7 @@ public class Game implements Runnable
             // Update the game delta times before drawing
             if (delta > 5) delta = 5;
             while(delta >= 1) {
-                update(window,keyH);
+                update(window);
                 delta--;
             }
             draw();
@@ -84,7 +84,7 @@ public class Game implements Runnable
 
     public synchronized void StartGame()
     {
-        if(runState == false)
+        if(!runState)
         {
             runState   = true;
             gameThread = new Thread(this);
@@ -94,7 +94,7 @@ public class Game implements Runnable
 
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
             runState = false;
             try { gameThread.join(); }
@@ -102,12 +102,12 @@ public class Game implements Runnable
         }
     }
 
-    private void update(GameWindow gw, KeyHandler Kh)
+    private void update(GameWindow gw)
     {
         if(menu.getState() == GameState.PLAYING){
-            levelManager.update(gw,Kh);
+            levelManager.update(gw);
         }
-        if (keyH.debugOn) Debuger.reset();
+        if (KeyHandler.debugOn) Debuger.reset();
     }
 
     private void draw()
@@ -128,7 +128,7 @@ public class Game implements Runnable
 
         // DEBUG_A
         long drawStart = 0;
-        if (keyH.debugOn) {
+        if (KeyHandler.debugOn) {
             drawStart = System.nanoTime();
         }
 
@@ -144,7 +144,7 @@ public class Game implements Runnable
         }
 
         // DEBUG_A
-        if (keyH.debugOn) {
+        if (KeyHandler.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
         }

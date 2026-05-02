@@ -16,7 +16,7 @@ public class Button extends GameObject{
     protected int doorX, doorY;             // Map coordinates of linked door
 
     public Button (int x, int y, Direction direction, int doorX, int doorY) {
-        // Set map coordinates
+        // Set coordinates
         this.x = x;
         this.y = y;
         this.direction = direction;
