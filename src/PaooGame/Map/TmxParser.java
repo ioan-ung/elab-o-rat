@@ -1,5 +1,6 @@
 package PaooGame.Map;
 
+import PaooGame.GameObjects.Entity;
 import PaooGame.GameObjects.GameObject;
 import PaooGame.Levels.LevelManager;
 import org.w3c.dom.Document;
@@ -15,6 +16,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collection;
 
 
 public class TmxParser {
@@ -39,12 +41,6 @@ public class TmxParser {
             case 116 : return 5;
             case 113 : return 6;
 
-            // PERM BUTTON
-            case 73 : return 30;
-            case 58 : return 31;
-            case 57 : return 32;
-            case 59 : return 33;
-
             // DOOR
             case 88 : return 20;
             case 89 : return 21;
@@ -57,9 +53,6 @@ public class TmxParser {
             case 106 : return 28;
             case 120 : return 29;
 
-            // ENTITIES / ITEMS
-            case 122 : return 50; // cheese
-            case 121 : return 51; // box
 
             default : return 0; // GID-uri nemapate → floor
         }
@@ -172,9 +165,19 @@ public class TmxParser {
                 }
         }
         map.gameObjects = parseObjects(doc).toArray(new GameObject[0]);
+        map.gameEntities = getEntities(map.gameObjects).toArray(new Entity[0]);
         System.out.println("[Playing] Harta incarcata cu succes!");
         return map;
     }
+
+    private static ArrayList<Entity> getEntities(GameObject[] gameObjects) {
+        ArrayList<Entity> entities = new ArrayList<>();
+        for (GameObject obj : gameObjects) {
+            if (obj instanceof Entity)  entities.add((Entity) obj);
+        }
+        return entities;
+    }
+
     private static int[] decodeLayerData(String encoding, String rawData) {
         if (encoding.equals("csv")) {
             String[] values = rawData.split(",");

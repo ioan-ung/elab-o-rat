@@ -12,6 +12,7 @@ public abstract class GameObject {
     protected int x, y;
     protected Rectangle hitBox;
     protected BufferedImage baseImage;
+    protected boolean collision;
 
     // Abstract methods
     public abstract void hasCollided();
@@ -31,7 +32,6 @@ public abstract class GameObject {
         g2d.drawRect((x + hitBox.x)*SCALE,(y + hitBox.y)*SCALE, hitBox.width*SCALE, hitBox.height*SCALE);
     }
     // Getters
-
     public int getX() {
         return x;
     }
@@ -40,5 +40,12 @@ public abstract class GameObject {
     }
     public Rectangle getRect() {
         return hitBox;
+    }
+
+    // Simply moves the object
+    public void move (int dx, int dy) {
+        x += dx;
+        y += dy;
+        collision = true;
     }
 }

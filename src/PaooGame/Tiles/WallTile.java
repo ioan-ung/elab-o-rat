@@ -15,4 +15,8 @@ public class WallTile extends Tile
     {
         return true;
     }
+    public boolean IsBoxSolid()
+    {
+        return true; // Boxes cannot go through open doors
+    }
 }

@@ -1,7 +1,6 @@
 package PaooGame.GameObjects;
 
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 import PaooGame.Tiles.Direction;
 
@@ -13,32 +12,40 @@ import static PaooGame.Graphics.AssetManager.*;
 
 public class Button extends GameObject{
     protected Direction direction;
-    protected BufferedImage activeImage;
-    protected boolean openDoor = true;
-    protected int doorX, doorY;
+    protected BufferedImage activeImage;    // Used when button is active
+    protected int doorX, doorY;             // Map coordinates of linked door
 
     public Button (int x, int y, Direction direction, int doorX, int doorY) {
         // Set map coordinates
         this.x = x;
         this.y = y;
         this.direction = direction;
-
+        // Set door coordinates
         this.doorX = doorX;
         this.doorY = doorY;
+        // Set hitbox
+        hitBox = new Rectangle(10,10,10,10);
+
+        collision = true;      // False when button is active
         setSprites();
-        hitBox = new Rectangle(10,10,12,12);
     }
 
     @Override
     public void hasCollided() {
-        if (openDoor) LevelManager.currentLevel.openDoorAt(doorX,doorY);
-        openDoor = false;
-        baseImage = activeImage;
+        // Open the door at collision if it's closed
+        if (collision) {     // Opens only if it's closed
+            LevelManager.currentLevel.openDoorAt(doorX, doorY);
+            baseImage = activeImage;    // Change the image to draw
+        }
+        collision = false;
     }
+
     @Override
-    public void update() {}
+    public void update() {}     // Simple buttons don't need to self update
+
     @Override
     protected void setSprites() {
+        // Set sprites based on direction
         switch (direction) {
             case NORTH:
                 baseImage = basicButtonWireTop;

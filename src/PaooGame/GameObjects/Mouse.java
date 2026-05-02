@@ -9,13 +9,11 @@ import java.awt.*;
 
 public class Mouse extends Entity{
     protected KeyHandler keyH;    // Handles keyboard input
-    protected CollisionChecker collisionChecker;    // Check collision with tiles
 
     // Constructor of Player
-    public Mouse(KeyHandler keyH, Level level) {
+    public Mouse(KeyHandler keyH) {
         this.keyH = keyH;
         hitBox = new Rectangle(10,10,12,12);
-        collisionChecker = new CollisionChecker(level);
         setSprites();
     }
     // Method for setting default position and speed
@@ -54,7 +52,7 @@ public class Mouse extends Entity{
         if (keyH.isRightPressed()) xSign += 1;
         // Second, change position based on speed and collision
         hasCollidedX = hasCollidedY = false;
-        if (!(ySign == 0 || collisionChecker.checkTile(this,0, ySign))) if (!hasCollidedY) y += speed * ySign;
-        if (!(xSign == 0 || collisionChecker.checkTile(this, xSign, 0))) if (!hasCollidedX) x += speed * xSign;
+        if (!(ySign == 0 || CollisionChecker.checkTile(this,0, ySign))) if (!hasCollidedY) y += speed * ySign;
+        if (!(xSign == 0 || CollisionChecker.checkTile(this, xSign, 0))) if (!hasCollidedX) x += speed * xSign;
     }
 }

@@ -14,4 +14,8 @@ public class OpenDoorTile extends Tile
     {
         return false; // The player can walk through an open door
     }
+    public boolean IsBoxSolid()
+    {
+        return true; // Boxes cannot go through open doors
+    }
 }

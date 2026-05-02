@@ -64,15 +64,6 @@ public class Tile
         doorLOpen = new OpenDoorTile(++id, AssetManager.getInstance().getSprite("doorLOpen", 7, 6));
         doorTOpen   = new OpenDoorTile(++id, AssetManager.getInstance().getSprite("doorTOpen", 7, 8));
         doorBOpen   = new OpenDoorTile(++id, AssetManager.getInstance().getSprite("doorBOpen", 7, 7));
-
-
-        cheese = new CheeseTile(++id);
-        box = new BoxTile(++id);
-
-        mouseT = new MouseTile(++id, AssetManager.getInstance().getSprite("mouseT", 9, 6));
-        mouseB = new MouseTile(++id, AssetManager.getInstance().getSprite("mouseB", 9, 7));
-        mouseL = new MouseTile(++id, AssetManager.getInstance().getSprite("mouseL", 8, 6));
-        mouseR = new MouseTile(++id, AssetManager.getInstance().getSprite("mouseR", 8, 7));
     }
 
     protected BufferedImage img;
@@ -93,5 +84,9 @@ public class Tile
     }
 
     public boolean IsSolid() { return false; }
+    public boolean IsBoxSolid()
+    {
+        return false;
+    }
     public int GetId()       { return id;    }
 }

@@ -3,9 +3,7 @@ package PaooGame.Levels;
 import PaooGame.Camera;
 import PaooGame.CollisionChecker;
 import PaooGame.Debuger;
-import PaooGame.GameObjects.GameObject;
-import PaooGame.GameObjects.Mouse;
-import PaooGame.GameObjects.Spawn;
+import PaooGame.GameObjects.*;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
@@ -19,7 +17,7 @@ import java.awt.*;
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public abstract class Level {
-    public GameMap map;
+    public static GameMap map;
     protected Camera camera;
     protected Mouse player;
     protected KeyHandler keyH;
@@ -35,7 +33,7 @@ public abstract class Level {
     }
 
     protected void initPlayer() {
-        player = new Mouse(keyH,this);
+        player = new Mouse(keyH);
         for (int i=0; i<map.gameObjects.length; ++i) {
             if (map.gameObjects[i] instanceof Spawn) {
                 player.setDefaultValues(map.gameObjects[i].getX(), map.gameObjects[i].getY());
@@ -79,8 +77,11 @@ public abstract class Level {
         camera.centerOn(player.getX(), player.getY());
         for (GameObject obj : map.gameObjects) {
             if (obj == null) continue;    // Skip if object's missing
+            if (obj instanceof BoxButton) {
+                for (Entity entity : map.gameEntities) CollisionChecker.checkObject(obj, entity);
+            }
+            else CollisionChecker.checkObject(obj, player);
             obj.update();
-            CollisionChecker.checkObject(obj, player);
         }
     }
 

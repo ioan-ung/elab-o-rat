@@ -20,12 +20,18 @@ public class Debuger {
         g.setColor(Color.white);
         g.setFont(debugFont);
         g.drawString(message + timeInterval/1000_000.0 + "ms", fontSize, fontSize*++noMessages);
-        System.out.println(message + timeInterval/1000_000.0 + "ms");
+//        System.out.println(message + timeInterval/1000_000.0 + "ms");
     }
     public static void drawCoordinates (Graphics g, String message, int x, int y) {
         g.setColor(Color.white);
         g.setFont(debugFont);
         g.drawString(message + x +" / "+ y, fontSize, fontSize*++noMessages);
-        System.out.println(message + x +" / "+ y);
+//        System.out.println(message + x +" / "+ y);
+    }
+    public static void drawText (Graphics g, String message) {
+        g.setColor(Color.white);
+        g.setFont(debugFont);
+        g.drawString(message, fontSize, fontSize*++noMessages);
+//        System.out.println(message + x +" / "+ y);
     }
 }

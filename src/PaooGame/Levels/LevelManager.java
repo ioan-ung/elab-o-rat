@@ -40,20 +40,22 @@ public class LevelManager {
             switch (type) {
                 case "Spawn": return new Spawn(x,y);
 
+                case "Box": return new Box(x,y);
+
                 case "Button north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
 
-                case "TimerButton north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "TimerButton east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "TimerButton south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "TimerButton west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "TimerButton north": return new TimerButton(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
+                case "TimerButton east": return new TimerButton(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
+                case "TimerButton south": return new TimerButton(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
+                case "TimerButton west": return new TimerButton(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
 
-                case "BoxButton north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton north": return new BoxButton(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton east": return new BoxButton(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton south": return new BoxButton(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton west": return new BoxButton(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
 
                 default:
                     System.out.println("Unknown object type found in map: " + type);
@@ -81,7 +83,13 @@ public class LevelManager {
         }
     }
 
-    public Level getCurrentLevel() {
-        return currentLevel;
+    @Override
+    public String toString() {
+        switch (currentLevelIndex) {
+            case 0: return "Tutorial";
+            case 1: return "Laboratory";
+            case 2: return "Maze";
+            default: return "Unknown";
+        }
     }
 }

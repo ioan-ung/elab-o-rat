@@ -1,13 +1,7 @@
 package PaooGame.GameObjects;
 
-import PaooGame.CollisionChecker;
-import PaooGame.Input.KeyHandler;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static PaooGame.Graphics.AssetManager.SCALE;
-import static PaooGame.Graphics.AssetManager.TILE_SIZE;
 
 public abstract class Entity extends GameObject {
 
@@ -44,5 +38,13 @@ public abstract class Entity extends GameObject {
     // Getters
     public int getSpeed() {
         return speed;
+    }
+
+    public byte getXSign() {
+        return xSign;
+    }
+
+    public byte getYSign() {
+        return ySign;
     }
 }

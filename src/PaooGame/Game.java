@@ -146,6 +146,7 @@ public class Game implements Runnable
         // DEBUG_A
         if (keyH.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
+            Debuger.drawText(g2,"Current Level: " + levelManager.toString());
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

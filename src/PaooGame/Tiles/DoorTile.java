@@ -27,4 +27,8 @@ public class DoorTile extends Tile
     {
         return true;
     }
+    public boolean IsBoxSolid()
+    {
+        return true; // Boxes cannot go through open doors
+    }
 }
