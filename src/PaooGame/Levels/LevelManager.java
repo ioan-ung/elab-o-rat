@@ -28,7 +28,7 @@ public class LevelManager {
         switch(type) {
             case TUTORIAL:   return new TutorialLevel(gw, keyH);
             case LABYRINTH:  return new LaboratoryLevel(gw, keyH);
-//            case MAZE:       return new MazeLevel(gw, keyH);
+            case MAZE:       return new MazeLevel(gw, keyH);
             default:         return new TutorialLevel(gw, keyH);
         }
     }
