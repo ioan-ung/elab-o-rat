@@ -9,9 +9,9 @@ import java.awt.*;
 public class Box extends Entity{
     private int xOg, yOg;                       // Remembers original position of the box
     public Box (int x, int y) {
-        // Set map coordinates
-        this.x = xOg = x;
-        this.y = yOg = y;
+        super(x,y);
+        xOg = x;
+        yOg = y;
 
         speed = 0;
         hitBox = new Rectangle(6,6,20,20);

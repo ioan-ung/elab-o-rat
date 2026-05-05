@@ -48,6 +48,8 @@ public class LevelManager {
 
                 case "Cheese": return new Cheese(x,y);
 
+                case "Mouse": return new Mouse(x,y);
+
                 case "Button north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
                 case "Button south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));

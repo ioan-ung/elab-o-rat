@@ -37,7 +37,7 @@ public class BoxButton extends Button{
     }
 
     @Override
-    protected void setSprites() {
+    protected void setSprites() {   /// TODO: use the correct assets
         // Set sprites based on direction
         switch (direction) {
             case NORTH:

@@ -8,12 +8,8 @@ public class Cheese extends GameObject{
     private static int cheeseLeft = 0;   // Cheese left to collect
 
     public Cheese (int x, int y) {
-        // Set coordinates
-        this.x = x;
-        this.y = y;
-
-        ++cheeseLeft;
-        collision = false;
+        super(x,y);     // Set coordinates
+        ++cheeseLeft;   // Increments no. cheese
         // Set hitbox
         hitBox = new Rectangle(10,10,10,10);
         setSprites();

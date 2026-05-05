@@ -15,11 +15,12 @@ import PaooGame.Tiles.Tile;
 import java.awt.*;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
+import static PaooGame.Graphics.AssetManager.box;
 
 public abstract class Level {
     public static GameMap map;
     protected Camera camera;
-    protected Mouse player;
+    protected Player player;
     protected GameWindow gameWindow;
 
     public Level(GameWindow gw, String mapPath) {
@@ -31,7 +32,7 @@ public abstract class Level {
     }
 
     protected void initPlayer() {
-        player = new Mouse(LevelManager.keyH);
+        player = new Player(LevelManager.keyH);
         for (GameObject obj : map.gameObjects) {
             if (obj instanceof Spawn) {
                 player.setDefaultValues(obj.getX(), obj.getY());
@@ -51,16 +52,18 @@ public abstract class Level {
         camera.centerOn(player.getX(), player.getY());
     }
 
-    public void openDoorAt(int col, int row) {
-        if (Tile.tiles[map.tileMap[row][col]] instanceof DoorTile){
-            map.tileMap[row][col] += 6;
-        } else System.out.println("This door is not closed");
+    public boolean openDoorAt(int col, int row) {
+        boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof DoorTile;
+        if (ret) map.tileMap[row][col] += 6;
+        else System.out.println("This door is not closed");
+        return ret;
     }
 
-    public void closeDoorAt(int col, int row) {
-        if (Tile.tiles[map.tileMap[row][col]] instanceof OpenDoorTile){
-            map.tileMap[row][col] -= 6;
-        } else System.out.println("This door is not open");
+    public boolean closeDoorAt(int col, int row) {
+        boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof OpenDoorTile;
+        if (ret) map.tileMap[row][col] -= 6;
+        else System.out.println("This door is not open");
+        return ret;
     }
 
 
@@ -69,12 +72,17 @@ public abstract class Level {
         camera.centerOn(player.getX(), player.getY());
 
         // DEBUG:
-        if (KeyHandler.debugOn) Debuger.spawnBox(player.getX(),player.getY() + TILE_ACTUAL_SIZE);
+        if (KeyHandler.debugOn) {
+            Debuger.spawnBox(player.getX(), player.getY() + TILE_ACTUAL_SIZE);
+            Debuger.openDoorsAround(player.getX(), player.getY());
+        }
 
         for (GameObject obj : map.gameObjects) {
             if (obj == null) continue;    // Skip if object's missing
             if (obj instanceof BoxButton) {
-                for (Entity entity : map.gameEntities) CollisionChecker.checkObject(obj, entity);
+                for (Entity entity : map.gameEntities) {
+                    if (entity instanceof Box) CollisionChecker.checkObject(obj, entity);
+                }
             }
             else CollisionChecker.checkObject(obj, player);
             obj.update();

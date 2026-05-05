@@ -1,13 +1,15 @@
 package PaooGame;
 
 import PaooGame.GameObjects.Box;
-import PaooGame.GameObjects.Entity;
-import PaooGame.GameObjects.Mouse;
-import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
+import PaooGame.Levels.LevelManager;
+import PaooGame.Tiles.DoorTile;
+import PaooGame.Tiles.Tile;
 
 import java.awt.*;
+
+import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public class Debuger {
     private static int noMessages = 0;
@@ -47,5 +49,19 @@ public class Debuger {
             Level.map.gameObjects.add(new Box(x, y));
             Level.map.gameEntities.add(new Box(x, y));
         }
+    }
+
+    public static boolean openDoorsAround (int x, int y) {
+        boolean openedDoor = false;
+
+        if (!KeyHandler.openDoorsKey) return openedDoor;
+
+        for (int i=x/TILE_ACTUAL_SIZE-1; i<=x/TILE_ACTUAL_SIZE+1; i++)
+            for (int j=y/TILE_ACTUAL_SIZE-1; j<=y/TILE_ACTUAL_SIZE+1; j++)
+                if (Tile.tiles[Level.map.tileMap[j][i]] instanceof DoorTile) {
+                    openedDoor = openedDoor || LevelManager.currentLevel.openDoorAt(i,j);
+                }
+
+        return openedDoor;
     }
 }

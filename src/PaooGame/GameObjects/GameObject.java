@@ -14,6 +14,11 @@ public abstract class GameObject {
     protected BufferedImage baseImage;
     protected boolean collision;
 
+    public GameObject (int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     // Abstract methods
     public abstract void hasCollided();
     public abstract void update();
