@@ -1,8 +1,11 @@
 package PaooGame;
 
+import PaooGame.GameObjects.Box;
 import PaooGame.GameObjects.Entity;
 import PaooGame.GameObjects.Mouse;
 import PaooGame.Graphics.AssetManager;
+import PaooGame.Input.KeyHandler;
+import PaooGame.Levels.Level;
 
 import java.awt.*;
 
@@ -37,5 +40,12 @@ public class Debuger {
         g.setFont(debugFont);
         g.drawString(message, fontSize, fontSize*++noMessages);
 //        System.out.println(message);
+    }
+
+    public static void spawnBox (int x, int y) {
+        if (KeyHandler.spawnBoxKey) {
+            Level.map.gameObjects.add(new Box(x, y));
+            Level.map.gameEntities.add(new Box(x, y));
+        }
     }
 }

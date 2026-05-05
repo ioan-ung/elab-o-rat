@@ -33,10 +33,10 @@ public abstract class Level {
 
     protected void initPlayer() {
         player = new Mouse(LevelManager.keyH);
-        for (int i=0; i<map.gameObjects.length; ++i) {
-            if (map.gameObjects[i] instanceof Spawn) {
-                player.setDefaultValues(map.gameObjects[i].getX(), map.gameObjects[i].getY());
-                map.gameObjects[i] = null;
+        for (GameObject obj : map.gameObjects) {
+            if (obj instanceof Spawn) {
+                player.setDefaultValues(obj.getX(), obj.getY());
+                map.gameObjects.remove(obj);
                 break;
             }
         }
@@ -68,6 +68,10 @@ public abstract class Level {
     public void update() {
         player.update();
         camera.centerOn(player.getX(), player.getY());
+
+        // DEBUG:
+        if (KeyHandler.debugOn) Debuger.spawnBox(player.getX(),player.getY() + TILE_ACTUAL_SIZE);
+
         for (GameObject obj : map.gameObjects) {
             if (obj == null) continue;    // Skip if object's missing
             if (obj instanceof BoxButton) {
@@ -88,7 +92,13 @@ public abstract class Level {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.translate(-camX, -camY);
+        // First draw non-entity game objects
         for (GameObject obj : map.gameObjects) {
+            if (obj == null || obj instanceof Entity) continue;    // Skip if object's missing or an entity
+            obj.draw(g2);
+        }
+        // Then draw entities
+        for (GameObject obj : map.gameEntities) {
             if (obj == null) continue;    // Skip if object's missing
             obj.draw(g2);
         }

@@ -94,6 +94,7 @@ public class TmxParser {
                         Integer.parseInt(objElement.getAttribute("y")),
                         properties
                         );
+
                 if (newObject != null) {
                     gameObjects.add(newObject);
                 }
@@ -164,13 +165,13 @@ public class TmxParser {
                         map.tileMap[row][col] = tileIdx;
                 }
         }
-        map.gameObjects = parseObjects(doc).toArray(new GameObject[0]);
-        map.gameEntities = getEntities(map.gameObjects).toArray(new Entity[0]);
+        map.gameObjects = parseObjects(doc);
+        map.gameEntities = getEntities(map.gameObjects);
         System.out.println("[Playing] Harta incarcata cu succes!");
         return map;
     }
 
-    private static ArrayList<Entity> getEntities(GameObject[] gameObjects) {
+    private static ArrayList<Entity> getEntities(ArrayList<GameObject> gameObjects) {
         ArrayList<Entity> entities = new ArrayList<>();
         for (GameObject obj : gameObjects) {
             if (obj instanceof Entity)  entities.add((Entity) obj);

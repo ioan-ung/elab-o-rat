@@ -10,6 +10,7 @@ public class KeyHandler implements KeyListener{
     public static boolean debugOn = false;
     public static boolean movePlayer = false;   // Used to move the player an entire tile
     public static boolean nextLevel;            // folosit pentru tranzitia la nivelul urmator
+    public static boolean spawnBoxKey;
 
     public boolean isUpPressed() {
         return upPressed;
@@ -52,6 +53,9 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
         }
+        if (keyCode == KeyEvent.VK_B) {
+            spawnBoxKey = true;
+        }
         if (keyCode == KeyEvent.VK_SPACE) {
             movePlayer = true;
         }
@@ -85,6 +89,9 @@ public class KeyHandler implements KeyListener{
         }
         if (keyCode == KeyEvent.VK_ESCAPE) {
             nextLevel = false;
+        }
+        if (keyCode == KeyEvent.VK_B) {
+            spawnBoxKey = false;
         }
     }
 }
