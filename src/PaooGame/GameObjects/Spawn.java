@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Spawn extends GameObject{
 
-    public Spawn (int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Spawn(int x, int y) {
+        super(x, y);
     }
+
     @Override
     public void hasCollided() {}
     @Override
