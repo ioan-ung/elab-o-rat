@@ -1,10 +1,15 @@
 package PaooGame.Map;
 
-public class GameMap {
-    public static final String MAP_PATH  = "maps/Tutorial.tmx";
+import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.GameObject;
 
-    public int[][] tileMapFloor;
+import java.util.ArrayList;
+
+public class GameMap {
+    public int[][] tileMap;
     public int[][] tileMapAbove;
     public int mapWidth;
     public int mapHeight;
+    public ArrayList<GameObject> gameObjects;
+    public ArrayList<Entity> gameEntities;
 }

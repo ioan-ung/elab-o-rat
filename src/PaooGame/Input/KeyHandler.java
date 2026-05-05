@@ -6,9 +6,11 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
     private boolean upPressed, rightPressed, downPressed, leftPressed;
-    public boolean escapePressed; // folosit pentru tranzitia la nivelul urmator
     // DEBUG KEY
-    public boolean debugOn = false;
+    public static boolean debugOn = false;
+    public static boolean movePlayer = false;   // Used to move the player an entire tile
+    public static boolean nextLevel;            // folosit pentru tranzitia la nivelul urmator
+    public static boolean spawnBoxKey;
 
     public boolean isUpPressed() {
         return upPressed;
@@ -46,13 +48,19 @@ public class KeyHandler implements KeyListener{
             leftPressed = true;
         }
 
-        if (keyCode == KeyEvent.VK_ESCAPE) {
-            escapePressed = true;
-        }
 
         // DEBUG KEY
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
+        }
+        if (keyCode == KeyEvent.VK_B) {
+            spawnBoxKey = true;
+        }
+        if (keyCode == KeyEvent.VK_SPACE) {
+            movePlayer = true;
+        }
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            nextLevel = true;
         }
     }
 
@@ -74,8 +82,16 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
             leftPressed = false;
         }
+
+        // DEBUG
+        if (keyCode == KeyEvent.VK_SPACE) {
+            movePlayer = false;
+        }
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            escapePressed = false;
+            nextLevel = false;
+        }
+        if (keyCode == KeyEvent.VK_B) {
+            spawnBoxKey = false;
         }
     }
 }
