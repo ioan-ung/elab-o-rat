@@ -35,8 +35,8 @@ public class LevelManager {
         switch(type) {
             case TUTORIAL:   return new TutorialLevel(gw);
             case LABORATORY:  return new LaboratoryLevel(gw);
-//            case MAZE:       return new MazeLevel(gw, keyH);
-            default:         return new TutorialLevel(gw);
+            case MAZE:       return new MazeLevel(gw);
+            default:         return null;
         }
     }
     public static GameObject createObject(String type, int x, int y, String[] prop) {
@@ -77,8 +77,8 @@ public class LevelManager {
             currentLevel.update();
             return;
         }
-
-        if(++currentLevelIndex < levelOrder.length) currentLevel = getLevel(levelOrder[currentLevelIndex],gw);
+        ++currentLevelIndex;
+        if(currentLevelIndex < levelOrder.length) currentLevel = getLevel(levelOrder[currentLevelIndex],gw);
         else {
             System.out.println("Game has ended");
             System.exit(0);

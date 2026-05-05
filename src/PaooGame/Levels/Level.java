@@ -13,7 +13,6 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
-import java.security.Key;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
