@@ -34,7 +34,7 @@
    <properties>
     <property name="doorX" type="int" value="4"/>
     <property name="doorY" type="int" value="2"/>
-    <property name="timer" type="int" value="90"/>
+    <property name="timer" type="int" value="120"/>
    </properties>
   </object>
   <object id="6" name="ButtonB2" type="TimerButton east" x="320" y="64" width="32" height="32" rotation="359.857">
