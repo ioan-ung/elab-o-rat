@@ -15,7 +15,6 @@ import PaooGame.Tiles.Tile;
 import java.awt.*;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
-import static PaooGame.Graphics.AssetManager.box;
 
 public abstract class Level {
     public static GameMap map;
