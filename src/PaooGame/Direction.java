@@ -1,4 +1,4 @@
-package PaooGame.Tiles;
+package PaooGame;
 
 public enum Direction {
     NORTH,

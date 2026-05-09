@@ -2,7 +2,7 @@ package PaooGame.GameObjects;
 
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.LevelManager;
-import PaooGame.Tiles.Direction;
+import PaooGame.Direction;
 
 import java.awt.image.BufferedImage;
 

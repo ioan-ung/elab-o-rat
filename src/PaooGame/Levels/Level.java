@@ -28,18 +28,17 @@ public abstract class Level {
         map = TmxParser.getMap(mapPath);
 
         initPlayer();
+        initCamera();
     }
 
     protected void initPlayer() {
-        player = new Player(LevelManager.keyH);
         for (GameObject obj : map.gameObjects) {
             if (obj instanceof Spawn) {
-                player.setDefaultValues(obj.getX(), obj.getY());
+                player = new Player(obj.getX(), obj.getY(),LevelManager.keyH);
                 map.gameObjects.remove(obj);
-                break;
+                return;
             }
         }
-        initCamera();
     }
 
     protected void initCamera() {
@@ -83,7 +82,12 @@ public abstract class Level {
                     if (entity instanceof Box) CollisionChecker.checkObject(obj, entity);
                 }
             }
-            else CollisionChecker.checkObject(obj, player);
+            else {
+                for (Entity entity : map.gameEntities) {
+                    if (entity instanceof NPC_Mouse) CollisionChecker.checkObject(obj, entity);
+                }
+                CollisionChecker.checkObject(obj, player);
+            }
             obj.update();
         }
     }

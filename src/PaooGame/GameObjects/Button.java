@@ -2,7 +2,7 @@ package PaooGame.GameObjects;
 
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.LevelManager;
-import PaooGame.Tiles.Direction;
+import PaooGame.Direction;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,9 +11,9 @@ import static PaooGame.Graphics.AssetManager.*;
 
 
 public class Button extends GameObject{
-    protected Direction direction;
+    protected final Direction direction;
     protected BufferedImage activeImage;    // Used when button is active
-    protected int doorX, doorY;             // Map coordinates of linked door
+    protected final int doorX, doorY;             // Map coordinates of linked door
 
     public Button (int x, int y, Direction direction, int doorX, int doorY) {
         // Set coordinates and direction

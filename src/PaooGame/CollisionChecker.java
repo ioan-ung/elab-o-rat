@@ -3,6 +3,7 @@ package PaooGame;
 import PaooGame.GameObjects.Box;
 import PaooGame.GameObjects.Entity;
 import PaooGame.GameObjects.GameObject;
+import PaooGame.GameObjects.NPC_Mouse;
 import PaooGame.Levels.Level;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
@@ -17,6 +18,7 @@ public class CollisionChecker {
         Rectangle entityHitbox = new Rectangle(entity.getX() + entity.getRect().x,entity.getY() + entity.getRect().y,entity.getRect().width,entity.getRect().height);
         Rectangle objectHitbox = new Rectangle();
         objectHitbox.setBounds(object.getX() + object.getRect().x,object.getY() + object.getRect().y,object.getRect().width,object.getRect().height);
+
         // Check intersection
         if (!entityHitbox.intersects(objectHitbox)) return;
 
