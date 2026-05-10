@@ -48,9 +48,9 @@ public abstract class GameObject {
     }
 
     // Simply moves the object
-    public void move (int dx, int dy) {
-        x += dx;
-        y += dy;
+    public void move (int x, int y) {
+        this.x = x;
+        this.y = y;
         collision = true;
     }
 }

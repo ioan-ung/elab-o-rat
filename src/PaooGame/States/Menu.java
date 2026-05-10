@@ -1,8 +1,11 @@
 package PaooGame.States;
 
+import PaooGame.Data.Database;
 import PaooGame.GameManager;
 import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.ImageLoader;
+import PaooGame.Levels.Level;
+import PaooGame.Levels.LevelManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -103,9 +106,13 @@ public class Menu
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
+                    Database.startNewGame();    // Set database to new game
                 }
                 break;
-            case 1: currentState = GameState.PLAYING; canvas.requestFocusInWindow(); break; // idem Continue
+            case 1:
+                currentState = GameState.PLAYING;
+                canvas.requestFocusInWindow();
+                break; // idem Continue
             case 2: /* TODO: optiuni */ break;
             case 3: System.exit(0); break;
         }

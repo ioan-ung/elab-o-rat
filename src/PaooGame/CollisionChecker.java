@@ -22,7 +22,7 @@ public class CollisionChecker {
         // Check intersection
         if (!entityHitbox.intersects(objectHitbox)) return;
 
-        if(object instanceof Box) object.move(entity.getXSign() * entity.getSpeed(),entity.getYSign() * entity.getSpeed());
+        if(object instanceof Box) object.move(object.getX() + entity.getXSign() * entity.getSpeed(),object.getY() + entity.getYSign() * entity.getSpeed());
         else object.hasCollided();
     }
 
@@ -122,15 +122,15 @@ public class CollisionChecker {
         // 5. Push the entity out based on the door's orientation
         if (Tile.tiles[Level.map.tileMap[doorRow][doorCol]].isOnXAxis()) {
             if (pushUp < pushDown) {
-                entity.move(0, -pushUp);
+                entity.move(entity.getX(), entity.getY()-pushUp);
             } else {
-                entity.move(0, pushDown);
+                entity.move(entity.getX(), entity.getY()+pushDown);
             }
         } else {
             if (pushLeft < pushRight) {
-                entity.move(-pushLeft, 0);
+                entity.move(entity.getX()-pushLeft, entity.getY());
             } else {
-                entity.move(pushRight, 0);
+                entity.move(entity.getX()+pushRight, entity.getY());
             }
         }
 

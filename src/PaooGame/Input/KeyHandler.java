@@ -12,6 +12,7 @@ public class KeyHandler implements KeyListener{
     public static boolean nextLevel;            // folosit pentru tranzitia la nivelul urmator
     public static boolean spawnBoxKey;          // Used for spawning boxes when debugging
     public static boolean openDoorsKey;         // Used for opening doors when debugging
+    public static boolean save, load;
 
     public boolean isUpPressed() {
         return upPressed;
@@ -54,17 +55,25 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
         }
-        if (keyCode == KeyEvent.VK_B) {
-            spawnBoxKey = true;
-        }
-        if (keyCode == KeyEvent.VK_O) {
-            openDoorsKey = true;
-        }
-        if (keyCode == KeyEvent.VK_SPACE) {
-            movePlayer = true;
-        }
-        if (keyCode == KeyEvent.VK_ESCAPE) {
-            nextLevel = true;
+        if (debugOn) {
+            if (keyCode == KeyEvent.VK_B) {
+                spawnBoxKey = true;
+            }
+            if (keyCode == KeyEvent.VK_O) {
+                openDoorsKey = true;
+            }
+            if (keyCode == KeyEvent.VK_SPACE) {
+                movePlayer = true;
+            }
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                nextLevel = true;
+            }
+            if (keyCode == KeyEvent.VK_F6) {
+                save = !save;
+            }
+            if (keyCode == KeyEvent.VK_F7) {
+                load = !load;
+            }
         }
     }
 

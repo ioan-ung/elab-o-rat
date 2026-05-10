@@ -1,5 +1,6 @@
 package PaooGame.Levels;
 
+import PaooGame.Data.Database;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Button;
 import PaooGame.GameWindow;
@@ -13,8 +14,7 @@ import java.util.List;
 public class LevelManager {
     public static Level currentLevel;
     public static KeyHandler keyH;
-    private List<Level> levels;
-    private int currentLevelIndex = 0;
+    public static int currentLevelIndex = -1;
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
             LevelType.LABORATORY,
@@ -25,10 +25,6 @@ public class LevelManager {
         LevelManager.keyH = new KeyHandler();
         gw.GetCanvas().addKeyListener(LevelManager.keyH);
         gw.GetCanvas().setFocusable(true);
-        levels = new ArrayList<>();
-        TutorialLevel tutorial = new TutorialLevel(gw);
-        levels.add(tutorial);
-        currentLevel = tutorial;
     }
 
     public Level getLevel(LevelType type,GameWindow gw) {
@@ -84,12 +80,18 @@ public class LevelManager {
     }
 
     public void update(GameWindow gw) {
+
+        if(currentLevel == null) currentLevel = getLevel(levelOrder[currentLevelIndex],gw);
+
         if(!currentLevel.isCompleted()) {
             currentLevel.update();
             return;
         }
         ++currentLevelIndex;
-        if(currentLevelIndex < levelOrder.length) currentLevel = getLevel(levelOrder[currentLevelIndex],gw);
+        if(currentLevelIndex < levelOrder.length) {
+            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), 0);
+        }
         else {
             System.out.println("Game has ended");
             System.exit(0);

@@ -1,5 +1,6 @@
 package PaooGame;
 
+import PaooGame.Data.Database;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.LevelManager;
@@ -17,7 +18,6 @@ public class Game implements Runnable
     private Thread          gameThread;
     private Menu            menu;
     private LevelManager levelManager;
-    private KeyHandler keyH;
 
     public Game(String title, int width, int height)
     {
@@ -27,13 +27,13 @@ public class Game implements Runnable
 
     private void InitGame(String title, int width, int height)
     {
-        keyH = new KeyHandler();
+        Database.initDB();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        levelManager = new LevelManager(window);
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        levelManager = new LevelManager(window);
     }
 
     public void run() {
@@ -102,12 +102,24 @@ public class Game implements Runnable
         }
     }
 
+    private static boolean needsIndex = true;
+
     private void update(GameWindow gw)
     {
         if(menu.getState() == GameState.PLAYING){
+            if (needsIndex) {
+                LevelManager.currentLevelIndex = Database.loadLevelIndex(); // Get level index from database
+            }
             levelManager.update(gw);
+            if (needsIndex) {
+                Database.loadPlayerState();     // Load game from database
+                needsIndex = false;
+            }
         }
-        if (KeyHandler.debugOn) Debuger.reset();
+        if (KeyHandler.debugOn) {
+            Debuger.reset();
+            Debuger.saveLoad();
+        }
     }
 
     private void draw()

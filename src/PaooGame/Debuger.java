@@ -1,5 +1,6 @@
 package PaooGame;
 
+import PaooGame.Data.Database;
 import PaooGame.GameObjects.Box;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
@@ -63,5 +64,16 @@ public class Debuger {
                 }
 
         return openedDoor;
+    }
+
+    public static void saveLoad () {
+        if(KeyHandler.save) {
+            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), 0);
+            KeyHandler.save = false;
+        }
+        if(KeyHandler.load) {
+            Database.loadPlayerState();
+            KeyHandler.load = false;
+        }
     }
 }

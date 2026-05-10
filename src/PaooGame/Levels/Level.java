@@ -19,7 +19,7 @@ import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 public abstract class Level {
     public static GameMap map;
     protected Camera camera;
-    protected Player player;
+    public static Player player;
     protected GameWindow gameWindow;
 
     public Level(GameWindow gw, String mapPath) {
@@ -123,7 +123,7 @@ public abstract class Level {
             Debuger.drawCoordinates(g2, "Cam: ", camX, camY);
             Debuger.drawText(g2,"Cheese left: " + Cheese.getCheeseLeft());
             if (KeyHandler.movePlayer) {
-                player.move(player.getXSign() * AssetManager.TILE_ACTUAL_SIZE, player.getYSign() * AssetManager.TILE_ACTUAL_SIZE);
+                player.move(player.getX() + player.getXSign() * AssetManager.TILE_ACTUAL_SIZE, player.getY() + player.getYSign() * AssetManager.TILE_ACTUAL_SIZE);
             }
         }
 
