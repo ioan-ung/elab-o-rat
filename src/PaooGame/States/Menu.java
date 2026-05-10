@@ -48,7 +48,7 @@ public class Menu
     public Menu(Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
-        bgImage = ImageLoader.LoadImage("/meniu.png");
+        bgImage = ImageLoader.LoadImage("/MenuScreen.png");
 
         canvas.addMouseListener(new MouseAdapter()
         {
