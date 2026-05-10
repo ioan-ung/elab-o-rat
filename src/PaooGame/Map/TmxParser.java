@@ -124,12 +124,22 @@ public class TmxParser {
 
                 // Extract properties
                 NodeList propertiesList = objElement.getElementsByTagName("property");
-                String[] properties = new String[propertiesList.getLength()];
+                Object[] properties = new Object[propertiesList.getLength()];
 
                 for (int p = 0; p < propertiesList.getLength(); p++) {
                     Element propElement = (Element) propertiesList.item(p);
-                    String propValue = propElement.getAttribute("value");
-                    properties[p] = propValue;
+
+                    // Check if the property is a list, otherwise assume it's an integer
+                    if ("list".equals(propElement.getAttribute("type"))) {
+                        ArrayList<Integer> listItems = new ArrayList<>();   // Assuming it's a list of integers
+                        NodeList items = propElement.getElementsByTagName("item");
+                        // Get every item of the list
+                        for (int k = 0; k < items.getLength(); k++) {
+                            Element itemElement = (Element) items.item(k);
+                            listItems.add(Integer.parseInt(itemElement.getAttribute("value")));
+                        }
+                        properties[p] = listItems;  // Put the list as a property
+                    } else properties[p] = Integer.parseInt(propElement.getAttribute("value"));
                 }
 
                 // Create and add the object

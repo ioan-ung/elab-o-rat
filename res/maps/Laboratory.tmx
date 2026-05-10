@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="114">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="119">
  <editorsettings>
   <export target="Tutorial.tmj" format="json"/>
  </editorsettings>
@@ -20,404 +20,461 @@
   </data>
  </layer>
  <objectgroup id="2" name="GameObj" locked="1">
-  <object id="5" name="Cheese1" type="Cheese" x="192" y="864" width="32" height="32" rotation="359.857"/>
-  <object id="6" name="Button" type="Button north" x="224" y="704" width="32" height="32" rotation="359.857">
+  <object id="5" name="Cheese1" type="Cheese" x="192" y="864" width="32" height="32"/>
+  <object id="6" name="Button" type="Button north" x="224" y="704" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="4"/>
     <property name="doorY" type="int" value="20"/>
    </properties>
   </object>
-  <object id="9" name="Box1" type="Box" x="544" y="160" width="32" height="32" rotation="359.857"/>
-  <object id="10" name="Cheese" type="Cheese" x="64" y="640" width="32" height="32" rotation="359.857"/>
-  <object id="11" name="Cheese" type="Cheese" x="448" y="928" width="32" height="32" rotation="359.857"/>
-  <object id="12" name="Cheese" type="Cheese" x="64" y="352" width="32" height="32" rotation="359.857"/>
-  <object id="13" name="Cheese" type="Cheese" x="320" y="64" width="32" height="32" rotation="359.857"/>
-  <object id="14" name="Cheese" type="Cheese" x="544" y="96" width="32" height="32" rotation="359.857"/>
-  <object id="15" name="Cheese" type="Cheese" x="704" y="96" width="32" height="32" rotation="359.857"/>
-  <object id="16" name="Cheese" type="Cheese" x="768" y="256" width="32" height="32" rotation="359.857"/>
-  <object id="17" name="Cheese" type="Cheese" x="992" y="384" width="32" height="32" rotation="359.857"/>
-  <object id="18" name="Cheese" type="Cheese" x="1024" y="384" width="32" height="32" rotation="359.857"/>
-  <object id="19" name="Cheese" type="Cheese" x="1056" y="384" width="32" height="32" rotation="359.857"/>
-  <object id="20" name="Cheese" type="Cheese" x="1248" y="416" width="32" height="32" rotation="359.857"/>
-  <object id="21" name="Cheese" type="Cheese" x="1408" y="640" width="32" height="32" rotation="359.857"/>
-  <object id="22" name="Cheese" type="Cheese" x="1280" y="928" width="32" height="32" rotation="359.857"/>
-  <object id="23" name="Cheese" type="Cheese" x="1504" y="960" width="32" height="32" rotation="359.857"/>
-  <object id="24" name="Cheese" type="Cheese" x="640" y="960" width="32" height="32" rotation="359.857"/>
-  <object id="25" name="Cheese" type="Cheese" x="1600" y="96" width="32" height="32" rotation="359.857"/>
-  <object id="26" name="Cheese" type="Cheese" x="1984" y="96" width="32" height="32" rotation="359.857"/>
-  <object id="27" name="Cheese" type="Cheese" x="1600" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="28" name="Cheese" type="Cheese" x="1632" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="29" name="Cheese" type="Cheese" x="1664" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="30" name="Cheese" type="Cheese" x="1696" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="31" name="Cheese" type="Cheese" x="1728" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="32" name="Cheese" type="Cheese" x="1760" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="33" name="Cheese" type="Cheese" x="1792" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="34" name="Cheese" type="Cheese" x="1760" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="35" name="Cheese" type="Cheese" x="1760" y="480" width="32" height="32" rotation="359.857"/>
-  <object id="36" name="Cheese" type="Cheese" x="1728" y="480" width="32" height="32" rotation="359.857"/>
-  <object id="37" name="Cheese" type="Cheese" x="1696" y="480" width="32" height="32" rotation="359.857"/>
-  <object id="38" name="Cheese" type="Cheese" x="1728" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="39" name="Cheese" type="Cheese" x="1696" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="40" name="Cheese" type="Cheese" x="1664" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="41" name="Box" type="Box" x="800" y="736" width="32" height="32" rotation="359.857"/>
-  <object id="42" name="Box" type="Box" x="896" y="928" width="32" height="32" rotation="359.857"/>
-  <object id="43" name="Box" type="Box" x="1344" y="928" width="32" height="32" rotation="359.857"/>
-  <object id="44" name="Box" type="Box" x="1440" y="416" width="32" height="32" rotation="359.857"/>
-  <object id="45" name="Box" type="Box" x="1088" y="64" width="32" height="32" rotation="359.857"/>
-  <object id="46" name="Box" type="Box" x="1280" y="64" width="32" height="32" rotation="359.857"/>
-  <object id="47" name="Mouse" type="Mouse" x="576" y="32" width="32" height="32" rotation="359.857"/>
-  <object id="48" name="Mouse" type="Mouse" x="1728" y="32" width="32" height="32" rotation="359.857"/>
-  <object id="49" name="Mouse" type="Mouse" x="1408" y="96" width="32" height="32" rotation="359.857"/>
-  <object id="50" name="Mouse" type="Mouse" x="800" y="896" width="32" height="32" rotation="359.857"/>
-  <object id="51" name="Mouse" type="Mouse" x="736" y="640" width="32" height="32" rotation="359.857"/>
-  <object id="52" name="Button" type="Button north" x="416" y="800" width="32" height="32" rotation="359.857">
+  <object id="9" name="Box1" type="Box" x="544" y="160" width="32" height="32"/>
+  <object id="10" name="Cheese" type="Cheese" x="64" y="640" width="32" height="32"/>
+  <object id="11" name="Cheese" type="Cheese" x="448" y="928" width="32" height="32"/>
+  <object id="12" name="Cheese" type="Cheese" x="64" y="352" width="32" height="32"/>
+  <object id="13" name="Cheese" type="Cheese" x="320" y="64" width="32" height="32"/>
+  <object id="14" name="Cheese" type="Cheese" x="544" y="96" width="32" height="32"/>
+  <object id="15" name="Cheese" type="Cheese" x="704" y="96" width="32" height="32"/>
+  <object id="16" name="Cheese" type="Cheese" x="768" y="256" width="32" height="32"/>
+  <object id="17" name="Cheese" type="Cheese" x="992" y="384" width="32" height="32"/>
+  <object id="18" name="Cheese" type="Cheese" x="1024" y="384" width="32" height="32"/>
+  <object id="19" name="Cheese" type="Cheese" x="1056" y="384" width="32" height="32"/>
+  <object id="20" name="Cheese" type="Cheese" x="1248" y="416" width="32" height="32"/>
+  <object id="21" name="Cheese" type="Cheese" x="1408" y="640" width="32" height="32"/>
+  <object id="22" name="Cheese" type="Cheese" x="1280" y="928" width="32" height="32"/>
+  <object id="23" name="Cheese" type="Cheese" x="1504" y="960" width="32" height="32"/>
+  <object id="24" name="Cheese" type="Cheese" x="640" y="960" width="32" height="32"/>
+  <object id="25" name="Cheese" type="Cheese" x="1600" y="96" width="32" height="32"/>
+  <object id="26" name="Cheese" type="Cheese" x="1984" y="96" width="32" height="32"/>
+  <object id="27" name="Cheese" type="Cheese" x="1600" y="544" width="32" height="32"/>
+  <object id="28" name="Cheese" type="Cheese" x="1632" y="544" width="32" height="32"/>
+  <object id="29" name="Cheese" type="Cheese" x="1664" y="544" width="32" height="32"/>
+  <object id="30" name="Cheese" type="Cheese" x="1696" y="544" width="32" height="32"/>
+  <object id="31" name="Cheese" type="Cheese" x="1728" y="544" width="32" height="32"/>
+  <object id="32" name="Cheese" type="Cheese" x="1760" y="544" width="32" height="32"/>
+  <object id="33" name="Cheese" type="Cheese" x="1792" y="512" width="32" height="32"/>
+  <object id="34" name="Cheese" type="Cheese" x="1760" y="512" width="32" height="32"/>
+  <object id="35" name="Cheese" type="Cheese" x="1760" y="480" width="32" height="32"/>
+  <object id="36" name="Cheese" type="Cheese" x="1728" y="480" width="32" height="32"/>
+  <object id="37" name="Cheese" type="Cheese" x="1696" y="480" width="32" height="32"/>
+  <object id="38" name="Cheese" type="Cheese" x="1728" y="512" width="32" height="32"/>
+  <object id="39" name="Cheese" type="Cheese" x="1696" y="512" width="32" height="32"/>
+  <object id="40" name="Cheese" type="Cheese" x="1664" y="512" width="32" height="32"/>
+  <object id="41" name="Box" type="Box" x="800" y="736" width="32" height="32"/>
+  <object id="42" name="Box" type="Box" x="896" y="928" width="32" height="32"/>
+  <object id="43" name="Box" type="Box" x="1344" y="928" width="32" height="32"/>
+  <object id="44" name="Box" type="Box" x="1440" y="416" width="32" height="32"/>
+  <object id="45" name="Box" type="Box" x="1088" y="64" width="32" height="32"/>
+  <object id="46" name="Box" type="Box" x="1280" y="64" width="32" height="32"/>
+  <object id="52" name="Button" type="Button north" x="416" y="800" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="13"/>
     <property name="doorY" type="int" value="20"/>
    </properties>
   </object>
-  <object id="53" name="Button" type="Button east" x="384" y="928" width="32" height="32" rotation="359.857">
+  <object id="53" name="Button" type="Button east" x="384" y="928" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="13"/>
     <property name="doorY" type="int" value="27"/>
    </properties>
   </object>
-  <object id="54" name="Button" type="Button north" x="704" y="960" width="32" height="32" rotation="359.857">
+  <object id="54" name="Button" type="Button north" x="704" y="960" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="16"/>
     <property name="doorY" type="int" value="29"/>
    </properties>
   </object>
-  <object id="55" name="Button" type="Button east" x="800" y="960" width="32" height="32" rotation="359.857">
+  <object id="55" name="Button" type="Button east" x="800" y="960" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="29"/>
     <property name="doorY" type="int" value="26"/>
    </properties>
   </object>
-  <object id="56" name="Button" type="Button south" x="800" y="832" width="32" height="32" rotation="359.857">
+  <object id="56" name="Button" type="Button south" x="800" y="832" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="25"/>
     <property name="doorY" type="int" value="29"/>
    </properties>
   </object>
-  <object id="57" name="Button" type="Button east" x="64" y="512" width="32" height="32" rotation="359.857">
+  <object id="57" name="Button" type="Button east" x="64" y="512" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="6"/>
     <property name="doorY" type="int" value="13"/>
    </properties>
   </object>
-  <object id="58" name="Button" type="Button west" x="416" y="352" width="32" height="32" rotation="359.857">
+  <object id="58" name="Button" type="Button west" x="416" y="352" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="6"/>
     <property name="doorY" type="int" value="9"/>
    </properties>
   </object>
-  <object id="59" name="Button" type="Button south" x="64" y="224" width="32" height="32" rotation="359.857">
+  <object id="59" name="Button" type="Button south" x="64" y="224" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="4"/>
     <property name="doorY" type="int" value="11"/>
    </properties>
   </object>
-  <object id="60" name="Button" type="Button west" x="448" y="64" width="32" height="32" rotation="359.857">
+  <object id="60" name="Button" type="Button west" x="448" y="64" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="12"/>
     <property name="doorY" type="int" value="4"/>
    </properties>
   </object>
-  <object id="61" name="Button" type="Button south" x="352" y="32" width="32" height="32" rotation="359.857">
+  <object id="61" name="Button" type="Button south" x="352" y="32" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="15"/>
     <property name="doorY" type="int" value="19"/>
    </properties>
   </object>
-  <object id="62" name="BoxButton" type="BoxButton south" x="672" y="224" width="32" height="32" rotation="359.857">
+  <object id="62" name="BoxButton" type="BoxButton south" x="672" y="224" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="21"/>
     <property name="doorY" type="int" value="9"/>
    </properties>
   </object>
-  <object id="63" name="Button" type="Button west" x="672" y="160" width="32" height="32" rotation="359.857">
+  <object id="63" name="Button" type="Button west" x="672" y="160" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="19"/>
     <property name="doorY" type="int" value="1"/>
    </properties>
   </object>
-  <object id="64" name="Button" type="Button west" x="864" y="160" width="32" height="32" rotation="359.857">
+  <object id="64" name="Button" type="Button west" x="864" y="160" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="24"/>
     <property name="doorY" type="int" value="9"/>
    </properties>
   </object>
-  <object id="65" name="Button" type="Button west" x="832" y="320" width="32" height="32" rotation="359.857">
+  <object id="65" name="Button" type="Button west" x="832" y="320" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="25"/>
     <property name="doorY" type="int" value="10"/>
    </properties>
   </object>
-  <object id="66" name="Button" type="Button south" x="1632" y="32" width="32" height="32" rotation="359.857">
+  <object id="66" name="Button" type="Button south" x="1632" y="32" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="49"/>
     <property name="doorY" type="int" value="3"/>
    </properties>
   </object>
-  <object id="67" name="Button" type="Button west" x="1920" y="32" width="32" height="32" rotation="359.857">
+  <object id="67" name="Button" type="Button west" x="1920" y="32" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="59"/>
     <property name="doorY" type="int" value="3"/>
    </properties>
   </object>
-  <object id="68" name="Button" type="Button south" x="1920" y="96" width="32" height="32" rotation="359.857">
+  <object id="68" name="Button" type="Button south" x="1920" y="96" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="62"/>
     <property name="doorY" type="int" value="4"/>
    </properties>
   </object>
-  <object id="69" name="Button" type="Button north" x="1632" y="512" width="32" height="32" rotation="359.857">
+  <object id="69" name="Button" type="Button north" x="1632" y="512" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="44"/>
     <property name="doorY" type="int" value="15"/>
    </properties>
   </object>
-  <object id="70" name="Button" type="Button west" x="1344" y="640" width="32" height="32" rotation="359.857">
+  <object id="70" name="Button" type="Button west" x="1344" y="640" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="45"/>
     <property name="doorY" type="int" value="20"/>
    </properties>
   </object>
-  <object id="71" name="Button" type="Button east" x="1216" y="640" width="32" height="32" rotation="359.857">
+  <object id="71" name="Button" type="Button east" x="1216" y="640" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="38"/>
     <property name="doorY" type="int" value="23"/>
    </properties>
   </object>
-  <object id="72" name="Button" type="Button east" x="1024" y="640" width="32" height="32" rotation="359.857">
+  <object id="72" name="Button" type="Button east" x="1024" y="640" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="32"/>
     <property name="doorY" type="int" value="23"/>
    </properties>
   </object>
-  <object id="73" name="Button" type="Button north" x="1856" y="704" width="32" height="32" rotation="359.857">
+  <object id="73" name="Button" type="Button north" x="1856" y="704" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="57"/>
     <property name="doorY" type="int" value="16"/>
    </properties>
   </object>
-  <object id="74" name="BoxButton" type="BoxButton east" x="640" y="640" width="32" height="32" rotation="359.857">
+  <object id="74" name="BoxButton" type="BoxButton east" x="640" y="640" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="24"/>
     <property name="doorY" type="int" value="20"/>
    </properties>
   </object>
-  <object id="75" name="BoxButton" type="BoxButton west" x="992" y="736" width="32" height="32" rotation="359.857">
+  <object id="75" name="BoxButton" type="BoxButton west" x="992" y="736" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="31"/>
     <property name="doorY" type="int" value="20"/>
    </properties>
   </object>
-  <object id="76" name="BoxButton" type="BoxButton east" x="960" y="928" width="32" height="32" rotation="359.857">
+  <object id="76" name="BoxButton" type="BoxButton east" x="960" y="928" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="35"/>
     <property name="doorY" type="int" value="26"/>
    </properties>
   </object>
-  <object id="77" name="BoxButton" type="BoxButton east" x="1408" y="928" width="32" height="32" rotation="359.857">
+  <object id="77" name="BoxButton" type="BoxButton east" x="1408" y="928" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="48"/>
     <property name="doorY" type="int" value="30"/>
    </properties>
   </object>
-  <object id="78" name="BoxButton" type="BoxButton south" x="1952" y="928" width="32" height="32" rotation="359.857">
+  <object id="78" name="BoxButton" type="BoxButton south" x="1952" y="928" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="58"/>
     <property name="doorY" type="int" value="29"/>
    </properties>
   </object>
-  <object id="79" name="BoxButton" type="BoxButton west" x="1344" y="352" width="32" height="32" rotation="359.857">
+  <object id="79" name="BoxButton" type="BoxButton west" x="1344" y="352" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="34"/>
     <property name="doorY" type="int" value="12"/>
    </properties>
   </object>
-  <object id="80" name="BoxButton" type="BoxButton north" x="1248" y="64" width="32" height="32" rotation="359.857">
+  <object id="80" name="BoxButton" type="BoxButton north" x="1248" y="64" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="50"/>
     <property name="doorY" type="int" value="2"/>
    </properties>
   </object>
-  <object id="81" name="BoxButton" type="BoxButton south" x="1312" y="64" width="32" height="32" rotation="359.857">
+  <object id="81" name="BoxButton" type="BoxButton south" x="1312" y="64" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="45"/>
     <property name="doorY" type="int" value="3"/>
    </properties>
   </object>
-  <object id="82" name="BoxButton" type="BoxButton west" x="1664" y="256" width="32" height="32" rotation="359.857">
+  <object id="82" name="BoxButton" type="BoxButton west" x="1664" y="256" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="40"/>
     <property name="doorY" type="int" value="4"/>
    </properties>
   </object>
-  <object id="83" name="BoxButton" type="BoxButton north" x="1696" y="192" width="32" height="32" rotation="359.857">
+  <object id="83" name="BoxButton" type="BoxButton north" x="1696" y="192" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="50"/>
     <property name="doorY" type="int" value="4"/>
    </properties>
   </object>
-  <object id="84" name="BoxButton" type="BoxButton north" x="1728" y="256" width="32" height="32" rotation="359.857">
+  <object id="84" name="BoxButton" type="BoxButton north" x="1728" y="256" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="53"/>
     <property name="doorY" type="int" value="1"/>
    </properties>
   </object>
-  <object id="85" name="BoxButton" type="BoxButton north" x="1760" y="192" width="32" height="32" rotation="359.857">
+  <object id="85" name="BoxButton" type="BoxButton north" x="1760" y="192" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="57"/>
     <property name="doorY" type="int" value="3"/>
    </properties>
   </object>
-  <object id="86" name="TimerButton" type="TimerButton east" x="448" y="448" width="32" height="32" rotation="359.857">
+  <object id="86" name="TimerButton" type="TimerButton east" x="448" y="448" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="17"/>
     <property name="doorY" type="int" value="8"/>
     <property name="timer" type="int" value="60"/>
    </properties>
   </object>
-  <object id="87" name="TimerButton" type="TimerButton east" x="64" y="64" width="32" height="32" rotation="359.857">
+  <object id="87" name="TimerButton" type="TimerButton east" x="64" y="64" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="10"/>
     <property name="doorY" type="int" value="4"/>
     <property name="timer" type="int" value="130"/>
    </properties>
   </object>
-  <object id="88" name="TimerButton" type="TimerButton south" x="192" y="128" width="32" height="32" rotation="359.857">
+  <object id="88" name="TimerButton" type="TimerButton south" x="192" y="128" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="8"/>
     <property name="doorY" type="int" value="7"/>
     <property name="timer" type="int" value="180"/>
    </properties>
   </object>
-  <object id="89" name="TimerButton" type="TimerButton north" x="704" y="160" width="32" height="32" rotation="359.857">
+  <object id="89" name="TimerButton" type="TimerButton north" x="704" y="160" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="22"/>
     <property name="doorY" type="int" value="2"/>
-    <property name="timer" type="int" value="1"/>
+    <property name="timer" type="int" value="10"/>
    </properties>
   </object>
-  <object id="90" name="TimerButton" type="TimerButton east" x="704" y="32" width="32" height="32" rotation="359.857">
+  <object id="90" name="TimerButton" type="TimerButton east" x="704" y="32" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="23"/>
     <property name="doorY" type="int" value="3"/>
     <property name="timer" type="int" value="1"/>
    </properties>
   </object>
-  <object id="91" name="BoxButton" type="BoxButton north" x="1024" y="128" width="32" height="32" rotation="359.857">
+  <object id="91" name="BoxButton" type="BoxButton north" x="1024" y="128" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="27"/>
     <property name="doorY" type="int" value="2"/>
    </properties>
   </object>
-  <object id="92" name="TimerButton" type="TimerButton south" x="800" y="416" width="32" height="32" rotation="359.857">
+  <object id="92" name="TimerButton" type="TimerButton south" x="800" y="416" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="25"/>
     <property name="doorY" type="int" value="14"/>
     <property name="timer" type="int" value="30"/>
    </properties>
   </object>
-  <object id="93" name="TimerButton" type="TimerButton west" x="960" y="384" width="32" height="32" rotation="359.857">
+  <object id="93" name="TimerButton" type="TimerButton west" x="960" y="384" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="26"/>
     <property name="doorY" type="int" value="12"/>
     <property name="timer" type="int" value="180"/>
    </properties>
   </object>
-  <object id="94" name="TimerButton" type="TimerButton west" x="992" y="480" width="32" height="32" rotation="359.857">
+  <object id="94" name="TimerButton" type="TimerButton west" x="992" y="480" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="27"/>
     <property name="doorY" type="int" value="16"/>
     <property name="timer" type="int" value="150"/>
    </properties>
   </object>
-  <object id="95" name="TimerButton" type="TimerButton west" x="800" y="576" width="32" height="32" rotation="359.857">
+  <object id="95" name="TimerButton" type="TimerButton west" x="800" y="576" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="20"/>
     <property name="doorY" type="int" value="15"/>
     <property name="timer" type="int" value="420"/>
    </properties>
   </object>
-  <object id="96" name="TimerButton" type="TimerButton west" x="1184" y="736" width="32" height="32" rotation="359.857">
+  <object id="96" name="TimerButton" type="TimerButton west" x="1184" y="736" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="37"/>
     <property name="doorY" type="int" value="20"/>
     <property name="timer" type="int" value="1"/>
    </properties>
   </object>
-  <object id="97" name="TimerButton" type="TimerButton north" x="1152" y="928" width="32" height="32" rotation="359.857">
+  <object id="97" name="TimerButton" type="TimerButton north" x="1152" y="928" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="41"/>
     <property name="doorY" type="int" value="26"/>
     <property name="timer" type="int" value="240"/>
    </properties>
   </object>
-  <object id="98" name="TimerButton" type="TimerButton south" x="1600" y="800" width="32" height="32" rotation="359.857">
+  <object id="98" name="TimerButton" type="TimerButton south" x="1600" y="800" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="56"/>
     <property name="doorY" type="int" value="25"/>
     <property name="timer" type="int" value="150"/>
    </properties>
   </object>
-  <object id="99" name="TimerButton" type="TimerButton north" x="1728" y="704" width="32" height="32" rotation="359.857">
+  <object id="99" name="TimerButton" type="TimerButton north" x="1728" y="704" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="54"/>
     <property name="doorY" type="int" value="21"/>
     <property name="timer" type="int" value="30"/>
    </properties>
   </object>
-  <object id="100" name="TimerButton" type="TimerButton south" x="1376" y="352" width="32" height="32" rotation="359.857">
+  <object id="100" name="TimerButton" type="TimerButton south" x="1376" y="352" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="40"/>
     <property name="doorY" type="int" value="13"/>
     <property name="timer" type="int" value="180"/>
    </properties>
   </object>
-  <object id="101" name="TimerButton" type="TimerButton west" x="1280" y="544" width="32" height="32" rotation="359.857">
+  <object id="101" name="TimerButton" type="TimerButton west" x="1280" y="544" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="34"/>
     <property name="doorY" type="int" value="14"/>
     <property name="timer" type="int" value="300"/>
    </properties>
   </object>
-  <object id="102" name="TimerButton" type="TimerButton south" x="1536" y="96" width="32" height="32" rotation="359.857">
+  <object id="102" name="TimerButton" type="TimerButton south" x="1536" y="96" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="49"/>
     <property name="doorY" type="int" value="5"/>
     <property name="timer" type="int" value="1"/>
    </properties>
   </object>
-  <object id="103" name="TimerButton" type="TimerButton south" x="1664" y="96" width="32" height="32" rotation="359.857">
+  <object id="103" name="TimerButton" type="TimerButton south" x="1664" y="96" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="52"/>
     <property name="doorY" type="int" value="4"/>
     <property name="timer" type="int" value="10"/>
    </properties>
   </object>
-  <object id="104" name="TimerButton" type="TimerButton west" x="1440" y="896" width="32" height="32" rotation="359.857">
+  <object id="104" name="TimerButton" type="TimerButton west" x="1440" y="896" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="38"/>
     <property name="doorY" type="int" value="29"/>
     <property name="timer" type="int" value="90"/>
    </properties>
   </object>
-  <object id="106" name="Cheese" type="Cheese" x="544" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="107" name="Button" type="Button east" x="480" y="544" width="32" height="32" rotation="359.857">
+  <object id="106" name="Cheese" type="Cheese" x="544" y="512" width="32" height="32"/>
+  <object id="107" name="Button" type="Button east" x="480" y="544" width="32" height="32">
    <properties>
     <property name="doorX" type="int" value="16"/>
     <property name="doorY" type="int" value="18"/>
    </properties>
   </object>
-  <object id="108" name="Cheese" type="Cheese" x="576" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="109" name="Cheese" type="Cheese" x="608" y="512" width="32" height="32" rotation="359.857"/>
-  <object id="110" name="Cheese" type="Cheese" x="576" y="480" width="32" height="32" rotation="359.857"/>
-  <object id="111" name="Cheese" type="Cheese" x="544" y="544" width="32" height="32" rotation="359.857"/>
-  <object id="112" name="Cheese" type="Cheese" x="608" y="480" width="32" height="32" rotation="359.857"/>
+  <object id="108" name="Cheese" type="Cheese" x="576" y="512" width="32" height="32"/>
+  <object id="109" name="Cheese" type="Cheese" x="608" y="512" width="32" height="32"/>
+  <object id="110" name="Cheese" type="Cheese" x="576" y="480" width="32" height="32"/>
+  <object id="111" name="Cheese" type="Cheese" x="544" y="544" width="32" height="32"/>
+  <object id="112" name="Cheese" type="Cheese" x="608" y="480" width="32" height="32"/>
   <object id="113" name="SpawnPoint" type="Spawn" x="96" y="864" width="32" height="32"/>
+  <object id="114" name="Mouse" type="Mouse" x="800" y="896" width="32" height="32">
+   <properties>
+    <property name="pathX" type="list">
+     <item type="int" value="25"/>
+     <item type="int" value="20"/>
+    </property>
+    <property name="pathY" type="list">
+     <item type="int" value="30"/>
+     <item type="int" value="30"/>
+    </property>
+   </properties>
+  </object>
+  <object id="115" name="Mouse" type="Mouse" x="736" y="640" width="32" height="32">
+   <properties>
+    <property name="pathX" type="list">
+     <item type="int" value="44"/>
+    </property>
+    <property name="pathY" type="list">
+     <item type="int" value="20"/>
+    </property>
+   </properties>
+  </object>
+  <object id="116" name="Mouse" type="Mouse" x="576" y="32" width="32" height="32">
+   <properties>
+    <property name="pathX" type="list">
+     <item type="int" value="22"/>
+     <item type="int" value="22"/>
+    </property>
+    <property name="pathY" type="list">
+     <item type="int" value="1"/>
+     <item type="int" value="3"/>
+    </property>
+   </properties>
+  </object>
+  <object id="117" name="Mouse" type="Mouse" x="1408" y="96" width="32" height="32">
+   <properties>
+    <property name="pathX" type="list">
+     <item type="int" value="58"/>
+     <item type="int" value="58"/>
+     <item type="int" value="60"/>
+    </property>
+    <property name="pathY" type="list">
+     <item type="int" value="3"/>
+     <item type="int" value="0"/>
+     <item type="int" value="1"/>
+    </property>
+   </properties>
+  </object>
+  <object id="118" name="Mouse" type="Mouse" x="1728" y="32" width="32" height="32">
+   <properties>
+    <property name="pathX" type="list">
+     <item type="int" value="49"/>
+     <item type="int" value="50"/>
+     <item type="int" value="62"/>
+    </property>
+    <property name="pathY" type="list">
+     <item type="int" value="1"/>
+     <item type="int" value="3"/>
+     <item type="int" value="3"/>
+    </property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

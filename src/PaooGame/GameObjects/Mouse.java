@@ -5,12 +5,10 @@ import PaooGame.Graphics.AssetManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Mouse extends Entity{
-
-    protected boolean hasCollidedY = false;  // Stops movement in Y
-    protected boolean hasCollidedX = false;  // Stops movement in X
+public abstract class Mouse extends Entity{
     // Directional sprites
     protected BufferedImage north, northeast, east, southeast, south, southwest, west, northwest;
+
     public Mouse(int x, int y) {
         super(x, y);
         hitBox = new Rectangle(10,10,12,12);
@@ -18,7 +16,7 @@ public class Mouse extends Entity{
         baseImage = north;
     }
 
-    @Override // Updates player position and faced direction
+    @Override // Updates mouse image
     public void update() {
         BufferedImage image = null;
         // Update base image

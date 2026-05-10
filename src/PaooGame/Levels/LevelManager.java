@@ -4,7 +4,7 @@ import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Button;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
-import PaooGame.Tiles.Direction;
+import PaooGame.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class LevelManager {
             default:         return null;
         }
     }
-    public static GameObject createObject(String type, int x, int y, String[] prop) {
+    public static GameObject createObject(String type, int x, int y, Object[] prop) {
         try {
             switch (type) {
                 case "Spawn": return new Spawn(x,y);
@@ -48,22 +48,22 @@ public class LevelManager {
 
                 case "Cheese": return new Cheese(x,y);
 
-                case "Mouse": return new Mouse(x,y);
+                case "Mouse": return new NPC_Mouse(x,y,getPointList((ArrayList<Integer>) prop[0],(ArrayList<Integer>) prop[1]));
 
-                case "Button north": return new Button(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "Button east": return new Button(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "Button south": return new Button(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "Button west": return new Button(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "Button north": return new Button(x,y,Direction.NORTH,(int) prop[0],(int) prop[1]);
+                case "Button east": return new Button(x,y,Direction.EAST,(int) prop[0],(int) prop[1]);
+                case "Button south": return new Button(x,y,Direction.SOUTH,(int) prop[0],(int) prop[1]);
+                case "Button west": return new Button(x,y,Direction.WEST,(int) prop[0],(int) prop[1]);
 
-                case "TimerButton north": return new TimerButton(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
-                case "TimerButton east": return new TimerButton(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
-                case "TimerButton south": return new TimerButton(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
-                case "TimerButton west": return new TimerButton(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]),Integer.parseInt(prop[2]));
+                case "TimerButton north": return new TimerButton(x,y,Direction.NORTH,(int) prop[0],(int) prop[1],(int) prop[2]);
+                case "TimerButton east": return new TimerButton(x,y,Direction.EAST,(int) prop[0],(int) prop[1],(int) prop[2]);
+                case "TimerButton south": return new TimerButton(x,y,Direction.SOUTH,(int) prop[0],(int) prop[1],(int) prop[2]);
+                case "TimerButton west": return new TimerButton(x,y,Direction.WEST,(int) prop[0],(int) prop[1],(int) prop[2]);
 
-                case "BoxButton north": return new BoxButton(x,y,Direction.NORTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton east": return new BoxButton(x,y,Direction.EAST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton south": return new BoxButton(x,y,Direction.SOUTH,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
-                case "BoxButton west": return new BoxButton(x,y,Direction.WEST,Integer.parseInt(prop[0]),Integer.parseInt(prop[1]));
+                case "BoxButton north": return new BoxButton(x,y,Direction.NORTH,(int) prop[0],(int) prop[1]);
+                case "BoxButton east": return new BoxButton(x,y,Direction.EAST,(int) prop[0],(int) prop[1]);
+                case "BoxButton south": return new BoxButton(x,y,Direction.SOUTH,(int) prop[0],(int) prop[1]);
+                case "BoxButton west": return new BoxButton(x,y,Direction.WEST,(int) prop[0],(int) prop[1]);
 
                 default:
                     System.out.println("Unknown object type found in map: " + type);
@@ -72,6 +72,15 @@ public class LevelManager {
             System.out.println("TMX file missing object properties");
         }
         return null;
+    }
+
+    private static Point[] getPointList(ArrayList<Integer> X, ArrayList<Integer> Y) {
+        int size = X.size();
+        Point[] points = new Point[size];
+
+        for (int i=0; i<size; ++i) points[i] = new Point(X.get(i),Y.get(i));
+
+        return points;
     }
 
     public void update(GameWindow gw) {
