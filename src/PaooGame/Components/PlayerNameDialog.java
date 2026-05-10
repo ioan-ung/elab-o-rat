@@ -1,4 +1,4 @@
-package PaooGame.States;
+package PaooGame.Components;
 
 import javax.swing.*;
 import java.awt.*;

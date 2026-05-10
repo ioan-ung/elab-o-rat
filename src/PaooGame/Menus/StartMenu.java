@@ -1,54 +1,62 @@
-package PaooGame.States;
+package PaooGame.Menus;
 
-import PaooGame.GameManager;
+import PaooGame.Components.MenuButton;
+import PaooGame.Components.PlayerNameDialog;
 import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.ImageLoader;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.Canvas;
-import java.io.File;
 
 /*! \class Menu
     \brief Deseneaza meniul principal al jocului folosind imaginea de fundal meniu.png
            si gestioneaza interactiunile cu butoanele.
  */
-public class Menu
+public class StartMenu
 {
     private String currentPlayerName = "";
     private GameState currentState = GameState.MENU;
 
     private final BufferedImage bgImage;
 
-    private static final int SRC_W = 2604;
-    private static final int SRC_H = 1600;
+    private static final int SRC_W = 1308;
+    private static final int SRC_H = 809;
+
+    private MenuButton[] buttons;
 
     /*! Coordonatele butoanelor in spatiul imaginii sursa [x, y, w, h] */
     private static final int[][] SRC_BTNS = {
-        {840, 597, 411, 138},   // New Game
-        {1332, 597, 411, 138},   // Continue
-        {843, 792, 411, 138},   // Options
-        {1320, 792, 411, 138}    // Quit Game
+        {420, 300, 200, 75},   // New Game
+        {663, 300, 200, 75},   // Continue
+        {420, 398, 200, 75},   // Options
+        {663, 398, 200, 75}    // Quit Game
     };
 
     /*! Coordonatele leaderboard-ului in spatiul imaginii sursa */
-    private static final int LB_SRC_X = 108;
-    private static final int LB_SRC_Y = 1239;
-    private static final int LB_SRC_W = 576;
-    private static final int LB_SRC_H = 361;
+    private static final int LB_SRC_X = 54;
+    private static final int LB_SRC_Y = 613;
+    private static final int LB_SRC_W = 291;
+    private static final int LB_SRC_H = 192;
 
     private final String[] lbNames  = {"Ioan", "Costy", "Nistor"};
     private final int[]    lbScores = {260, 180, 120};
 
     private int hoveredBtn = -1;
     private final Canvas canvas;
-    public Menu(Canvas canvas, int wndWidth, int wndHeight)
+    public StartMenu(Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
         bgImage = ImageLoader.LoadImage("/MenuScreen.png");
+
+        buttons = new MenuButton[]{
+                new MenuButton(SRC_BTNS[0],SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[1],SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[2],SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[3],SRC_W, SRC_H,wndWidth,wndHeight),
+        };
 
         canvas.addMouseListener(new MouseAdapter()
         {
@@ -67,7 +75,7 @@ public class Menu
             {
                 if(currentState != GameState.MENU) return;
 
-                hoveredBtn = getHoveredButton(e.getX(), e.getY(), wndWidth, wndHeight);
+                hoveredBtn = getHoveredButton(e.getX(), e.getY());
                 // mouse-ul are acum animatie cand ii dau hover--acea mana
                 if(hoveredBtn != -1)
                     canvas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -79,21 +87,11 @@ public class Menu
     }
 
     public GameState getState() { return currentState; }
-    /// TODO: MAKE BUTTON CLASS (maybe use rectangle class)
-    private int[] scaledBtn(int idx, int wndW, int wndH)
-    {
-        double sx = (double) wndW / SRC_W;
-        double sy = (double) wndH / SRC_H;
-        int[] s = SRC_BTNS[idx];
-        return new int[] {
-            (int)(s[0] * sx), (int)(s[1] * sy),
-            (int)(s[2] * sx), (int)(s[3] * sy)
-        };
-    }
+
 
     private void handleClick(int mx, int my, int wndW, int wndH)
     {
-        switch(getHoveredButton(mx, my, wndW, wndH))
+        switch(getHoveredButton(mx, my))
         {
             case 0:
                 String name = PlayerNameDialog.show(canvas);
@@ -111,16 +109,16 @@ public class Menu
         }
     }
 
-    private int getHoveredButton(int mx, int my, int wndW, int wndH)
+    private int getHoveredButton(int mx, int my)
     {
         for(int i = 0; i < SRC_BTNS.length; i++)
         {
-            int[] b = scaledBtn(i, wndW, wndH);
-            if(mx >= b[0] && mx <= b[0]+b[2] && my >= b[1] && my <= b[1]+b[3])
+            if(buttons[i].contains(mx,my))
                 return i;
         }
         return -1;
     }
+
 
     public void Draw(Graphics g, int wndWidth, int wndHeight)
     {
@@ -142,12 +140,7 @@ public class Menu
         {
             if(i == hoveredBtn)
             {
-                int[] b = scaledBtn(i, wndWidth, wndHeight);
-                g2d.setColor(new Color(255, 200, 50, 120));
-                g2d.fillRoundRect(b[0], b[1], b[2], b[3], 10, 10);
-                g2d.setColor(new Color(220, 130, 20, 220));
-                g2d.setStroke(new BasicStroke(2.5f));
-                g2d.drawRoundRect(b[0], b[1], b[2], b[3], 10, 10);
+                buttons[i].drawHoverButton(g2d,SRC_BTNS[i]);
             }
         }
 

@@ -5,7 +5,7 @@ import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
-import PaooGame.States.Menu;
+import PaooGame.Menus.StartMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import PaooGame.Tiles.Tile;
@@ -15,7 +15,7 @@ public class Game implements Runnable
     private GameWindow      window;
     private boolean         runState;
     private Thread          gameThread;
-    private Menu            menu;
+    private StartMenu startMenu;
     private LevelManager levelManager;
     private KeyHandler keyH;
 
@@ -33,7 +33,7 @@ public class Game implements Runnable
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         levelManager = new LevelManager(window);
-        menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
     }
 
     public void run() {
@@ -104,7 +104,7 @@ public class Game implements Runnable
 
     private void update(GameWindow gw)
     {
-        if(menu.getState() == GameState.PLAYING){
+        if(startMenu.getState() == GameState.PLAYING){
             levelManager.update(gw);
         }
         if (KeyHandler.debugOn) Debuger.reset();
@@ -134,11 +134,11 @@ public class Game implements Runnable
 
         // Clear window
         g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
-        if(menu.getState() == GameState.MENU) {
+        if(startMenu.getState() == GameState.MENU) {
             // Draw main menu
-            menu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            startMenu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
-        else if(menu.getState() == GameState.PLAYING) {
+        else if(startMenu.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
