@@ -1,5 +1,6 @@
 package PaooGame.Menus;
 
+import PaooGame.Components.Leaderboard;
 import PaooGame.Components.MenuButton;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.GameManager.GameState;
@@ -35,14 +36,10 @@ public class StartMenu
         {663, 398, 200, 75}    // Quit Game
     };
 
-    /*! Coordonatele leaderboard-ului in spatiul imaginii sursa */
-    private static final int LB_SRC_X = 54;
-    private static final int LB_SRC_Y = 613;
-    private static final int LB_SRC_W = 291;
-    private static final int LB_SRC_H = 192;
-
-    private final String[] lbNames  = {"Ioan", "Costy", "Nistor"};
-    private final int[]    lbScores = {260, 180, 120};
+    private final Leaderboard leaderboard = new Leaderboard(
+        new String[]{"Ioan", "Costy", "Nistor"},
+        new int[]   {260, 180, 120}
+    );
 
     private int hoveredBtn = -1;
     private final Canvas canvas;
@@ -145,19 +142,7 @@ public class StartMenu
         }
 
         // --- Leaderboard ---
-        double sx = (double) wndWidth  / SRC_W;
-        double sy = (double) wndHeight / SRC_H;
-        int lbX = (int)(LB_SRC_X * sx);
-        int lbY = (int)(LB_SRC_Y * sy);
-        int lbW = (int)(LB_SRC_W * sx);
-        int lbH = (int)(LB_SRC_H * sy);
-
-        g2d.setColor(new Color(10, 10, 20, 200));
-        g2d.fillRect(lbX, lbY, lbW, lbH);
-        g2d.setColor(new Color(245, 200, 66, 200));
-        g2d.setStroke(new BasicStroke(1.5f));
-        g2d.drawRect(lbX, lbY, lbW, lbH);
-
+        leaderboard.draw(g2d, wndWidth, wndHeight, SRC_W, SRC_H);
 
         // --- Version ---
         g2d.setFont(new Font("Monospaced", Font.PLAIN, 11));
