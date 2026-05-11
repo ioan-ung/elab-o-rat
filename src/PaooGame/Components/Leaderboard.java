@@ -4,11 +4,6 @@ import java.awt.*;
 
 public class Leaderboard {
 
-    private static final int SRC_X = 54;
-    private static final int SRC_Y = 613;
-    private static final int SRC_W = 291;
-    private static final int SRC_H = 192;
-
     private final String[] names;
     private final int[]    scores;
 
@@ -17,14 +12,17 @@ public class Leaderboard {
         this.scores = scores;
     }
 
-    public void draw(Graphics2D g2d, int wndWidth, int wndHeight, int srcW, int srcH) {
+    public void draw(Graphics2D g2d, int wndWidth, int wndHeight) {
+        int srcW = MenuConfig.leaderBoard_W;
+        int srcH = MenuConfig.leaderBoard_H;
+
         double sx = (double) wndWidth  / srcW;
         double sy = (double) wndHeight / srcH;
 
-        int lbX = (int)(SRC_X * sx);
-        int lbY = (int)(SRC_Y * sy);
-        int lbW = (int)(SRC_W * sx);
-        int lbH = (int)(SRC_H * sy);
+        int lbX = (int)(MenuConfig.leaderBoard_X * sx);
+        int lbY = (int)(MenuConfig.leaderBoard_Y * sy);
+        int lbW = (int)(MenuConfig.leaderBoard_W * sx);
+        int lbH = (int)(MenuConfig.leaderBoard_H * sy);
 
         drawBackground(g2d, lbX, lbY, lbW, lbH);
         drawTitle(g2d, lbX, lbY, lbW, lbH);

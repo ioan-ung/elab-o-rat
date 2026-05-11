@@ -2,6 +2,7 @@ package PaooGame.Menus;
 
 import PaooGame.Components.Leaderboard;
 import PaooGame.Components.MenuButton;
+import PaooGame.Components.MenuConfig;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.AssetManager;
@@ -24,24 +25,9 @@ public class StartMenu
 
     private final BufferedImage bgImage;
 
-    private static final int SRC_W = 1308;
-    private static final int SRC_H = 809;
-
     private MenuButton[] buttons;
 
     /*! Coordonatele butoanelor in spatiul imaginii sursa [x, y, w, h] */
-    private static final int[][] SRC_BTNS = {
-        {420, 300, 200, 75},   // New Game
-        {663, 300, 200, 75},   // Continue
-        {420, 398, 200, 75},   // Options
-        {663, 398, 200, 75}    // Quit Game
-    };
-    private static String[] buttonNames = {
-        "New Game",
-        "Continue",
-        "Options",
-            "Quit Game"
-    };
 
     private final Leaderboard leaderboard = new Leaderboard(
         new String[]{"Ioan", "Costy", "Nistor"},
@@ -56,10 +42,10 @@ public class StartMenu
         bgImage = ImageLoader.LoadImage("/MenuScreen.png");
 
         buttons = new MenuButton[]{
-                new MenuButton(SRC_BTNS[0],AssetManager.mouseEast,SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[1],AssetManager.mouseWest,SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[2],AssetManager.mouseEast,SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[3],AssetManager.mouseWest,SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[0],AssetManager.mouseEast,wndWidth,wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[1],AssetManager.mouseWest,wndWidth,wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[2],AssetManager.mouseEast,wndWidth,wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[3],AssetManager.mouseWest,wndWidth,wndHeight),
         };
 
         canvas.addMouseListener(new MouseAdapter()
@@ -114,7 +100,7 @@ public class StartMenu
 
     private int getHoveredButton(int mx, int my)
     {
-        for(int i = 0; i < SRC_BTNS.length; i++)
+        for(int i = 0; i < MenuConfig.SRC_BTNS.length; i++)
         {
             if(buttons[i].contains(mx,my))
                 return i;
@@ -139,7 +125,7 @@ public class StartMenu
         }
 
         // --- Highlight hover butoane ---
-        for(int i = 0; i < SRC_BTNS.length; i++)
+        for(int i = 0; i < MenuConfig.SRC_BTNS.length; i++)
         {
             if(i == hoveredBtn)
             {
@@ -148,7 +134,7 @@ public class StartMenu
         }
 
         // --- Leaderboard ---
-        leaderboard.draw(g2d, wndWidth, wndHeight, SRC_W, SRC_H);
+        leaderboard.draw(g2d, wndWidth, wndHeight);
 
         // --- Version ---
         g2d.setFont(new Font("Monospaced", Font.PLAIN, 11));

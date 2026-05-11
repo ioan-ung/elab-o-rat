@@ -13,10 +13,10 @@ public class MenuButton {
     private int wndW, wndH;
     private boolean hovered;
 
-    public MenuButton(int[]SRC_BTN,BufferedImage cursorImg,int SRC_W, int SRC_H, int wndW, int wndH){
+    public MenuButton(int[]SRC_BTN,BufferedImage cursorImg,int wndW, int wndH){
         this.SRC_BTN=SRC_BTN;
         this.cursorImg=cursorImg;
-        this.SRC_W=SRC_W;this.SRC_H=SRC_H;
+        this.SRC_W=MenuConfig.startMenu_W;this.SRC_H=MenuConfig.startMenu_H;
         this.wndW = wndW;this.wndH = wndH;
     }
 
