@@ -90,7 +90,7 @@ public class LevelManager {
         ++currentLevelIndex;
         if(currentLevelIndex < levelOrder.length) {
             currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
-            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), 0);
+            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore());
         }
         else {
             System.out.println("Game has ended");

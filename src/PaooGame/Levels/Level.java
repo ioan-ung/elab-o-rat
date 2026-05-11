@@ -13,6 +13,7 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
@@ -34,7 +35,8 @@ public abstract class Level {
     protected void initPlayer() {
         for (GameObject obj : map.gameObjects) {
             if (obj instanceof Spawn) {
-                player = new Player(obj.getX(), obj.getY(),LevelManager.keyH);
+                if (player == null) player = new Player(obj.getX(), obj.getY(),LevelManager.keyH);
+                else player.move(obj.getX(), obj.getY());
                 map.gameObjects.remove(obj);
                 return;
             }
@@ -75,6 +77,7 @@ public abstract class Level {
             Debuger.openDoorsAround(player.getX(), player.getY());
         }
 
+        Cheese foundCheese = null;
         for (GameObject obj : map.gameObjects) {
             if (obj == null) continue;    // Skip if object's missing
             if (obj instanceof BoxButton) {
@@ -86,10 +89,12 @@ public abstract class Level {
                 for (Entity entity : map.gameEntities) {
                     if (entity instanceof NPC_Mouse) CollisionChecker.checkObject(obj, entity);
                 }
-                CollisionChecker.checkObject(obj, player);
+                if (CollisionChecker.checkObject(obj, player) && obj instanceof Cheese) foundCheese = (Cheese) obj;
             }
             obj.update();
         }
+        // Remove cheese found
+        if(foundCheese != null) Level.map.gameObjects.remove(foundCheese);
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {
@@ -149,8 +154,9 @@ public abstract class Level {
     }
 
     public boolean isCompleted() {
-        if (KeyHandler.debugOn && KeyHandler.nextLevel) {
+        if (KeyHandler.debugOn && KeyHandler.nextLevel) {   // DEBUG
             KeyHandler.nextLevel = false;   // Reset the key input
+            Cheese.resetCheese();   // Reset no. cheese left
             return true;
         }
         return Cheese.getCheeseLeft() == 0;

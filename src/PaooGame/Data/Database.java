@@ -6,14 +6,12 @@ import PaooGame.Levels.LevelManager;
 import java.sql.*;
 
 public class Database {
-    private static final String URL = "jdbc:mariadb://localhost:3306/gamedb?createDatabaseIfNotExist=true";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String URL = "jdbc:sqlite:game.db";
 
     public static void initDB() {
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            Class.forName("org.sqlite.JDBC");
+            try (Connection conn = DriverManager.getConnection(URL);
                  Statement stmt = conn.createStatement()) {
 
                 stmt.execute(
@@ -25,17 +23,15 @@ public class Database {
                                 "score INTEGER);"
                 );
                 stmt.execute(
-                        "INSERT IGNORE INTO player (id, currentLevel, playerX, playerY, score) " +
+                        "INSERT OR IGNORE INTO player (id, currentLevel, playerX, playerY, score) " +
                                 "VALUES (1, 0, 0, 0, 0);"
                 );
-
-
             }
-        } catch (ClassNotFoundException e) {
-            System.err.println("MariaDB Driver missing!");
-            e.printStackTrace();
         } catch (SQLException e) {
             System.err.println("Database initialization failed!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.err.println("SQLite JDBC driver JAR missing");
             e.printStackTrace();
         }
     }
@@ -43,7 +39,7 @@ public class Database {
     public static void savePlayerState(int level, int x, int y, int score) {
         String sql = "UPDATE player SET currentLevel = ?, playerX = ?, playerY = ?, score = ? WHERE id = 1;";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, level);
@@ -62,7 +58,7 @@ public class Database {
     public static int loadLevelIndex() {
         String sql = "SELECT currentLevel FROM player WHERE id = 1;";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -77,13 +73,13 @@ public class Database {
     public static void loadPlayerState() {
         String sql = "SELECT playerX, playerY, score FROM player WHERE id = 1;";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             if (rs.next()) {
                 Level.player.move(rs.getInt("playerX"),rs.getInt("playerY"));
-                int score = rs.getInt("score");
+                Level.player.setScore(rs.getInt("score"));
 
                 System.out.println("[Database] Loaded Player");
             }
@@ -94,7 +90,7 @@ public class Database {
     }
 
     public static void startNewGame() {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
 
             stmt.execute("UPDATE player SET currentLevel = 0, playerX = 64, playerY = 480, score = 0 WHERE id = 1;");

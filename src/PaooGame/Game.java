@@ -1,8 +1,11 @@
 package PaooGame;
 
 import PaooGame.Data.Database;
+import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
+import PaooGame.Graphics.FontManager;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
@@ -34,6 +37,7 @@ public class Game implements Runnable
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
         levelManager = new LevelManager(window);
+        FontManager.init();
     }
 
     public void run() {
@@ -153,6 +157,11 @@ public class Game implements Runnable
         else if(menu.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+
+            // Draw player score
+            GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getWindowWidth()-120,0,120,30);
+            // Draw no. cheese left only when NOT in debug mode
+            if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
         }
 
         // DEBUG_A

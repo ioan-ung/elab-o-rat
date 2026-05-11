@@ -68,7 +68,7 @@ public class Debuger {
 
     public static void saveLoad () {
         if(KeyHandler.save) {
-            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), 0);
+            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore());
             KeyHandler.save = false;
         }
         if(KeyHandler.load) {
