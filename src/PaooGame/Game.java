@@ -5,6 +5,7 @@ import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
+import PaooGame.Menus.PauseMenu;
 import PaooGame.Menus.StartMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -16,8 +17,10 @@ public class Game implements Runnable
     private boolean         runState;
     private Thread          gameThread;
     private StartMenu startMenu;
+    private PauseMenu pauseMenu;
     private LevelManager levelManager;
     private KeyHandler keyH;
+    private boolean prevPauseKey = false;
 
     public Game(String title, int width, int height)
     {
@@ -34,6 +37,7 @@ public class Game implements Runnable
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         levelManager = new LevelManager(window);
         startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        pauseMenu = new PauseMenu();
     }
 
     public void run() {
@@ -104,6 +108,12 @@ public class Game implements Runnable
 
     private void update(GameWindow gw)
     {
+        boolean curPauseKey = KeyHandler.pauseKey;
+        if (curPauseKey && !prevPauseKey) {
+            startMenu.togglePause();
+        }
+        prevPauseKey = curPauseKey;
+
         if(startMenu.getState() == GameState.PLAYING){
             levelManager.update(gw);
         }
@@ -141,6 +151,10 @@ public class Game implements Runnable
         else if(startMenu.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+        }
+        else if(startMenu.getState() == GameState.PAUSED) {
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            pauseMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
         // DEBUG_A

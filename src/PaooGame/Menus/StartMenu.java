@@ -77,6 +77,11 @@ public class StartMenu
 
     public GameState getState() { return currentState; }
 
+    public void togglePause() {
+        if      (currentState == GameState.PLAYING) currentState = GameState.PAUSED;
+        else if (currentState == GameState.PAUSED)  currentState = GameState.PLAYING;
+    }
+
 
     private void handleClick(int mx, int my, int wndW, int wndH)
     {
