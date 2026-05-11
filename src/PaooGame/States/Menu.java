@@ -21,7 +21,7 @@ import java.io.File;
  */
 public class Menu
 {
-    private String currentPlayerName = "";
+    private static String currentPlayerName = "";
     private GameState currentState = GameState.MENU;
 
     private final BufferedImage bgImage;
@@ -102,14 +102,16 @@ public class Menu
                 String name = PlayerNameDialog.show(canvas);
                 if(name != null)
                 {
-                    Database.startNewGame();    // Set database to new game
                     currentPlayerName = name;
+                    Database.startNewGame(name);    // Set database to new game
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
                 }
                 break;
             case 1:
+                currentPlayerName = Database.getPlayerName();
+                if (currentPlayerName.isEmpty()) break;
                 currentState = GameState.PLAYING;
                 canvas.requestFocusInWindow();
                 break; // idem Continue
@@ -176,5 +178,9 @@ public class Menu
         // --- Version ---
         g2d.setFont(new Font("Monospaced", Font.PLAIN, 11));
         g2d.setColor(new Color(80, 60, 40, 180));
+    }
+
+    public static String getPlayerName() {
+        return currentPlayerName;
     }
 }

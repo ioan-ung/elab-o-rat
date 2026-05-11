@@ -112,7 +112,7 @@ public class Game implements Runnable
     {
         if(menu.getState() == GameState.PLAYING){
             if (needsIndex) {
-                LevelManager.currentLevelIndex = Database.loadLevelIndex(); // Get level index from database
+                LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
             }
             levelManager.update(gw);
             if (needsIndex) {
@@ -168,6 +168,7 @@ public class Game implements Runnable
         if (KeyHandler.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
+            Debuger.drawText(g2,"Player name: " + Menu.getPlayerName());
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

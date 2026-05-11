@@ -1,7 +1,6 @@
 package PaooGame.Data;
 
 import PaooGame.Levels.Level;
-import PaooGame.Levels.LevelManager;
 
 import java.sql.*;
 
@@ -20,11 +19,12 @@ public class Database {
                                 "currentLevel INTEGER, " +
                                 "playerX INTEGER, " +
                                 "playerY INTEGER, " +
-                                "score INTEGER);"
+                                "score INTEGER, " +
+                                "name TEXT);"
                 );
                 stmt.execute(
-                        "INSERT OR IGNORE INTO player (id, currentLevel, playerX, playerY, score) " +
-                                "VALUES (1, 0, 0, 0, 0);"
+                        "INSERT OR IGNORE INTO player (id, currentLevel, playerX, playerY, score, name) " +
+                                "VALUES (1, 0, 64, 480, 0, '');"
                 );
             }
         } catch (SQLException e) {
@@ -36,8 +36,8 @@ public class Database {
         }
     }
 
-    public static void savePlayerState(int level, int x, int y, int score) {
-        String sql = "UPDATE player SET currentLevel = ?, playerX = ?, playerY = ?, score = ? WHERE id = 1;";
+    public static void savePlayerState(int level, int x, int y, int score, String name) {
+        String sql = "UPDATE player SET currentLevel = ?, playerX = ?, playerY = ?, score = ?, name = ? WHERE id = 1;";
 
         try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -46,6 +46,7 @@ public class Database {
             pstmt.setInt(2, x);
             pstmt.setInt(3, y);
             pstmt.setInt(4, score);
+            pstmt.setString(5, name);
             pstmt.executeUpdate();
 
             System.out.println("[Database] Game Saved Successfully!");
@@ -53,21 +54,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static int loadLevelIndex() {
-        String sql = "SELECT currentLevel FROM player WHERE id = 1;";
-
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            if (rs.next()) return rs.getInt("currentLevel");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
     public static void loadPlayerState() {
@@ -89,15 +75,48 @@ public class Database {
         }
     }
 
-    public static void startNewGame() {
+    public static void startNewGame(String name) {
+        String sql = "UPDATE player SET currentLevel = 0, playerX = 64, playerY = 480, score = 0, name = ? WHERE id = 1;";
         try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement()) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            stmt.execute("UPDATE player SET currentLevel = 0, playerX = 64, playerY = 480, score = 0 WHERE id = 1;");
+            pstmt.setString(1, name);
+            pstmt.executeUpdate();
             System.out.println("[Database] Started a new game!");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public static int getLevelIndex() {
+        String sql = "SELECT currentLevel FROM player WHERE id = 1;";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) return rs.getInt("currentLevel");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static String getPlayerName() {
+        String sql = "SELECT name FROM player WHERE id = 1;";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) return rs.getString("name");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

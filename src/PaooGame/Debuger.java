@@ -5,6 +5,7 @@ import PaooGame.GameObjects.Box;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
+import PaooGame.States.Menu;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
 
@@ -68,7 +69,7 @@ public class Debuger {
 
     public static void saveLoad () {
         if(KeyHandler.save) {
-            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore());
+            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), Menu.getPlayerName());
             KeyHandler.save = false;
         }
         if(KeyHandler.load) {
