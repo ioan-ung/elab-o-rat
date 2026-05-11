@@ -1,17 +1,21 @@
 package PaooGame.Components;
 
+import PaooGame.Graphics.AssetManager;
 import PaooGame.Menus.StartMenu;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MenuButton {
     private int[]SRC_BTN;
+    private BufferedImage cursorImg;
     private int SRC_W,SRC_H;
     private int wndW, wndH;
     private boolean hovered;
 
-    public MenuButton(int[]SRC_BTN, int SRC_W, int SRC_H, int wndW, int wndH){
+    public MenuButton(int[]SRC_BTN,BufferedImage cursorImg,int SRC_W, int SRC_H, int wndW, int wndH){
         this.SRC_BTN=SRC_BTN;
+        this.cursorImg=cursorImg;
         this.SRC_W=SRC_W;this.SRC_H=SRC_H;
         this.wndW = wndW;this.wndH = wndH;
     }
@@ -38,12 +42,15 @@ public class MenuButton {
         };
     }
 
-    public void drawHoverButton(Graphics2D g2d,int[] SRC_BTN){
+    public void drawHoverButton(Graphics2D g2d){
         int[] b = scaledBtn();
-        g2d.setColor(new Color(255, 200, 50, 120));
-        g2d.fillRoundRect(b[0], b[1], b[2], b[3], 10, 10);
-        g2d.setColor(new Color(220, 130, 20, 220));
-        g2d.setStroke(new BasicStroke(2.5f));
-        g2d.drawRoundRect(b[0], b[1], b[2], b[3], 10, 10);
+
+        if(cursorImg== AssetManager.mouseEast){
+            g2d.drawImage(cursorImg, b[0] - cursorImg.getWidth() - 5, b[1] + b[3]/2 - cursorImg.getHeight()/2, null);
+        }
+        else{
+            g2d.drawImage(cursorImg, b[0] + b[2] + 5, b[1] + b[3]/2 - cursorImg.getHeight()/2, null);
+        }
     }
+
 }

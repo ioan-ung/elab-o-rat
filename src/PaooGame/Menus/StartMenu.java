@@ -4,6 +4,7 @@ import PaooGame.Components.Leaderboard;
 import PaooGame.Components.MenuButton;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.GameManager.GameState;
+import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 
 import java.awt.*;
@@ -35,6 +36,12 @@ public class StartMenu
         {420, 398, 200, 75},   // Options
         {663, 398, 200, 75}    // Quit Game
     };
+    private static String[] buttonNames = {
+        "New Game",
+        "Continue",
+        "Options",
+            "Quit Game"
+    };
 
     private final Leaderboard leaderboard = new Leaderboard(
         new String[]{"Ioan", "Costy", "Nistor"},
@@ -49,10 +56,10 @@ public class StartMenu
         bgImage = ImageLoader.LoadImage("/MenuScreen.png");
 
         buttons = new MenuButton[]{
-                new MenuButton(SRC_BTNS[0],SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[1],SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[2],SRC_W, SRC_H,wndWidth,wndHeight),
-                new MenuButton(SRC_BTNS[3],SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[0],AssetManager.mouseEast,SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[1],AssetManager.mouseWest,SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[2],AssetManager.mouseEast,SRC_W, SRC_H,wndWidth,wndHeight),
+                new MenuButton(SRC_BTNS[3],AssetManager.mouseWest,SRC_W, SRC_H,wndWidth,wndHeight),
         };
 
         canvas.addMouseListener(new MouseAdapter()
@@ -73,7 +80,6 @@ public class StartMenu
                 if(currentState != GameState.MENU) return;
 
                 hoveredBtn = getHoveredButton(e.getX(), e.getY());
-                // mouse-ul are acum animatie cand ii dau hover--acea mana
                 if(hoveredBtn != -1)
                     canvas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 else
@@ -137,7 +143,7 @@ public class StartMenu
         {
             if(i == hoveredBtn)
             {
-                buttons[i].drawHoverButton(g2d,SRC_BTNS[i]);
+                buttons[i].drawHoverButton(g2d);
             }
         }
 
