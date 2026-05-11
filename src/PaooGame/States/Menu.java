@@ -102,11 +102,11 @@ public class Menu
                 String name = PlayerNameDialog.show(canvas);
                 if(name != null)
                 {
+                    Database.startNewGame();    // Set database to new game
                     currentPlayerName = name;
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
-                    Database.startNewGame();    // Set database to new game
                 }
                 break;
             case 1:
