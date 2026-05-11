@@ -12,8 +12,8 @@ public class KeyHandler implements KeyListener{
     public static boolean nextLevel;            // folosit pentru tranzitia la nivelul urmator
     public static boolean spawnBoxKey;          // Used for spawning boxes when debugging
     public static boolean openDoorsKey;         // Used for opening doors when debugging
-    public static boolean save, load;
-
+    public static boolean save, load;           // Used for save/load during Debug mode
+    public static boolean pauseKey;             // Toggles the pause menu
     public boolean isUpPressed() {
         return upPressed;
     }
@@ -50,30 +50,32 @@ public class KeyHandler implements KeyListener{
             leftPressed = true;
         }
 
+        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = true;
+
 
         // DEBUG KEY
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
         }
-        if (debugOn) {
-            if (keyCode == KeyEvent.VK_B) {
-                spawnBoxKey = true;
-            }
-            if (keyCode == KeyEvent.VK_O) {
-                openDoorsKey = true;
-            }
-            if (keyCode == KeyEvent.VK_SPACE) {
-                movePlayer = true;
-            }
-            if (keyCode == KeyEvent.VK_ESCAPE) {
-                nextLevel = true;
-            }
-            if (keyCode == KeyEvent.VK_F6) {
-                save = !save;
-            }
-            if (keyCode == KeyEvent.VK_F7) {
-                load = !load;
-            }
+        if (!debugOn) return;
+
+        if (keyCode == KeyEvent.VK_B) {
+            spawnBoxKey = true;
+        }
+        if (keyCode == KeyEvent.VK_O) {
+            openDoorsKey = true;
+        }
+        if (keyCode == KeyEvent.VK_SPACE) {
+            movePlayer = true;
+        }
+        if (keyCode == KeyEvent.VK_F1) {
+            nextLevel = true;
+        }
+        if (keyCode == KeyEvent.VK_F6) {
+            save = !save;
+        }
+        if (keyCode == KeyEvent.VK_F7) {
+            load = !load;
         }
     }
 
@@ -95,6 +97,8 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
             leftPressed = false;
         }
+
+        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = false;
 
         // DEBUG
         if (keyCode == KeyEvent.VK_SPACE) {

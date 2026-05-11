@@ -9,7 +9,8 @@ import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
-import PaooGame.States.Menu;
+import PaooGame.Menus.PauseMenu;
+import PaooGame.Menus.StartMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import PaooGame.Tiles.Tile;
@@ -19,8 +20,10 @@ public class Game implements Runnable
     private GameWindow      window;
     private boolean         runState;
     private Thread          gameThread;
-    private Menu            menu;
+    private StartMenu startMenu;
+    private PauseMenu pauseMenu;
     private LevelManager levelManager;
+    private boolean prevPauseKey = false; /// CHECK OUT LATER
 
     public Game(String title, int width, int height)
     {
@@ -35,8 +38,9 @@ public class Game implements Runnable
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
         levelManager = new LevelManager(window);
+        startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        pauseMenu = new PauseMenu();
         FontManager.init();
     }
 
@@ -110,7 +114,13 @@ public class Game implements Runnable
 
     private void update(GameWindow gw)
     {
-        if(menu.getState() == GameState.PLAYING){
+        boolean curPauseKey = KeyHandler.pauseKey;
+        if (curPauseKey && !prevPauseKey) {
+            startMenu.togglePause();
+        }
+        prevPauseKey = curPauseKey;
+
+        if(startMenu.getState() == GameState.PLAYING){
             if (needsIndex) {
                 LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
             }
@@ -150,11 +160,11 @@ public class Game implements Runnable
 
         // Clear window
         g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
-        if(menu.getState() == GameState.MENU) {
+        if(startMenu.getState() == GameState.MENU) {
             // Draw main menu
-            menu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            startMenu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
-        else if(menu.getState() == GameState.PLAYING) {
+        else if(startMenu.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
 
@@ -162,6 +172,10 @@ public class Game implements Runnable
             GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getWindowWidth()-120,0,120,30);
             // Draw no. cheese left only when NOT in debug mode
             if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
+        }
+        else if(startMenu.getState() == GameState.PAUSED) {
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            pauseMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
 
         // DEBUG_A
