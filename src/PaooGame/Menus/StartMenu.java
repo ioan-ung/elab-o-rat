@@ -9,6 +9,7 @@ import PaooGame.Components.PlayerNameDialog;
 import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
+import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
@@ -81,9 +82,9 @@ public class StartMenu
 
     public GameState getState() { return currentState; }
 
-    public void togglePause() {
-        if      (currentState == GameState.PLAYING) currentState = GameState.PAUSED;
-        else if (currentState == GameState.PAUSED)  currentState = GameState.PLAYING;
+    public void setCurrentState() {
+        if (currentState == GameState.MENU) return;
+        currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
     }
 
     private void handleClick(int mx, int my, int wndW, int wndH)

@@ -50,7 +50,7 @@ public class KeyHandler implements KeyListener{
             leftPressed = true;
         }
 
-        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = true;
+        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = !pauseKey;
 
 
         // DEBUG KEY
@@ -98,7 +98,6 @@ public class KeyHandler implements KeyListener{
             leftPressed = false;
         }
 
-        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = false;
 
         // DEBUG
         if (keyCode == KeyEvent.VK_SPACE) {

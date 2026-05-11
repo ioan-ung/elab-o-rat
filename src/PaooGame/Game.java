@@ -23,7 +23,6 @@ public class Game implements Runnable
     private StartMenu startMenu;
     private PauseMenu pauseMenu;
     private LevelManager levelManager;
-    private boolean prevPauseKey = false; /// CHECK OUT LATER
 
     public Game(String title, int width, int height)
     {
@@ -65,9 +64,6 @@ public class Game implements Runnable
                 delta--;
             }
             draw();
-
-//            // DEBUG: COMMENT THIS LATER
-//            System.out.println(delta);
 
             // Calculate how much time is left in the current frame
             sleepTime = (int) ((nsPerFrame - (System.nanoTime() - currentTime))/1000_000);    // In milliseconds
@@ -114,11 +110,7 @@ public class Game implements Runnable
 
     private void update(GameWindow gw)
     {
-        boolean curPauseKey = KeyHandler.pauseKey;
-        if (curPauseKey && !prevPauseKey) {
-            startMenu.togglePause();
-        }
-        prevPauseKey = curPauseKey;
+        startMenu.setCurrentState();    // Swaps between Pause and Playing when pressing ESC
 
         if(startMenu.getState() == GameState.PLAYING){
             if (needsIndex) {
@@ -182,7 +174,7 @@ public class Game implements Runnable
         if (KeyHandler.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
-            Debuger.drawText(g2,"Player name: " + Menu.getPlayerName());
+            Debuger.drawText(g2,"Player name: " + StartMenu.getPlayerName());
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

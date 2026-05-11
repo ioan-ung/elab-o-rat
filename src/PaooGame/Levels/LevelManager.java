@@ -6,11 +6,10 @@ import PaooGame.GameObjects.Button;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Direction;
-import PaooGame.States.Menu;
+import PaooGame.Menus.StartMenu;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LevelManager {
     public static Level currentLevel;
@@ -91,7 +90,7 @@ public class LevelManager {
         ++currentLevelIndex;
         if(currentLevelIndex < levelOrder.length) {
             currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
-            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), Menu.getPlayerName());
+            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
         }
         else {
             System.out.println("Game has ended");

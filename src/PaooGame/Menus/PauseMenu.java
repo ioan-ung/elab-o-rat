@@ -1,5 +1,7 @@
 package PaooGame.Menus;
 
+import PaooGame.Graphics.FontManager;
+
 import java.awt.*;
 
 public class PauseMenu {
@@ -17,7 +19,7 @@ public class PauseMenu {
 
     private void drawTitle(Graphics2D g2d, int w, int h) {
         int fontSize = Math.max(24, w / 14);
-        g2d.setFont(new Font("Monospaced", Font.BOLD, fontSize));
+        g2d.setFont(FontManager.getFont().deriveFont(Font.PLAIN, fontSize));
         String text = "PAUSED";
         FontMetrics fm = g2d.getFontMetrics();
         int x = (w - fm.stringWidth(text)) / 2;
@@ -33,7 +35,7 @@ public class PauseMenu {
     private void drawHint(Graphics2D g2d, int w, int h) {
         int fontSize = Math.max(12, w / 40);
         g2d.setFont(new Font("Monospaced", Font.PLAIN, fontSize));
-        String text = "Press SPACE to resume";
+        String text = "Press ESC to resume";
         FontMetrics fm = g2d.getFontMetrics();
         int x = (w - fm.stringWidth(text)) / 2;
         int y = h / 2 + fm.getHeight();
