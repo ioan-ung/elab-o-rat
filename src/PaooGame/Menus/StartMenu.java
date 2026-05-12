@@ -34,10 +34,7 @@ public class StartMenu
 
     /*! Coordonatele butoanelor in spatiul imaginii sursa [x, y, w, h] */
 
-    private final Leaderboard leaderboard = new Leaderboard(
-        new String[]{"Ioan", "Costy", "Nistor"},
-        new int[]   {260, 180, 120}
-    );
+    private final Leaderboard leaderboard = new Leaderboard();
 
     private int hoveredBtn = -1;
     private final Canvas canvas;
@@ -99,18 +96,18 @@ public class StartMenu
                 if(name != null)
                 {
                     currentPlayerName = name;
-                    Database.startNewGame(name);    // Set database to new game
+                    Database.currentPlayerId = Database.startNewGame(name);    // Set database to new game
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
                 }
                 break;
             case 1:
-                currentPlayerName = Database.getPlayerName();
+                currentPlayerName = Database.resumeLastGame();
                 if (currentPlayerName.isEmpty()) break;
                 currentState = GameState.PLAYING;
                 canvas.requestFocusInWindow();
-                break; // idem Continue
+                break;
             case 2: /* TODO: optiuni */ break;
             case 3: System.exit(0); break;
         }
