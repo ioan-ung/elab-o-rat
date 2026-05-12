@@ -1,7 +1,7 @@
 package PaooGame;
 
 public class GameManager {
-    public enum GameState { MENU, PLAYING, PAUSED }
+    public enum GameState { MENU, PLAYING, PAUSED, WON }
 
     //instanta unica --specifica singleton
     private static GameManager instance;

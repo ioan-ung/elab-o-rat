@@ -44,13 +44,13 @@ public class StartMenu
     public StartMenu(Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
-        bgImage = ImageLoader.LoadImage("/MenuScreen.png");
+        bgImage = ImageLoader.LoadImage("/MenuScreen.jpeg");
 
         buttons = new MenuButton[]{
-                new MenuButton(MenuConfig.SRC_BTNS[0],AssetManager.mouseEast,wndWidth,wndHeight),
-                new MenuButton(MenuConfig.SRC_BTNS[1],AssetManager.mouseWest,wndWidth,wndHeight),
-                new MenuButton(MenuConfig.SRC_BTNS[2],AssetManager.mouseEast,wndWidth,wndHeight),
-                new MenuButton(MenuConfig.SRC_BTNS[3],AssetManager.mouseWest,wndWidth,wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[0], MenuConfig.buttonNames[0], AssetManager.mouseEast,  wndWidth, wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[1], MenuConfig.buttonNames[1], AssetManager.mouseWest, wndWidth, wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[2], MenuConfig.buttonNames[2], AssetManager.mouseEast,  wndWidth, wndHeight),
+                new MenuButton(MenuConfig.SRC_BTNS[3], MenuConfig.buttonNames[3], AssetManager.mouseWest, wndWidth, wndHeight),
         };
 
         canvas.addMouseListener(new MouseAdapter()
@@ -83,9 +83,12 @@ public class StartMenu
     public GameState getState() { return currentState; }
 
     public void setCurrentState() {
-        if (currentState == GameState.MENU) return;
+        if (currentState == GameState.MENU || currentState == GameState.WON) return;
         currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
     }
+
+    public void setWon()  { currentState = GameState.WON; }
+    public void setMenu() { currentState = GameState.MENU; }
 
     private void handleClick(int mx, int my, int wndW, int wndH)
     {
@@ -140,12 +143,11 @@ public class StartMenu
         }
 
         // --- Highlight hover butoane ---
-        for(int i = 0; i < MenuConfig.SRC_BTNS.length; i++)
+        for(int i = 0; i < buttons.length; i++)
         {
             if(i == hoveredBtn)
-            {
                 buttons[i].drawHoverButton(g2d);
-            }
+            buttons[i].draw(g2d);
         }
 
         // --- Leaderboard ---

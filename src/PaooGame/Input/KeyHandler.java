@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener{
     public static boolean openDoorsKey;         // Used for opening doors when debugging
     public static boolean save, load;           // Used for save/load during Debug mode
     public static boolean pauseKey;             // Toggles the pause menu
+    public static boolean enterKey;             // Confirm / return to menu
     public boolean isUpPressed() {
         return upPressed;
     }
@@ -51,6 +52,7 @@ public class KeyHandler implements KeyListener{
         }
 
         if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = !pauseKey;
+        if (keyCode == KeyEvent.VK_ENTER) enterKey = true;
 
 
         // DEBUG KEY
@@ -106,6 +108,7 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_ESCAPE) {
             nextLevel = false;
         }
+        if (keyCode == KeyEvent.VK_ENTER) enterKey = false;
         if (keyCode == KeyEvent.VK_B) {
             spawnBoxKey = false;
         }
