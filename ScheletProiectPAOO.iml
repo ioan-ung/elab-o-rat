@@ -10,11 +10,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/PAOO L5 2026 /sqlite-jdbc-3.7.2.jar!/" />
+          <root url="jar://$USER_HOME$/sqlite-jdbc-3.7.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/PAOO L5 2026 /sqlite-jdbc-3.7.2.jar!/" />
+          <root url="jar://$USER_HOME$/sqlite-jdbc-3.7.2.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
