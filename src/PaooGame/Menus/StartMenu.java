@@ -83,9 +83,12 @@ public class StartMenu
     public GameState getState() { return currentState; }
 
     public void setCurrentState() {
-        if (currentState == GameState.MENU) return;
+        if (currentState == GameState.MENU || currentState == GameState.WON) return;
         currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
     }
+
+    public void setWon()  { currentState = GameState.WON; }
+    public void setMenu() { currentState = GameState.MENU; }
 
     private void handleClick(int mx, int my, int wndW, int wndH)
     {

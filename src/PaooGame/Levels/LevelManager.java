@@ -15,6 +15,7 @@ public class LevelManager {
     public static Level currentLevel;
     public static KeyHandler keyH;
     public static int currentLevelIndex = -1;
+    public static boolean gameWon = false;
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
             LevelType.LABORATORY,
@@ -93,8 +94,7 @@ public class LevelManager {
             Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
         }
         else {
-            System.out.println("Game has ended");
-            System.exit(0);
+            gameWon = true;
         }
     }
 

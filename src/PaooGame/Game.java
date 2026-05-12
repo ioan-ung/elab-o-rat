@@ -9,6 +9,7 @@ import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
+import PaooGame.Menus.EndMenu;
 import PaooGame.Menus.PauseMenu;
 import PaooGame.Menus.StartMenu;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class Game implements Runnable
     private Thread          gameThread;
     private StartMenu startMenu;
     private PauseMenu pauseMenu;
+    private EndMenu endMenu;
     private LevelManager levelManager;
 
     public Game(String title, int width, int height)
@@ -40,6 +42,7 @@ public class Game implements Runnable
         levelManager = new LevelManager(window);
         startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
         pauseMenu = new PauseMenu();
+        endMenu   = new EndMenu();
         FontManager.init();
     }
 
@@ -112,6 +115,25 @@ public class Game implements Runnable
     {
         startMenu.setCurrentState();    // Swaps between Pause and Playing when pressing ESC
 
+        if (LevelManager.gameWon) {
+            startMenu.setWon();
+        }
+
+        if (startMenu.getState() == GameState.WON) {
+            if (KeyHandler.enterKey) {
+                KeyHandler.enterKey  = false;
+                KeyHandler.pauseKey  = false;
+                LevelManager.gameWon = false;
+                LevelManager.currentLevelIndex = -1;
+                LevelManager.currentLevel = null;
+                needsIndex = true;
+                startMenu.setMenu();
+            } else if (KeyHandler.pauseKey) {
+                System.exit(0);
+            }
+            return;
+        }
+
         if(startMenu.getState() == GameState.PLAYING){
             if (needsIndex) {
                 LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
@@ -168,6 +190,10 @@ public class Game implements Runnable
         else if(startMenu.getState() == GameState.PAUSED) {
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
             pauseMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+        }
+        else if(startMenu.getState() == GameState.WON) {
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            endMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight(), Level.player.getScore());
         }
 
         // DEBUG_A
