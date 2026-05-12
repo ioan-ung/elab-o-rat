@@ -1,27 +1,12 @@
 package PaooGame.Components;
 
 import PaooGame.Graphics.AssetManager;
+import PaooGame.Graphics.FontManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 public class MenuButton {
-    private static final Font freeCheese;
-
-    static {
-        Font f;
-        try {
-            InputStream is = MenuButton.class.getResourceAsStream(
-                    "/FreeCheese_Font_1_0/TrueType (.ttf)/FreeCheese-Regular.ttf");
-            f = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(22f);
-            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(f);
-        } catch (Exception e) {
-            f = new Font("Serif", Font.BOLD, 28);
-        }
-        freeCheese = f;
-    }
-
     private int[] SRC_BTN;
     private String buttonName;
     private BufferedImage cursorImg;
@@ -55,7 +40,7 @@ public class MenuButton {
 
     public void draw(Graphics2D g2d) {
         int[] b = scaledBtn();
-        g2d.setFont(freeCheese);
+        g2d.setFont(FontManager.getFont().deriveFont(22f));
         FontMetrics fm = g2d.getFontMetrics();
         int tx = b[0] + (b[2] - fm.stringWidth(buttonName)) / 2;
         int ty = b[1] + (b[3] - fm.getHeight()) / 2 + fm.getAscent();
