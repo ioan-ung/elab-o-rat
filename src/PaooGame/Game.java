@@ -7,24 +7,28 @@ import PaooGame.Graphics.FontManager;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
+import PaooGame.Tiles.Tile;
 
 import PaooGame.GameManager.GameState;
 import PaooGame.Menus.EndMenu;
 import PaooGame.Menus.PauseMenu;
 import PaooGame.Menus.StartMenu;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import PaooGame.Tiles.Tile;
 
-public class Game implements Runnable
-{
-    private GameWindow      window;
-    private boolean         runState;
-    private Thread          gameThread;
-    private StartMenu startMenu;
-    private PauseMenu pauseMenu;
-    private EndMenu endMenu;
+import java.util.logging.Logger;
+
+public class Game implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
+
+    private volatile boolean runState;
+    private GameWindow  window;
+    private Thread      gameThread;
     private LevelManager levelManager;
+    private StartMenu   startMenu;
+    private PauseMenu   pauseMenu;
+    private EndMenu     endMenu;
 
     public Game(String title, int width, int height)
     {
@@ -35,17 +39,18 @@ public class Game implements Runnable
     private void InitGame(String title, int width, int height)
     {
         Database.initDB();
+        FontManager.init();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         levelManager = new LevelManager(window);
-        startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        startMenu = new StartMenu(this, window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
         pauseMenu = new PauseMenu();
         endMenu   = new EndMenu();
-        FontManager.init();
     }
 
+    @SuppressWarnings("BusyWait")
     public void run() {
         long currentTime, lastTime = System.nanoTime();
         double delta = 0;   // No. of frames
@@ -78,7 +83,7 @@ public class Game implements Runnable
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // Restore interrupted status
-                    e.printStackTrace();
+                    LOGGER.log(java.util.logging.Level.SEVERE, "Interrupted thread from sleep: ", e);
                 }
 
                 // Wait until the frame is over
@@ -104,28 +109,22 @@ public class Game implements Runnable
         if(runState)
         {
             runState = false;
-            try { gameThread.join(); }
-            catch(InterruptedException ex) { ex.printStackTrace(); }
+            try {
+                gameThread.join();
+            }
+            catch(InterruptedException e) {
+                LOGGER.log(java.util.logging.Level.SEVERE, "Game thread joining was interrupted. ", e);
+            }
         }
     }
-
-    private static boolean needsIndex = true;
 
     private void update(GameWindow gw)
     {
         startMenu.setCurrentState();    // Sets correct current state
 
 
-        if(startMenu.getState() == GameState.PLAYING){
-            if (needsIndex) {
-                LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
-            }
-            levelManager.update(gw);
-            if (needsIndex) {
-                Database.loadPlayerState();     // Load game from database
-                needsIndex = false;
-            }
-        }
+        if(startMenu.getState() == GameState.PLAYING) levelManager.update(gw);
+
         if (KeyHandler.debugOn) {
             Debuger.reset();
             Debuger.saveLoad();
@@ -139,11 +138,11 @@ public class Game implements Runnable
         {
             try {
                 window.GetCanvas().createBufferStrategy(3);
-                return;
             }
             catch(Exception e) {
-                e.printStackTrace();
+                LOGGER.log(java.util.logging.Level.SEVERE, "Triple buffer strategy threw an exception. ", e);
             }
+            return;
         }
 
         Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();

@@ -1,10 +1,15 @@
 package PaooGame.Data;
 
 import PaooGame.Levels.Level;
+import PaooGame.Levels.LevelManager;
+
+import java.util.logging.Logger;
 
 import java.sql.*;
 
 public class Database {
+    private static final Logger LOGGER = Logger.getLogger(Database.class.getName());    // Trying this out
+
     private static final String URL = "jdbc:sqlite:game.db";
     public static int currentPlayerId = -1;
     //tine evidenta playerului curent
@@ -30,11 +35,9 @@ public class Database {
                 );
             }
         } catch (SQLException e) {
-            System.err.println("Database initialization failed!");
-            e.printStackTrace();
+            System.err.println("Database initialization failed!\n" + e.getMessage());
         } catch (ClassNotFoundException e) {
-            System.err.println("SQLite JDBC driver JAR missing");
-            e.printStackTrace();
+            System.err.println("SQLite JDBC driver JAR missing\n" + e.getMessage());
         }
     }
 
@@ -55,7 +58,7 @@ public class Database {
             System.out.println("[Database] Game Saved Successfully!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
     }
     public static void savePlayerScore(int score) {
@@ -69,7 +72,7 @@ public class Database {
             System.out.println("[Database] Game Saved Successfully!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
     }
 
@@ -88,12 +91,13 @@ public class Database {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
     }
 
     //idul se genereaza automat --metoda insert din sql
     public static int startNewGame(String name) {
+        LevelManager.currentLevel = null;
         String sql = "INSERT INTO player (currentLevel, playerX, playerY, score, name) " +
                 "VALUES (0, 64, 480, 0, ?);";
         try (Connection conn = DriverManager.getConnection(URL);
@@ -106,7 +110,7 @@ public class Database {
             if (keys.next()) return keys.getInt(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
         return -1;
     }
@@ -121,13 +125,13 @@ public class Database {
             if (rs.next()) return rs.getInt("currentLevel");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
         return 0;
     }
 
     public static String resumeLastGame() {
-        String sql = "SELECT id, name FROM player WHERE name != '' ORDER BY id DESC LIMIT 1;";
+        String sql = "SELECT id, name, currentLevel FROM player WHERE name != '' ORDER BY id DESC LIMIT 1;";
 
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement();
@@ -135,11 +139,12 @@ public class Database {
 
             if (rs.next()) {
                 currentPlayerId = rs.getInt("id");
+                LevelManager.currentLevelIndex = rs.getInt("currentLevel");
                 return rs.getString("name");
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
         return "";
     }
@@ -156,9 +161,8 @@ public class Database {
             while (rs.next())
                 rows.add(new String[]{ rs.getString("name"), String.valueOf(rs.getInt("score")) });
             result = rows.toArray(new String[0][]);
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
         return result;
     }
