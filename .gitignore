@@ -6,3 +6,5 @@
 out/
 *.class
 *.zip
+game.db
+ScheletProiectPAOO.iml
