@@ -1,11 +1,11 @@
 package PaooGame.Menus;
 
 import PaooGame.Data.Database;
-import PaooGame.GameManager;
 import PaooGame.Components.Leaderboard;
 import PaooGame.Components.MenuButton;
 import PaooGame.Components.MenuConfig;
 import PaooGame.Components.PlayerNameDialog;
+import PaooGame.Game;
 import PaooGame.GameManager.GameState;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
@@ -27,10 +27,11 @@ public class StartMenu
 {
     private static String currentPlayerName = "";
     private GameState currentState = GameState.MENU;
+    private final Game gameInstance;
 
     private final BufferedImage bgImage;
 
-    private MenuButton[] buttons;
+    private final MenuButton[] buttons;
 
     /*! Coordonatele butoanelor in spatiul imaginii sursa [x, y, w, h] */
 
@@ -38,9 +39,10 @@ public class StartMenu
 
     private int hoveredBtn = -1;
     private final Canvas canvas;
-    public StartMenu(Canvas canvas, int wndWidth, int wndHeight)
+    public StartMenu(Game gameInstance, Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
+        this.gameInstance = gameInstance;
         bgImage = ImageLoader.LoadImage("/MenuScreen.jpeg");
 
         buttons = new MenuButton[]{
@@ -56,7 +58,7 @@ public class StartMenu
             public void mouseClicked(MouseEvent e)
             {
                 if(currentState != GameState.MENU) return;
-                handleClick(e.getX(), e.getY(), wndWidth, wndHeight);
+                handleClick(e.getX(), e.getY());
             }
         });
 
@@ -87,7 +89,10 @@ public class StartMenu
         }
         // Go back to Main Menu
         if (KeyHandler.enterKey && (currentState == GameState.PAUSED || currentState == GameState.WON)) {
-            if (currentState == GameState.WON) Database.savePlayerScore(Level.player.getScore());
+            if (currentState == GameState.WON) {
+                Database.savePlayerScore(Level.player.getScore());
+                LevelManager.gameWon = false;
+            }
             currentState = GameState.MENU;
             return;
         } else if (LevelManager.gameWon) { // Sets win screen
@@ -98,7 +103,7 @@ public class StartMenu
         currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
     }
 
-    private void handleClick(int mx, int my, int wndW, int wndH)
+    private void handleClick(int mx, int my)
     {
         switch(getHoveredButton(mx, my))
         {
@@ -106,7 +111,6 @@ public class StartMenu
                 String name = PlayerNameDialog.show(canvas);
                 if(name != null)
                 {
-                    LevelManager.gameWon = false;
                     currentPlayerName = name;
                     Database.currentPlayerId = Database.startNewGame(name);    // Set database to new game
                     currentState = GameState.PLAYING;
@@ -116,12 +120,15 @@ public class StartMenu
                 break;
             case 1:
                 currentPlayerName = Database.resumeLastGame();
-                if (currentPlayerName.isEmpty() || LevelManager.gameWon) break;
+                if (currentPlayerName.isEmpty() || LevelManager.currentLevelIndex == 3) break;
                 currentState = GameState.PLAYING;
                 canvas.requestFocusInWindow();
                 break;
             case 2: /* TODO: optiuni */ break;
-            case 3: System.exit(0); break;
+            case 3:
+                gameInstance.StopGame();
+                System.exit(0);
+                break;
         }
     }
 
@@ -161,10 +168,6 @@ public class StartMenu
 
         // --- Leaderboard ---
         leaderboard.draw(g2d, wndWidth, wndHeight);
-
-        // --- Version ---
-        g2d.setFont(new Font("Monospaced", Font.PLAIN, 11));
-        g2d.setColor(new Color(80, 60, 40, 180));
     }
 
     public static String getPlayerName() {

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class LevelManager {
     public static Level currentLevel;
     public static KeyHandler keyH;
-    public static int currentLevelIndex = -1;
+    public static int currentLevelIndex;
     public static boolean gameWon = false;
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
@@ -45,7 +45,12 @@ public class LevelManager {
 
                 case "Cheese": return new Cheese(x,y);
 
-                case "Mouse": return new NPC_Mouse(x,y,getPointList((ArrayList<Integer>) prop[0],(ArrayList<Integer>) prop[1]));
+                case "Mouse":
+                    @SuppressWarnings("unchecked")
+                    ArrayList<Integer> xList = (ArrayList<Integer>) prop[0];
+                    @SuppressWarnings("unchecked")
+                    ArrayList<Integer> yList = (ArrayList<Integer>) prop[1];
+                    return new NPC_Mouse(x,y,getPointList(xList,yList));
 
                 case "Button north": return new Button(x,y,Direction.NORTH,(int) prop[0],(int) prop[1]);
                 case "Button east": return new Button(x,y,Direction.EAST,(int) prop[0],(int) prop[1]);
@@ -81,21 +86,23 @@ public class LevelManager {
     }
 
     public void update(GameWindow gw) {
-
-        if(currentLevel == null) currentLevel = getLevel(levelOrder[currentLevelIndex],gw);
-
-        if(!currentLevel.isCompleted()) {
-            currentLevel.update();
+        if(currentLevel == null) {
+            LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
+            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+            Database.loadPlayerState();     // Load game from database
             return;
         }
-        ++currentLevelIndex;
-        if(currentLevelIndex < levelOrder.length) {
-            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
-            Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
+
+        if(!currentLevel.isCompleted()) {
+            currentLevel.update();  // Update level
+            return;
         }
-        else {
-            gameWon = true;
-        }
+
+        // If the level has been completed, go to the next one
+        if(++currentLevelIndex < levelOrder.length) currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+        else gameWon = true;    // Game is won when all the levels have been completed
+        // Save state to DB
+        Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {
