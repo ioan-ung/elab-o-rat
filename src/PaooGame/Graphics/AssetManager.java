@@ -36,6 +36,11 @@ public class AssetManager
     public static BufferedImage doorNoKeyV;
     public static BufferedImage doorNoKeyH;
 
+    public static BufferedImage doorLOpen;
+    public static BufferedImage doorROpen;
+    public static BufferedImage doorTOpen;
+    public static BufferedImage doorBOpen;
+
 
     public static BufferedImage cheese;
     public static BufferedImage box;
@@ -106,6 +111,11 @@ public class AssetManager
         doorT   = AssetManager.getInstance().getSprite("doorT", 4, 8);
         doorNoKeyV = AssetManager.getInstance().getSprite("doorNoKeyV", 8, 4);
         doorNoKeyH = AssetManager.getInstance().getSprite("doorNoKeyH", 8, 5);
+
+        doorROpen = AssetManager.getInstance().getSprite("doorROpen", 6, 6);
+        doorLOpen = AssetManager.getInstance().getSprite("doorLOpen", 7, 6);
+        doorTOpen = AssetManager.getInstance().getSprite("doorTOpen", 7, 8);
+        doorBOpen = AssetManager.getInstance().getSprite("doorBOpen", 7, 7);
 
         cheese = AssetManager.getInstance().getSprite("cheese", 9, 8);
         box = AssetManager.getInstance().getSprite("box", 8, 8);

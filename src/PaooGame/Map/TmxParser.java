@@ -24,14 +24,59 @@ public class TmxParser {
     /// sincer sa fiu le-am luat mai mult prin incercari sa nimeresc indecsii
     /// f mare discrepanta intre ce arata tiled si ce returneaza
     private static int mapGidToTileIndex(int gid) {
-        // Check ranges first for walls (since switches don't do >= well)
-        if ((gid >= 1 && gid <= 11) || (gid >= 15 && gid <= 23) ||
-                (gid >= 29 && gid <= 39) || (gid >= 43 && gid <= 54)) {
-            return 10; // WALL
-        }
-
         // Exact matches
         switch (gid) {
+            // WALL
+            case 1 : return 40;
+            case 2 : return 41;
+            case 3 : return 42;
+            case 4 : return 43;
+            case 5 : return 44;
+            case 6 : return 45;
+            case 7 : return 46;
+            case 8 : return 47;
+            case 9 : return 48;
+            case 10 : return 49;
+            case 11 : return 50;
+
+            case 15 : return 51;
+            case 16 : return 52;
+            case 17 : return 53;
+            case 18 : return 54;
+            case 19 : return 55;
+            case 20 : return 56;
+            case 21 : return 57;
+            case 22 : return 58;
+            case 23 : return 59;
+            case 24 : return 60;
+            case 25 : return 61;
+
+            case 29 : return 62;
+            case 30 : return 63;
+            case 31 : return 64;
+            case 32 : return 65;
+            case 33 : return 66;
+            case 34 : return 67;
+            case 35 : return 68;
+            case 36 : return 69;
+            case 37 : return 70;
+            case 38 : return 71;
+            case 39 : return 72;
+
+            case 43 : return 73;
+            case 44 : return 74;
+            case 45 : return 75;
+            case 46 : return 76;
+            case 47 : return 77;
+            case 48 : return 78;
+            case 49 : return 79;
+            case 50 : return 80;
+            case 51 : return 81;
+            case 52 : return 82;
+            case 53 : return 83;
+            case 54 : return 84;
+
+
             // FLOOR
             case 100 : return 0;
             case 86 : return 1;
@@ -79,12 +124,22 @@ public class TmxParser {
 
                 // Extract properties
                 NodeList propertiesList = objElement.getElementsByTagName("property");
-                String[] properties = new String[propertiesList.getLength()];
+                Object[] properties = new Object[propertiesList.getLength()];
 
                 for (int p = 0; p < propertiesList.getLength(); p++) {
                     Element propElement = (Element) propertiesList.item(p);
-                    String propValue = propElement.getAttribute("value");
-                    properties[p] = propValue;
+
+                    // Check if the property is a list, otherwise assume it's an integer
+                    if ("list".equals(propElement.getAttribute("type"))) {
+                        ArrayList<Integer> listItems = new ArrayList<>();   // Assuming it's a list of integers
+                        NodeList items = propElement.getElementsByTagName("item");
+                        // Get every item of the list
+                        for (int k = 0; k < items.getLength(); k++) {
+                            Element itemElement = (Element) items.item(k);
+                            listItems.add(Integer.parseInt(itemElement.getAttribute("value")));
+                        }
+                        properties[p] = listItems;  // Put the list as a property
+                    } else properties[p] = Integer.parseInt(propElement.getAttribute("value"));
                 }
 
                 // Create and add the object

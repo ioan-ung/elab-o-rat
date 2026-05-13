@@ -1,11 +1,17 @@
 package PaooGame;
 
+import PaooGame.Data.Database;
+import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
+import PaooGame.Graphics.FontManager;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
 import PaooGame.GameManager.GameState;
-import PaooGame.States.Menu;
+import PaooGame.Menus.EndMenu;
+import PaooGame.Menus.PauseMenu;
+import PaooGame.Menus.StartMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import PaooGame.Tiles.Tile;
@@ -15,9 +21,10 @@ public class Game implements Runnable
     private GameWindow      window;
     private boolean         runState;
     private Thread          gameThread;
-    private Menu            menu;
+    private StartMenu startMenu;
+    private PauseMenu pauseMenu;
+    private EndMenu endMenu;
     private LevelManager levelManager;
-    private KeyHandler keyH;
 
     public Game(String title, int width, int height)
     {
@@ -27,13 +34,16 @@ public class Game implements Runnable
 
     private void InitGame(String title, int width, int height)
     {
-        keyH = new KeyHandler();
+        Database.initDB();
         window = new GameWindow(title, width, height);
         window.BuildGameWindow();
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         levelManager = new LevelManager(window);
-        menu = new Menu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        startMenu = new StartMenu(window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        pauseMenu = new PauseMenu();
+        endMenu   = new EndMenu();
+        FontManager.init();
     }
 
     public void run() {
@@ -57,9 +67,6 @@ public class Game implements Runnable
                 delta--;
             }
             draw();
-
-//            // DEBUG: COMMENT THIS LATER
-//            System.out.println(delta);
 
             // Calculate how much time is left in the current frame
             sleepTime = (int) ((nsPerFrame - (System.nanoTime() - currentTime))/1000_000);    // In milliseconds
@@ -102,12 +109,27 @@ public class Game implements Runnable
         }
     }
 
+    private static boolean needsIndex = true;
+
     private void update(GameWindow gw)
     {
-        if(menu.getState() == GameState.PLAYING){
+        startMenu.setCurrentState();    // Sets correct current state
+
+
+        if(startMenu.getState() == GameState.PLAYING){
+            if (needsIndex) {
+                LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
+            }
             levelManager.update(gw);
+            if (needsIndex) {
+                Database.loadPlayerState();     // Load game from database
+                needsIndex = false;
+            }
         }
-        if (KeyHandler.debugOn) Debuger.reset();
+        if (KeyHandler.debugOn) {
+            Debuger.reset();
+            Debuger.saveLoad();
+        }
     }
 
     private void draw()
@@ -134,19 +156,33 @@ public class Game implements Runnable
 
         // Clear window
         g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
-        if(menu.getState() == GameState.MENU) {
+        if(startMenu.getState() == GameState.MENU) {
             // Draw main menu
-            menu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            startMenu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
         }
-        else if(menu.getState() == GameState.PLAYING) {
+        else if(startMenu.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+
+            // Draw player score
+            GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getWindowWidth()-120,0,120,30);
+            // Draw no. cheese left only when NOT in debug mode
+            if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
+        }
+        else if(startMenu.getState() == GameState.PAUSED) {
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            pauseMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+        }
+        else if(startMenu.getState() == GameState.WON) {
+            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            endMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight(), Level.player.getScore());
         }
 
         // DEBUG_A
         if (KeyHandler.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
+            Debuger.drawText(g2,"Player name: " + StartMenu.getPlayerName());
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

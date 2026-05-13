@@ -12,7 +12,9 @@ public class KeyHandler implements KeyListener{
     public static boolean nextLevel;            // folosit pentru tranzitia la nivelul urmator
     public static boolean spawnBoxKey;          // Used for spawning boxes when debugging
     public static boolean openDoorsKey;         // Used for opening doors when debugging
-
+    public static boolean save, load;           // Used for save/load during Debug mode
+    public static boolean pauseKey;             // Toggles the pause menu
+    public static boolean enterKey;             // Confirm / return to menu
     public boolean isUpPressed() {
         return upPressed;
     }
@@ -49,11 +51,16 @@ public class KeyHandler implements KeyListener{
             leftPressed = true;
         }
 
+        if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = !pauseKey;
+        if (keyCode == KeyEvent.VK_ENTER) enterKey = true;
+
 
         // DEBUG KEY
         if (keyCode == KeyEvent.VK_F3) {
             debugOn = !debugOn;
         }
+        if (!debugOn) return;
+
         if (keyCode == KeyEvent.VK_B) {
             spawnBoxKey = true;
         }
@@ -63,8 +70,14 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_SPACE) {
             movePlayer = true;
         }
-        if (keyCode == KeyEvent.VK_ESCAPE) {
+        if (keyCode == KeyEvent.VK_F1) {
             nextLevel = true;
+        }
+        if (keyCode == KeyEvent.VK_F6) {
+            save = !save;
+        }
+        if (keyCode == KeyEvent.VK_F7) {
+            load = !load;
         }
     }
 
@@ -87,6 +100,7 @@ public class KeyHandler implements KeyListener{
             leftPressed = false;
         }
 
+
         // DEBUG
         if (keyCode == KeyEvent.VK_SPACE) {
             movePlayer = false;
@@ -94,6 +108,7 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_ESCAPE) {
             nextLevel = false;
         }
+        if (keyCode == KeyEvent.VK_ENTER) enterKey = false;
         if (keyCode == KeyEvent.VK_B) {
             spawnBoxKey = false;
         }

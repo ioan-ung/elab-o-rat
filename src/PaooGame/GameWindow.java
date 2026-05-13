@@ -1,5 +1,8 @@
 package PaooGame;
 
+import PaooGame.GameObjects.Cheese;
+import PaooGame.Graphics.FontManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -53,5 +56,15 @@ public class GameWindow
 
     public Canvas GetCanvas() {
         return canvas;
+    }
+
+    public static void drawString (Graphics2D g2, String message, int x, int y, int w, int h) {
+        g2.setColor(new Color(0, 0, 100, 100));
+        g2.fillRect(x, y, w, h);
+        g2.setColor(Color.black);
+        g2.drawRect(x, y, w, h);
+        g2.setColor(Color.white);
+        g2.setFont(FontManager.getFont());
+        g2.drawString(message, x+10, y+20);
     }
 }

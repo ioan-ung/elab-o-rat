@@ -1,6 +1,7 @@
 package PaooGame.GameObjects;
 
 import PaooGame.Graphics.AssetManager;
+import PaooGame.Levels.Level;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class Cheese extends GameObject{
     public void hasCollided() {
         if (collision) return;  // Return if it's already been collected
         collision = true;
-        --cheeseLeft;
+        --cheeseLeft;   // Decrement the cheese left
     }
 
     @Override
@@ -38,5 +39,8 @@ public class Cheese extends GameObject{
 
     public static int getCheeseLeft() {
         return cheeseLeft;
+    }
+    public static void resetCheese() {
+        cheeseLeft = 0;
     }
 }

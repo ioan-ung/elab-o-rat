@@ -3,6 +3,7 @@
 /.idea/workspace.xml
 .DS_Store
 .idea/
+.claude/
 out/
 *.class
 *.zip

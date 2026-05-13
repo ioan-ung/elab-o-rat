@@ -1,8 +1,6 @@
 package PaooGame;
 
-import PaooGame.GameObjects.Box;
-import PaooGame.GameObjects.Entity;
-import PaooGame.GameObjects.GameObject;
+import PaooGame.GameObjects.*;
 import PaooGame.Levels.Level;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
@@ -13,15 +11,20 @@ import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public class CollisionChecker {
 
-    public static void checkObject (GameObject object, Entity entity) {
+    public static boolean checkObject (GameObject object, Entity entity) {
         Rectangle entityHitbox = new Rectangle(entity.getX() + entity.getRect().x,entity.getY() + entity.getRect().y,entity.getRect().width,entity.getRect().height);
         Rectangle objectHitbox = new Rectangle();
         objectHitbox.setBounds(object.getX() + object.getRect().x,object.getY() + object.getRect().y,object.getRect().width,object.getRect().height);
-        // Check intersection
-        if (!entityHitbox.intersects(objectHitbox)) return;
 
-        if(object instanceof Box) object.move(entity.getXSign() * entity.getSpeed(),entity.getYSign() * entity.getSpeed());
+        // Check intersection
+        if (!entityHitbox.intersects(objectHitbox)) return false;
+
+        if(object instanceof Box) object.move(object.getX() + entity.getXSign() * entity.getSpeed(),object.getY() + entity.getYSign() * entity.getSpeed());
         else object.hasCollided();
+
+        // Increment score of the player if they got cheese
+        if (object instanceof Cheese && entity instanceof Player) Level.player.setScore(Level.player.getScore() + 10);
+        return true;
     }
 
     public static boolean checkTile (Entity entity, int xSign, int ySign) {
@@ -120,15 +123,15 @@ public class CollisionChecker {
         // 5. Push the entity out based on the door's orientation
         if (Tile.tiles[Level.map.tileMap[doorRow][doorCol]].isOnXAxis()) {
             if (pushUp < pushDown) {
-                entity.move(0, -pushUp);
+                entity.move(entity.getX(), entity.getY()-pushUp);
             } else {
-                entity.move(0, pushDown);
+                entity.move(entity.getX(), entity.getY()+pushDown);
             }
         } else {
             if (pushLeft < pushRight) {
-                entity.move(-pushLeft, 0);
+                entity.move(entity.getX()-pushLeft, entity.getY());
             } else {
-                entity.move(pushRight, 0);
+                entity.move(entity.getX()+pushRight, entity.getY());
             }
         }
 

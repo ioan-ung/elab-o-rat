@@ -2,12 +2,14 @@ package PaooGame.Tiles;
 
 import PaooGame.Graphics.AssetManager;
 
+import java.awt.image.BufferedImage;
+
 // dala solida de tip perete
 public class WallTile extends Tile
 {
-    public WallTile(int id)
+    public WallTile(int id, BufferedImage img)
     {
-        super(AssetManager.wall, id);
+        super(img, id);
     }
 
     @Override

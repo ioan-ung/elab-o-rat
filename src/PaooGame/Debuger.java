@@ -1,9 +1,11 @@
 package PaooGame;
 
+import PaooGame.Data.Database;
 import PaooGame.GameObjects.Box;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
+import PaooGame.Menus.StartMenu;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
 
@@ -63,5 +65,16 @@ public class Debuger {
                 }
 
         return openedDoor;
+    }
+
+    public static void saveLoad () {
+        if(KeyHandler.save) {
+            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
+            KeyHandler.save = false;
+        }
+        if(KeyHandler.load) {
+            Database.loadPlayerState();
+            KeyHandler.load = false;
+        }
     }
 }
