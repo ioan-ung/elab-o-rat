@@ -4,9 +4,11 @@ import PaooGame.Data.Database;
 import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.FontManager;
+import PaooGame.Input.Debuger;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
+import PaooGame.Sounds.SoundPlayer;
 import PaooGame.Tiles.Tile;
 
 import PaooGame.GameManager.GameState;
@@ -29,6 +31,7 @@ public class Game implements Runnable {
     private StartMenu   startMenu;
     private PauseMenu   pauseMenu;
     private EndMenu     endMenu;
+    private static SoundPlayer soundPlayer;
 
     public Game(String title, int width, int height)
     {
@@ -48,6 +51,7 @@ public class Game implements Runnable {
         startMenu = new StartMenu(this, window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
         pauseMenu = new PauseMenu();
         endMenu   = new EndMenu();
+        soundPlayer = new SoundPlayer();
     }
 
     @SuppressWarnings("BusyWait")
@@ -187,5 +191,17 @@ public class Game implements Runnable {
         // Force the OS to synchronize the graphics pipeline
         Toolkit.getDefaultToolkit().sync();
         g2.dispose();
+    }
+
+    public static void playSoundEfx (int i) {
+        soundPlayer.setSound(i);
+        soundPlayer.play();
+    }
+    public static void playSong() {
+        soundPlayer.setSound(-1);
+        soundPlayer.play();
+    }
+    public static void stopSong() {
+        soundPlayer.stop();
     }
 }

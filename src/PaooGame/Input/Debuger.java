@@ -1,8 +1,7 @@
-package PaooGame;
+package PaooGame.Input;
 
 import PaooGame.Data.Database;
 import PaooGame.GameObjects.Box;
-import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 import PaooGame.Menus.StartMenu;
@@ -53,18 +52,13 @@ public class Debuger {
         }
     }
 
-    public static boolean openDoorsAround (int x, int y) {
-        boolean openedDoor = false;
-
-        if (!KeyHandler.openDoorsKey) return openedDoor;
+    public static void openDoorsAround (int x, int y) {
+        if (!KeyHandler.openDoorsKey) return;
 
         for (int i=x/TILE_ACTUAL_SIZE-1; i<=x/TILE_ACTUAL_SIZE+1; i++)
             for (int j=y/TILE_ACTUAL_SIZE-1; j<=y/TILE_ACTUAL_SIZE+1; j++)
-                if (Tile.tiles[Level.map.tileMap[j][i]] instanceof DoorTile) {
-                    openedDoor = openedDoor || LevelManager.currentLevel.openDoorAt(i,j);
-                }
-
-        return openedDoor;
+                if (Tile.tiles[Level.map.tileMap[j][i]] instanceof DoorTile)
+                    LevelManager.currentLevel.openDoorAt(i,j);
     }
 
     public static void saveLoad () {

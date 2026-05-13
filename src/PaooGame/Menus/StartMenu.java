@@ -92,6 +92,7 @@ public class StartMenu
             if (currentState == GameState.WON) {
                 Database.savePlayerScore(Level.player.getScore());
                 LevelManager.gameWon = false;
+                Game.stopSong();
             }
             currentState = GameState.MENU;
             return;

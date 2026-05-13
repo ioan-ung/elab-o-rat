@@ -23,7 +23,10 @@ public class CollisionChecker {
         else object.hasCollided();
 
         // Increment score of the player if they got cheese
-        if (object instanceof Cheese && entity instanceof Player) Level.player.setScore(Level.player.getScore() + 10);
+        if (object instanceof Cheese && entity instanceof Player) {
+            Level.player.setScore(Level.player.getScore() + 10);
+            Game.playSoundEfx(2);
+        }
         return true;
     }
 

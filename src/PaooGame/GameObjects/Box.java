@@ -1,13 +1,13 @@
 package PaooGame.GameObjects;
 
 import PaooGame.CollisionChecker;
+import PaooGame.Game;
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Levels.Level;
 
 import java.awt.*;
 
 public class Box extends Entity{
-    private int xOg, yOg;                       // Remembers original position of the box
+    private final int xOg, yOg;   // Remembers original position of the box
     public Box (int x, int y) {
         super(x,y);
         xOg = x;
@@ -29,6 +29,7 @@ public class Box extends Entity{
             x = xOg;
             y = yOg;
             collision = false;
+            Game.playSoundEfx(3);
         }
     }
 

@@ -2,7 +2,8 @@ package PaooGame.Levels;
 
 import PaooGame.Camera;
 import PaooGame.CollisionChecker;
-import PaooGame.Debuger;
+import PaooGame.Game;
+import PaooGame.Input.Debuger;
 import PaooGame.GameObjects.*;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
@@ -13,7 +14,6 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
@@ -52,18 +52,18 @@ public abstract class Level {
         camera.centerOn(player.getX(), player.getY());
     }
 
-    public boolean openDoorAt(int col, int row) {
+    public void openDoorAt(int col, int row) {
         boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof DoorTile;
         if (ret) map.tileMap[row][col] += 6;
         else System.out.println("This door is not closed");
-        return ret;
+        Game.playSoundEfx(0);
     }
 
-    public boolean closeDoorAt(int col, int row) {
+    public void closeDoorAt(int col, int row) {
         boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof OpenDoorTile;
         if (ret) map.tileMap[row][col] -= 6;
         else System.out.println("This door is not open");
-        return ret;
+        Game.playSoundEfx(1);
     }
 
 
