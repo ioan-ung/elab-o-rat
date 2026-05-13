@@ -1,5 +1,7 @@
 package PaooGame.Menus;
 
+import PaooGame.Graphics.FontManager;
+
 import java.awt.*;
 
 public class EndMenu {
@@ -18,7 +20,7 @@ public class EndMenu {
 
     private void drawTitle(Graphics2D g2d, int w, int h) {
         int fontSize = Math.max(28, w / 12);
-        g2d.setFont(new Font("Monospaced", Font.BOLD, fontSize));
+        g2d.setFont(FontManager.getFont().deriveFont(Font.PLAIN, fontSize));
         String text = "YOU WIN!";
         FontMetrics fm = g2d.getFontMetrics();
         int x = (w - fm.stringWidth(text)) / 2;
@@ -48,16 +50,12 @@ public class EndMenu {
         g2d.setFont(new Font("Monospaced", Font.PLAIN, fontSize));
         FontMetrics fm = g2d.getFontMetrics();
 
-        String enterText = "ENTER  -  Return to menu";
-        String escText   = "ESC    -  Quit";
+        String enterText = "Press ENTER for main menu";
 
         int x1 = (w - fm.stringWidth(enterText)) / 2;
-        int x2 = (w - fm.stringWidth(escText))   / 2;
         int y1 = h / 2 + fm.getHeight() * 2;
-        int y2 = y1 + fm.getHeight() + 4;
 
         g2d.setColor(new Color(180, 180, 180));
         g2d.drawString(enterText, x1, y1);
-        g2d.drawString(escText,   x2, y2);
     }
 }

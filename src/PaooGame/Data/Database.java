@@ -58,6 +58,20 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public static void savePlayerScore(int score) {
+        String sql = "UPDATE player SET score = " +score+ " WHERE id = " + currentPlayerId;
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.executeUpdate();
+
+            System.out.println("[Database] Game Saved Successfully!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void loadPlayerState() {
         String sql = "SELECT playerX, playerY, score FROM player WHERE id = " + currentPlayerId + ";";
@@ -112,23 +126,6 @@ public class Database {
         return 0;
     }
 
-    public static String getPlayerName() {
-        String sql = "SELECT name FROM player WHERE id = " + currentPlayerId + ";";
-
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            if (rs.next()) return rs.getString("name");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    //luam cel mai recent id
-    //functia necesara deoarece avem mai multi playeri acum
     public static String resumeLastGame() {
         String sql = "SELECT id, name FROM player WHERE name != '' ORDER BY id DESC LIMIT 1;";
 

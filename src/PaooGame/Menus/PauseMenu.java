@@ -35,12 +35,18 @@ public class PauseMenu {
     private void drawHint(Graphics2D g2d, int w, int h) {
         int fontSize = Math.max(12, w / 40);
         g2d.setFont(new Font("Monospaced", Font.PLAIN, fontSize));
-        String text = "Press ESC to resume";
         FontMetrics fm = g2d.getFontMetrics();
-        int x = (w - fm.stringWidth(text)) / 2;
-        int y = h / 2 + fm.getHeight();
 
-        g2d.setColor(new Color(200, 200, 200));
-        g2d.drawString(text, x, y);
+        String enterText = "Press ENTER for main menu";
+        String escText   = "Press ESC to resume";
+
+        int x1 = (w - fm.stringWidth(escText)) / 2;
+        int x2 = (w - fm.stringWidth(enterText))   / 2;
+        int y1 = h / 2 + fm.getHeight() * 2;
+        int y2 = y1 + fm.getHeight() + 4;
+
+        g2d.setColor(new Color(180, 180, 180));
+        g2d.drawString(escText,   x1, y1-20);
+        g2d.drawString(enterText, x2, y2);
     }
 }

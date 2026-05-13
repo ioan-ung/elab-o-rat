@@ -113,26 +113,8 @@ public class Game implements Runnable
 
     private void update(GameWindow gw)
     {
-        startMenu.setCurrentState();    // Swaps between Pause and Playing when pressing ESC
+        startMenu.setCurrentState();    // Sets correct current state
 
-        if (LevelManager.gameWon) {
-            startMenu.setWon();
-        }
-
-        if (startMenu.getState() == GameState.WON) {
-            if (KeyHandler.enterKey) {
-                KeyHandler.enterKey  = false;
-                KeyHandler.pauseKey  = false;
-                LevelManager.gameWon = false;
-                LevelManager.currentLevelIndex = -1;
-                LevelManager.currentLevel = null;
-                needsIndex = true;
-                startMenu.setMenu();
-            } else if (KeyHandler.pauseKey) {
-                System.exit(0);
-            }
-            return;
-        }
 
         if(startMenu.getState() == GameState.PLAYING){
             if (needsIndex) {

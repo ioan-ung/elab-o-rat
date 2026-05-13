@@ -80,12 +80,23 @@ public class StartMenu
     public GameState getState() { return currentState; }
 
     public void setCurrentState() {
-        if (currentState == GameState.MENU || currentState == GameState.WON) return;
+        // Reset pause when in Main Menu
+        if (currentState == GameState.MENU) {
+            KeyHandler.pauseKey = false;
+            return;
+        }
+        // Go back to Main Menu
+        if (KeyHandler.enterKey && (currentState == GameState.PAUSED || currentState == GameState.WON)) {
+            if (currentState == GameState.WON) Database.savePlayerScore(Level.player.getScore());
+            currentState = GameState.MENU;
+            return;
+        } else if (LevelManager.gameWon) { // Sets win screen
+            currentState = GameState.WON;
+            return;
+        }
+        // Toggle Pause
         currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
     }
-
-    public void setWon()  { currentState = GameState.WON; }
-    public void setMenu() { currentState = GameState.MENU; }
 
     private void handleClick(int mx, int my, int wndW, int wndH)
     {
@@ -95,6 +106,7 @@ public class StartMenu
                 String name = PlayerNameDialog.show(canvas);
                 if(name != null)
                 {
+                    LevelManager.gameWon = false;
                     currentPlayerName = name;
                     Database.currentPlayerId = Database.startNewGame(name);    // Set database to new game
                     currentState = GameState.PLAYING;
@@ -104,7 +116,7 @@ public class StartMenu
                 break;
             case 1:
                 currentPlayerName = Database.resumeLastGame();
-                if (currentPlayerName.isEmpty()) break;
+                if (currentPlayerName.isEmpty() || LevelManager.gameWon) break;
                 currentState = GameState.PLAYING;
                 canvas.requestFocusInWindow();
                 break;
