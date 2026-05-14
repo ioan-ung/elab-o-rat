@@ -1,6 +1,6 @@
 package PaooGame.Map;
 
-import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.Entities.Entity;
 import PaooGame.GameObjects.GameObject;
 
 import java.util.ArrayList;

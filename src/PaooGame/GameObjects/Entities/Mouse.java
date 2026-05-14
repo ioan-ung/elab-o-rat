@@ -1,4 +1,4 @@
-package PaooGame.GameObjects;
+package PaooGame.GameObjects.Entities;
 
 import PaooGame.Graphics.AssetManager;
 
@@ -18,7 +18,7 @@ public abstract class Mouse extends Entity{
 
     @Override // Updates mouse image
     public void update() {
-        BufferedImage image = null;
+        BufferedImage image;
         // Update base image
         if (ySign==-1) {
             if (xSign==-1) image = northwest;

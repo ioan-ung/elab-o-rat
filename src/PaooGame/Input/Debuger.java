@@ -1,7 +1,7 @@
 package PaooGame.Input;
 
 import PaooGame.Data.Database;
-import PaooGame.GameObjects.Box;
+import PaooGame.GameObjects.Entities.Box;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 import PaooGame.Menus.StartMenu;

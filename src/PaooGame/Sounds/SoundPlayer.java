@@ -37,4 +37,7 @@ public class SoundPlayer {
     public void stop() {
         clip.stop();
     }
+    public void loop() {
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 }

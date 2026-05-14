@@ -1,6 +1,6 @@
 package PaooGame.Map;
 
-import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.Entities.Entity;
 import PaooGame.GameObjects.GameObject;
 import PaooGame.Levels.LevelManager;
 import org.w3c.dom.Document;
@@ -9,14 +9,12 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Collection;
 
 
 public class TmxParser {
@@ -161,7 +159,7 @@ public class TmxParser {
     public static GameMap getMap(String mapPath)
     {
         GameMap map = new GameMap();    // The map that will get returned
-        Document doc = null;
+        Document doc;
         try (InputStream is = TmxParser.class.getResourceAsStream(mapPath)) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder        = factory.newDocumentBuilder();
@@ -174,7 +172,6 @@ public class TmxParser {
             doc.getDocumentElement().normalize();
         } catch (Exception e) {
             System.out.println("[Playing] EROARE la parsarea TMX!");
-            e.printStackTrace();
             return null;
         }
         Element mapElement = (Element) doc.getElementsByTagName("map").item(0);

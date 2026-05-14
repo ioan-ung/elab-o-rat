@@ -1,6 +1,5 @@
 package PaooGame;
 
-import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.FontManager;
 
 import javax.swing.*;
@@ -9,16 +8,19 @@ import java.awt.*;
 // fereastra principala a jocului — JFrame + Canvas pe care se deseneaza
 public class GameWindow
 {
-    private JFrame  windowFrame;
-    private String  windowTitle;
-    private int     windowWidth;
-    private int     windowHeight;
-    private Canvas  canvas;
+    private JFrame      windowFrame;
+    private final String windowTitle;
+    private final int   windowWidth;
+    private final int   windowHeight;
+    private int         currentWidth;
+    private int         currentHeight;
+    private Canvas      canvas;
+    private boolean     isFullScreen;
 
     public GameWindow(String title, int width, int height){
         windowTitle  = title;
-        windowWidth  = width;
-        windowHeight = height;
+        currentWidth = windowWidth = width;
+        currentHeight = windowHeight = height;
         windowFrame  = null;
     }
 
@@ -30,28 +32,68 @@ public class GameWindow
             return;
         }
         windowFrame = new JFrame(windowTitle);
-        windowFrame.setSize(windowWidth, windowHeight);
+        windowFrame.setSize(currentWidth, currentHeight);
         windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowFrame.setResizable(false);
         windowFrame.setLocationRelativeTo(null);
         windowFrame.setVisible(true);
 
         canvas = new Canvas();
-        canvas.setPreferredSize(new Dimension(windowWidth, windowHeight));
-        canvas.setMaximumSize(new Dimension(windowWidth, windowHeight));
-        canvas.setMinimumSize(new Dimension(windowWidth, windowHeight));
+        canvas.setPreferredSize(new Dimension(currentWidth, currentHeight));
+        canvas.setMaximumSize(new Dimension(currentWidth, currentHeight));
+        canvas.setMinimumSize(new Dimension(currentWidth, currentHeight));
         windowFrame.add(canvas);
         windowFrame.pack();
     }
 
-    public int getWindowWidth()
-    {
-        return windowWidth;
+    public void toggleFullScreen() {
+        if (windowFrame == null) return;
+
+        // Disposes the frame in order to change decorations
+        windowFrame.dispose();
+        isFullScreen = !isFullScreen;
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+
+        if (isFullScreen) {
+            windowFrame.setUndecorated(true); // Strip borders
+            gd.setFullScreenWindow(windowFrame); // Makes fullscreen
+
+            // Gets fullscreen window dimensions
+            DisplayMode mode = gd.getDisplayMode();
+            currentWidth = mode.getWidth();
+            currentHeight = mode.getHeight();
+        } else {
+            windowFrame.setUndecorated(false); // Restore borders
+            gd.setFullScreenWindow(null); // Changes back from fullscreen
+
+            // Restores normal window dimensions
+            currentWidth = windowWidth;
+            currentHeight = windowHeight;
+            windowFrame.setSize(currentWidth, currentHeight);
+            windowFrame.setLocationRelativeTo(null); // Center
+        }
+
+        // Update canvas size
+        canvas.setPreferredSize(new Dimension(currentWidth, currentHeight));
+        canvas.setMaximumSize(new Dimension(currentWidth, currentHeight));
+        canvas.setMinimumSize(new Dimension(currentWidth, currentHeight));
+
+        // Display window
+        if (!isFullScreen) windowFrame.pack(); // Only pack when returning in windowed mode
+        windowFrame.setVisible(true);
+        canvas.requestFocusInWindow();
     }
 
-    public int getWindowHeight()
+    public int getCurrentWidth()
     {
-        return windowHeight;
+        return currentWidth;
+    }
+
+    public int getCurrentHeight()
+    {
+        return currentHeight;
     }
 
     public Canvas GetCanvas() {

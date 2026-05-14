@@ -10,8 +10,8 @@ public class Camera
 
     private final int mapWidthPx;   /*!< Latimea hartii in pixeli */
     private final int mapHeightPx;  /*!< Inaltimea hartii in pixeli */
-    private final int wndWidth;     /*!< Latimea ferestrei */
-    private final int wndHeight;    /*!< Inaltimea ferestrei */
+    private int wndWidth;     /*!< Latimea ferestrei */
+    private int wndHeight;    /*!< Inaltimea ferestrei */
 
     public Camera(int wndWidth, int wndHeight, int mapWidthPx, int mapHeightPx)
     {
@@ -37,4 +37,9 @@ public class Camera
 
     public int getXOffset() {return (int) xOffset; }
     public int getYOffset() { return (int) yOffset; }
+
+    public void updateResolution(int width, int height) {
+        wndWidth = width;
+        wndHeight = height;
+    }
 }

@@ -1,10 +1,7 @@
-package PaooGame.GameObjects;
+package PaooGame.GameObjects.Entities;
 
 import PaooGame.CollisionChecker;
-import PaooGame.Graphics.AssetManager;
 import PaooGame.Input.KeyHandler;
-
-import java.awt.*;
 
 public class Player extends Mouse{
     protected final KeyHandler keyH;    // Handles keyboard input

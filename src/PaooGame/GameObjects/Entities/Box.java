@@ -1,4 +1,4 @@
-package PaooGame.GameObjects;
+package PaooGame.GameObjects.Entities;
 
 import PaooGame.CollisionChecker;
 import PaooGame.Game;

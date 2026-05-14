@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class MenuButton {
-    private int[] SRC_BTN;
-    private String buttonName;
-    private BufferedImage cursorImg;
-    private int SRC_W, SRC_H;
+    private final int[] SRC_BTN;    // Base coordinates
+    private final String buttonName;
+    private final BufferedImage cursorImg;
+    private final int SRC_W, SRC_H;   // Base resolution
     private int wndW, wndH;
 
     public MenuButton(int[] SRC_BTN, String buttonName, BufferedImage cursorImg, int wndW, int wndH) {
@@ -40,8 +40,11 @@ public class MenuButton {
 
     public void draw(Graphics2D g2d) {
         int[] b = scaledBtn();
-        g2d.setFont(FontManager.getFont().deriveFont(22f));
+
+        float fontSize = 26f * wndH / SRC_H;
+        g2d.setFont(FontManager.getFont().deriveFont(fontSize));
         FontMetrics fm = g2d.getFontMetrics();
+
         int tx = b[0] + (b[2] - fm.stringWidth(buttonName)) / 2;
         int ty = b[1] + (b[3] - fm.getHeight()) / 2 + fm.getAscent();
         g2d.setColor(new Color(60, 30, 10));
@@ -55,5 +58,11 @@ public class MenuButton {
         } else {
             g2d.drawImage(cursorImg, b[0] + b[2] + 5, b[1] + b[3] / 2 - cursorImg.getHeight() / 2, null);
         }
+    }
+
+    // Used during fullscreen toggle
+    public void updateSize(int width, int height) {
+        this.wndW = width;
+        this.wndH = height;
     }
 }

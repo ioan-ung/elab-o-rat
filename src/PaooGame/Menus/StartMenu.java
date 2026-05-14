@@ -174,4 +174,8 @@ public class StartMenu
     public static String getPlayerName() {
         return currentPlayerName;
     }
+
+    public void updateSize(int width, int height) { // Used during fullscreen toggle
+        for(MenuButton b: buttons) b.updateSize(width,height);
+    }
 }

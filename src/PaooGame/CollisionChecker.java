@@ -1,6 +1,9 @@
 package PaooGame;
 
 import PaooGame.GameObjects.*;
+import PaooGame.GameObjects.Entities.Box;
+import PaooGame.GameObjects.Entities.Entity;
+import PaooGame.GameObjects.Entities.Player;
 import PaooGame.Levels.Level;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;

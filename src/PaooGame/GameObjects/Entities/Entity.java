@@ -1,6 +1,6 @@
-package PaooGame.GameObjects;
+package PaooGame.GameObjects.Entities;
 
-import java.awt.image.BufferedImage;
+import PaooGame.GameObjects.GameObject;
 
 
 public abstract class Entity extends GameObject {
