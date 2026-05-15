@@ -31,7 +31,7 @@ public class Game implements Runnable {
     private StartMenu   startMenu;
     private PauseMenu   pauseMenu;
     private EndMenu     endMenu;
-    private static SoundPlayer soundPlayer;
+    private static SoundPlayer soundPlayer, sfxPlayer;
 
     public Game(String title, int width, int height)
     {
@@ -52,6 +52,8 @@ public class Game implements Runnable {
         pauseMenu = new PauseMenu();
         endMenu   = new EndMenu();
         soundPlayer = new SoundPlayer();
+        sfxPlayer = new SoundPlayer();
+        playSong(1);
     }
 
     @SuppressWarnings("BusyWait")
@@ -200,15 +202,18 @@ public class Game implements Runnable {
     }
 
     public static void playSoundEfx (int i) {
-        soundPlayer.setSound(i);
-        soundPlayer.play();
+        sfxPlayer.setSound(i);
+        sfxPlayer.play();
     }
-    public static void playSong() {
-        soundPlayer.setSound(-1);
+
+    public static void playSong(int songID) {
+        // Stops last song
+        if (soundPlayer != null) soundPlayer.stop();
+
+        // New song ID
+        if (songID <= 0) return;
+        soundPlayer.setSound(-songID);
         soundPlayer.play();
         soundPlayer.loop();
-    }
-    public static void stopSong() {
-        soundPlayer.stop();
     }
 }

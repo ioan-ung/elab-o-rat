@@ -108,7 +108,7 @@ public class LevelManager {
         }
         else {
             gameWon = true;    // Game is won when all the levels have been completed
-            Game.playSong();
+            Game.playSong(3);   // Plays from ratsURL
         }
         // Save state to DB
         Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());

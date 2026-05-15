@@ -7,6 +7,7 @@ import PaooGame.Components.MenuConfig;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.Game;
 import PaooGame.GameManager.GameState;
+import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
@@ -92,7 +93,7 @@ public class StartMenu
             if (currentState == GameState.WON) {
                 Database.savePlayerScore(Level.player.getScore());
                 LevelManager.gameWon = false;
-                Game.stopSong();
+                Game.playSong(1);
             }
             currentState = GameState.MENU;
             return;
@@ -117,6 +118,7 @@ public class StartMenu
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
+                    Cheese.resetCheese();
                 }
                 break;
             case 1:
