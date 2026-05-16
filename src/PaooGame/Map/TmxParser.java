@@ -1,6 +1,6 @@
 package PaooGame.Map;
 
-import PaooGame.GameObjects.Entity;
+import PaooGame.GameObjects.Entities.Entity;
 import PaooGame.GameObjects.GameObject;
 import PaooGame.Levels.LevelManager;
 import org.w3c.dom.Document;
@@ -9,14 +9,12 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Collection;
 
 
 public class TmxParser {
@@ -161,7 +159,7 @@ public class TmxParser {
     public static GameMap getMap(String mapPath)
     {
         GameMap map = new GameMap();    // The map that will get returned
-        Document doc = null;
+        Document doc;
         try (InputStream is = TmxParser.class.getResourceAsStream(mapPath)) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder        = factory.newDocumentBuilder();
@@ -174,33 +172,36 @@ public class TmxParser {
             doc.getDocumentElement().normalize();
         } catch (Exception e) {
             System.out.println("[Playing] EROARE la parsarea TMX!");
-            e.printStackTrace();
             return null;
         }
         Element mapElement = (Element) doc.getElementsByTagName("map").item(0);
         map.mapWidth  = Integer.parseInt(mapElement.getAttribute("width"));
         map.mapHeight = Integer.parseInt(mapElement.getAttribute("height"));
-        System.out.println("[Playing] Harta: " + map.mapWidth + "x" + map.mapHeight);
+        System.out.print("[Playing] Map: " + map.mapWidth + "x" + map.mapHeight + " | Layers: ");
 
         NodeList layers = doc.getElementsByTagName("layer");
         if(layers.getLength() == 0) { System.out.println("[Playing] EROARE: niciun layer!"); return null; }
 
         map.tileMap = new int[map.mapHeight][map.mapWidth];
-        map.tileMapAbove = new int[map.mapHeight][map.mapWidth];
+        //map.tileMapAbove = new int[map.mapHeight][map.mapWidth]; /// Currently not using layer Above
 
         // Initializam cu -1 (gol)
         for(int[] r : map.tileMap) Arrays.fill(r, -1);
-        for(int[] r : map.tileMapAbove) Arrays.fill(r, -1);
+        //for(int[] r : map.tileMapAbove) Arrays.fill(r, -1); /// Currently not using layer Above
 
+        String encoding = "";
         for(int l = 0; l < layers.getLength(); l++)
         {
             Element layer   = (Element) layers.item(l);
             String  name    = layer.getAttribute("name");
+
+            if(name.equals("Above")) continue;  /// Currently not using layer Above
+
             Element dataEl  = (Element) layer.getElementsByTagName("data").item(0);
-            String encoding = dataEl.getAttribute("encoding");
+            encoding = dataEl.getAttribute("encoding");
             String rawData  = dataEl.getTextContent().trim();
 
-            System.out.println("[Playing] Layer: " + name + " | encoding: " + encoding);
+            System.out.print(name + " ");
 
             int[] indices = decodeLayerData(encoding, rawData);
             if (indices == null) return null;
@@ -213,16 +214,16 @@ public class TmxParser {
 
                     int tileIdx = mapGidToTileIndex(gid);
 
-                    // Above = branza, obiecte deasupra playerului
-                    if(name.equals("Above"))
-                        map.tileMapAbove[row][col] = tileIdx;
-                    else  // Floor + Background
+                    /// Currently not using layer Above
+//                    if(name.equals("Above")) // Above
+//                        map.tileMapAbove[row][col] = tileIdx;
+//                    else  // Floor + Background
                         map.tileMap[row][col] = tileIdx;
                 }
         }
         map.gameObjects = parseObjects(doc);
         map.gameEntities = getEntities(map.gameObjects);
-        System.out.println("[Playing] Harta incarcata cu succes!");
+        System.out.println("Objects | Encoding: " + encoding);
         return map;
     }
 

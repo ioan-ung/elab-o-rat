@@ -10,15 +10,15 @@ import java.sql.*;
 public class Database {
     private static final Logger LOGGER = Logger.getLogger(Database.class.getName());    // Trying this out
 
-    private static final String URL = "jdbc:sqlite:game.db";
-    public static int currentPlayerId = -1;
-    //tine evidenta playerului curent
+    private static final String URL = "jdbc:sqlite:game.db"; // URL of database
+    private static Connection conn;         // Uses only one connection initialized during initDB
+    public static int currentPlayerId = -1; //tine evidenta playerului curent
 
     public static void initDB() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection conn = DriverManager.getConnection(URL);
-                 Statement stmt = conn.createStatement()) {
+            conn =  DriverManager.getConnection(URL);
+            try (Statement stmt = conn.createStatement()) {
 
                 stmt.execute(
                         "CREATE TABLE IF NOT EXISTS player (" +
@@ -44,16 +44,15 @@ public class Database {
     public static void savePlayerState(int level, int x, int y, int score, String name) {
         String sql = "UPDATE player SET currentLevel = ?, playerX = ?, playerY = ?, score = ?, name = ? WHERE id = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, level);
-            pstmt.setInt(2, x);
-            pstmt.setInt(3, y);
-            pstmt.setInt(4, score);
-            pstmt.setString(5, name);
-            pstmt.setInt(6, currentPlayerId);
-            pstmt.executeUpdate();
+            ps.setInt(1, level);
+            ps.setInt(2, x);
+            ps.setInt(3, y);
+            ps.setInt(4, score);
+            ps.setString(5, name);
+            ps.setInt(6, currentPlayerId);
+            ps.executeUpdate();
 
             System.out.println("[Database] Game Saved Successfully!");
 
@@ -64,10 +63,9 @@ public class Database {
     public static void savePlayerScore(int score) {
         String sql = "UPDATE player SET score = " +score+ " WHERE id = " + currentPlayerId;
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            pstmt.executeUpdate();
+            ps.executeUpdate();
 
             System.out.println("[Database] Game Saved Successfully!");
 
@@ -79,8 +77,7 @@ public class Database {
     public static void loadPlayerState() {
         String sql = "SELECT playerX, playerY, score FROM player WHERE id = " + currentPlayerId + ";";
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             if (rs.next()) {
@@ -89,7 +86,6 @@ public class Database {
 
                 System.out.println("[Database] Loaded Player");
             }
-
         } catch (SQLException e) {
             LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
@@ -100,15 +96,15 @@ public class Database {
         LevelManager.currentLevel = null;
         String sql = "INSERT INTO player (currentLevel, playerX, playerY, score, name) " +
                 "VALUES (0, 64, 480, 0, ?);";
-        try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, name);
-            pstmt.executeUpdate();
+            ps.setString(1, name);
+            ps.executeUpdate();
 
-            ResultSet keys = pstmt.getGeneratedKeys();
+            System.out.println("[Database] New Game");
+
+            ResultSet keys = ps.getGeneratedKeys();
             if (keys.next()) return keys.getInt(1);
-
         } catch (SQLException e) {
             LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
@@ -118,8 +114,7 @@ public class Database {
     public static int getLevelIndex() {
         String sql = "SELECT currentLevel FROM player WHERE id = " + currentPlayerId + ";";
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             if (rs.next()) return rs.getInt("currentLevel");
@@ -133,8 +128,7 @@ public class Database {
     public static String resumeLastGame() {
         String sql = "SELECT id, name, currentLevel FROM player WHERE name != '' ORDER BY id DESC LIMIT 1;";
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             if (rs.next()) {
@@ -153,8 +147,7 @@ public class Database {
         String sql = "SELECT name, score FROM player WHERE name != '' ORDER BY score DESC LIMIT " + limit + ";";
         String[][] result = new String[0][];
 
-        try (Connection conn = DriverManager.getConnection(URL);
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             java.util.List<String[]> rows = new java.util.ArrayList<>();

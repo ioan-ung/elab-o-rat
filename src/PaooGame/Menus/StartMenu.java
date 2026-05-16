@@ -7,6 +7,7 @@ import PaooGame.Components.MenuConfig;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.Game;
 import PaooGame.GameManager.GameState;
+import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
@@ -92,6 +93,7 @@ public class StartMenu
             if (currentState == GameState.WON) {
                 Database.savePlayerScore(Level.player.getScore());
                 LevelManager.gameWon = false;
+                Game.playSong(1);
             }
             currentState = GameState.MENU;
             return;
@@ -109,6 +111,7 @@ public class StartMenu
         {
             case 0:
                 String name = PlayerNameDialog.show(canvas);
+                // long start = System.nanoTime(); // DEBUG_A
                 if(name != null)
                 {
                     currentPlayerName = name;
@@ -116,7 +119,9 @@ public class StartMenu
                     currentState = GameState.PLAYING;
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
+                    Cheese.resetCheese();
                 }
+                // System.out.println("New game: " + (System.nanoTime()-start)/1000_000.0); // DEBUG_A
                 break;
             case 1:
                 currentPlayerName = Database.resumeLastGame();
@@ -172,5 +177,9 @@ public class StartMenu
 
     public static String getPlayerName() {
         return currentPlayerName;
+    }
+
+    public void updateSize(int width, int height) { // Used during fullscreen toggle
+        for(MenuButton b: buttons) b.updateSize(width,height);
     }
 }

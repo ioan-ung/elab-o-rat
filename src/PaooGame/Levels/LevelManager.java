@@ -1,8 +1,11 @@
 package PaooGame.Levels;
 
 import PaooGame.Data.Database;
+import PaooGame.Game;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Button;
+import PaooGame.GameObjects.Entities.Box;
+import PaooGame.GameObjects.Entities.NPC_Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Direction;
@@ -99,8 +102,14 @@ public class LevelManager {
         }
 
         // If the level has been completed, go to the next one
-        if(++currentLevelIndex < levelOrder.length) currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
-        else gameWon = true;    // Game is won when all the levels have been completed
+        if(++currentLevelIndex < levelOrder.length) {
+            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+            Game.playSoundEfx(4);
+        }
+        else {
+            gameWon = true;    // Game is won when all the levels have been completed
+            Game.playSong(3);   // Plays from ratsURL
+        }
         // Save state to DB
         Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
     }

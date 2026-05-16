@@ -2,7 +2,12 @@ package PaooGame.Levels;
 
 import PaooGame.Camera;
 import PaooGame.CollisionChecker;
-import PaooGame.Debuger;
+import PaooGame.Game;
+import PaooGame.GameObjects.Entities.Box;
+import PaooGame.GameObjects.Entities.Entity;
+import PaooGame.GameObjects.Entities.NPC_Mouse;
+import PaooGame.GameObjects.Entities.Player;
+import PaooGame.Input.Debuger;
 import PaooGame.GameObjects.*;
 import PaooGame.GameWindow;
 import PaooGame.Graphics.AssetManager;
@@ -13,13 +18,12 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public abstract class Level {
     public static GameMap map;
-    protected Camera camera;
+    protected static Camera camera;
     public static Player player;
     protected GameWindow gameWindow;
 
@@ -45,25 +49,25 @@ public abstract class Level {
 
     protected void initCamera() {
         camera = new Camera(
-                gameWindow.getWindowWidth(), gameWindow.getWindowHeight(),
+                gameWindow.getCurrentWidth(), gameWindow.getCurrentHeight(),
                 map.mapWidth  * AssetManager.TILE_SIZE,
                 map.mapHeight * AssetManager.TILE_SIZE
         );
         camera.centerOn(player.getX(), player.getY());
     }
 
-    public boolean openDoorAt(int col, int row) {
+    public void openDoorAt(int col, int row) {
         boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof DoorTile;
         if (ret) map.tileMap[row][col] += 6;
         else System.out.println("This door is not closed");
-        return ret;
+        Game.playSoundEfx(0);
     }
 
-    public boolean closeDoorAt(int col, int row) {
+    public void closeDoorAt(int col, int row) {
         boolean ret = Tile.tiles[map.tileMap[row][col]] instanceof OpenDoorTile;
         if (ret) map.tileMap[row][col] -= 6;
         else System.out.println("This door is not open");
-        return ret;
+        Game.playSoundEfx(1);
     }
 
 
@@ -160,5 +164,10 @@ public abstract class Level {
             return true;
         }
         return Cheese.getCheeseLeft() == 0;
+    }
+
+    public static void updateCamera (int width, int height) {
+        if (camera == null) return;
+        camera.updateResolution(width, height);
     }
 }

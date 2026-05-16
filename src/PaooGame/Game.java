@@ -4,9 +4,11 @@ import PaooGame.Data.Database;
 import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.FontManager;
+import PaooGame.Input.Debuger;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
+import PaooGame.Sounds.SoundPlayer;
 import PaooGame.Tiles.Tile;
 
 import PaooGame.GameManager.GameState;
@@ -29,6 +31,7 @@ public class Game implements Runnable {
     private StartMenu   startMenu;
     private PauseMenu   pauseMenu;
     private EndMenu     endMenu;
+    private static SoundPlayer soundPlayer, sfxPlayer;
 
     public Game(String title, int width, int height)
     {
@@ -45,9 +48,12 @@ public class Game implements Runnable {
         AssetManager.Init();   // ← 1. încarcă imaginile
         Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
         levelManager = new LevelManager(window);
-        startMenu = new StartMenu(this, window.GetCanvas(), window.getWindowWidth(), window.getWindowHeight());
+        startMenu = new StartMenu(this, window.GetCanvas(), window.getCurrentWidth(), window.getCurrentHeight());
         pauseMenu = new PauseMenu();
         endMenu   = new EndMenu();
+        soundPlayer = new SoundPlayer();
+        sfxPlayer = new SoundPlayer();
+        playSong(1);
     }
 
     @SuppressWarnings("BusyWait")
@@ -122,6 +128,12 @@ public class Game implements Runnable {
     {
         startMenu.setCurrentState();    // Sets correct current state
 
+        if (KeyHandler.fullScreenKey) {
+            window.toggleFullScreen();
+            startMenu.updateSize(window.getCurrentWidth(), window.getCurrentHeight());
+            Level.updateCamera(window.getCurrentWidth(), window.getCurrentHeight());
+            KeyHandler.fullScreenKey = false;
+        }
 
         if(startMenu.getState() == GameState.PLAYING) levelManager.update(gw);
 
@@ -154,27 +166,27 @@ public class Game implements Runnable {
         }
 
         // Clear window
-        g2.clearRect(0, 0, window.getWindowWidth(), window.getWindowHeight());
+        g2.clearRect(0, 0, window.getCurrentWidth(), window.getCurrentHeight());
         if(startMenu.getState() == GameState.MENU) {
             // Draw main menu
-            startMenu.Draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            startMenu.Draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
         }
         else if(startMenu.getState() == GameState.PLAYING) {
             // Draw playing area
-            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
 
             // Draw player score
-            GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getWindowWidth()-120,0,120,30);
+            GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getCurrentWidth()-120,0,120,30);
             // Draw no. cheese left only when NOT in debug mode
             if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
         }
         else if(startMenu.getState() == GameState.PAUSED) {
-            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
-            pauseMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight());
+            levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
+            pauseMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
         }
         else if(startMenu.getState() == GameState.WON) {
-            levelManager.draw(g2, window.getWindowWidth(), window.getWindowHeight());
-            endMenu.draw(g2, window.getWindowWidth(), window.getWindowHeight(), Level.player.getScore());
+            levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
+            endMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight(), Level.player.getScore());
         }
 
         // DEBUG_A
@@ -187,5 +199,21 @@ public class Game implements Runnable {
         // Force the OS to synchronize the graphics pipeline
         Toolkit.getDefaultToolkit().sync();
         g2.dispose();
+    }
+
+    public static void playSoundEfx (int i) {
+        sfxPlayer.setSound(i);
+        sfxPlayer.play();
+    }
+
+    public static void playSong(int songID) {
+        // Stops last song
+        if (soundPlayer != null) soundPlayer.stop();
+
+        // New song ID
+        if (songID <= 0) return;
+        soundPlayer.setSound(-songID);
+        soundPlayer.play();
+        soundPlayer.loop();
     }
 }
