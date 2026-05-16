@@ -1,5 +1,7 @@
 package PaooGame.Components;
 
+import java.awt.*;
+
 public class MenuConfig {
     //leaderboard
     public static final int leaderBoard_X = 54;
@@ -24,6 +26,14 @@ public class MenuConfig {
 
     public static final int startMenu_W = 1308;
     public static final int startMenu_H = 809;
+
+
+
+    public static final Color BG_COLOR     = new Color(20, 20, 35);
+    public static final Color ACCENT_COLOR = new Color(220, 180, 60);
+    public static final Color TEXT_COLOR   = new Color(230, 220, 200);
+    public static final Color FIELD_BG     = new Color(15, 15, 25);
+    public static final Color BTN_HOVER    = new Color(240, 200, 80);
 }
 
 

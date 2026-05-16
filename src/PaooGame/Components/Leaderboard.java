@@ -4,16 +4,18 @@ import PaooGame.Data.Database;
 
 import java.awt.*;
 
+import static PaooGame.Components.MenuConfig.*;
+
 public class Leaderboard {
 
     public void draw(Graphics2D g2d, int wndWidth, int wndHeight) {
         double sx = (double) wndWidth  / MenuConfig.startMenu_W;
         double sy = (double) wndHeight / MenuConfig.startMenu_H;
 
-        int lbX = (int)(MenuConfig.leaderBoard_X * sx);
-        int lbY = (int)(MenuConfig.leaderBoard_Y * sy);
-        int lbW = (int)(MenuConfig.leaderBoard_W * sx);
-        int lbH = (int)(MenuConfig.leaderBoard_H * sy);
+        int lbX = (int)(leaderBoard_X * sx);
+        int lbY = (int)(leaderBoard_Y * sy);
+        int lbW = (int)(leaderBoard_W * sx);
+        int lbH = (int)(leaderBoard_H * sy);
 
         //apelul catre database
         //cele mai bune 3 scoruri
