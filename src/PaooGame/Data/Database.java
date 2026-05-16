@@ -143,6 +143,20 @@ public class Database {
         return "";
     }
 
+    public static boolean playerExists(String numeCautat) {
+        String sql = "SELECT COUNT(*) FROM player WHERE name = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, numeCautat);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+        }
+        return false;
+    }
+
     public static String[][] getTopPlayers(int limit) {
         String sql = "SELECT name, score FROM player WHERE name != '' ORDER BY score DESC LIMIT " + limit + ";";
         String[][] result = new String[0][];
