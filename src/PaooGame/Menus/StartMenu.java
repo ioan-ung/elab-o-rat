@@ -111,6 +111,7 @@ public class StartMenu
         {
             case 0:
                 String name = PlayerNameDialog.show(canvas);
+                // long start = System.nanoTime(); // DEBUG_A
                 if(name != null)
                 {
                     currentPlayerName = name;
@@ -120,6 +121,7 @@ public class StartMenu
                     canvas.requestFocusInWindow();
                     Cheese.resetCheese();
                 }
+                // System.out.println("New game: " + (System.nanoTime()-start)/1000_000.0); // DEBUG_A
                 break;
             case 1:
                 currentPlayerName = Database.resumeLastGame();
