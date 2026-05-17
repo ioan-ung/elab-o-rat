@@ -1,7 +1,7 @@
 package PaooGame.Levels;
 
-import PaooGame.Camera;
-import PaooGame.CollisionChecker;
+import PaooGame.Components.Camera;
+import PaooGame.Algorithms.CollisionChecker;
 import PaooGame.Game;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.GameObjects.Entities.Entity;

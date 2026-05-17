@@ -1,4 +1,4 @@
-package PaooGame;
+package PaooGame.Components;
 
 import PaooGame.Graphics.AssetManager;
 

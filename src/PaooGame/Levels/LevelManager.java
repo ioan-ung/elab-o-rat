@@ -9,7 +9,7 @@ import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.GameObjects.Entities.NPC_Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
-import PaooGame.Direction;
+import PaooGame.Algorithms.Direction;
 import PaooGame.Menus.StartMenu;
 
 import java.awt.*;

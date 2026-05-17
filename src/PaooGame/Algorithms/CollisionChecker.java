@@ -1,5 +1,6 @@
-package PaooGame;
+package PaooGame.Algorithms;
 
+import PaooGame.Game;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.GameObjects.Entities.Entity;

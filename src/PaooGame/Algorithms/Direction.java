@@ -1,4 +1,4 @@
-package PaooGame;
+package PaooGame.Algorithms;
 
 public enum Direction {
     NORTH,
