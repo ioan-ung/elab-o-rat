@@ -127,7 +127,7 @@ public class Database {
 
             ps.executeUpdate();
 
-            System.out.println("[Database] Game Saved Successfully!");
+            System.out.println("[Database] Saved Player Score");
 
         } catch (SQLException e) {
             LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);

@@ -18,8 +18,10 @@ import PaooGame.Map.TmxParser;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
+
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
@@ -41,10 +43,16 @@ public abstract class Level {
     public void loadLevel() {
         ArrayList<Point> collidedObjects = Database.loadObjChanges(); // Objects from last save
         Point objCoord = new Point();
+        Iterator<GameObject> iterator = map.gameObjects.iterator();
 
-        for (GameObject obj : map.gameObjects) {
-            objCoord.setLocation(obj.getX(),obj.getY());
-            if (collidedObjects.contains(objCoord)) obj.act();
+        while (iterator.hasNext()) {
+            GameObject obj = iterator.next(); // Get the next object
+            objCoord.setLocation(obj.getX(), obj.getY()); // Get coordinates
+            // Check if this object is in the database
+            if (collidedObjects.contains(objCoord)) {
+                obj.act();
+                if (obj instanceof Cheese) iterator.remove();
+            }
         }
     }
 
