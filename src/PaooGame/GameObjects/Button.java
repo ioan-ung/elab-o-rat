@@ -3,7 +3,7 @@ package PaooGame.GameObjects;
 import PaooGame.Data.Database;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.LevelManager;
-import PaooGame.Direction;
+import PaooGame.Algorithms.Direction;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

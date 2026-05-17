@@ -1,6 +1,6 @@
 package PaooGame.GameObjects.Entities;
 
-import PaooGame.CollisionChecker;
+import PaooGame.Algorithms.CollisionChecker;
 import PaooGame.Input.KeyHandler;
 
 public class Player extends Mouse{
