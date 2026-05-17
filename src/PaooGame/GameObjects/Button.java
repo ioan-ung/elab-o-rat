@@ -1,5 +1,6 @@
 package PaooGame.GameObjects;
 
+import PaooGame.Data.Database;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.LevelManager;
 import PaooGame.Direction;
@@ -13,7 +14,8 @@ import static PaooGame.Graphics.AssetManager.*;
 public class Button extends GameObject{
     protected final Direction direction;
     protected BufferedImage activeImage;    // Used when button is active
-    protected final int doorX, doorY;             // Map coordinates of linked door
+    protected final int doorX, doorY;       // Map coordinates of linked door
+    protected boolean save = true;
 
     public Button (int x, int y, Direction direction, int doorX, int doorY) {
         // Set coordinates and direction
@@ -25,18 +27,23 @@ public class Button extends GameObject{
         // Set hitbox
         hitBox = new Rectangle(10,10,10,10);
 
-        collision = true;      // False when button is active
+        collision = false;      // Turns true when button is activated
         setSprites();
     }
 
     @Override
     public void hasCollided() {
-        // Open the door at collision if it's closed
-        if (collision) {     // Opens only if it's closed
-            LevelManager.currentLevel.openDoorAt(doorX, doorY);
-            baseImage = activeImage;    // Change the image to draw
-        }
-        collision = false;
+        if (collision) return;
+        act();
+        if (save) Database.saveObjChanges(x,y); // Save interraction to DB
+    }
+
+
+    @Override
+    public void act() {         // Opens door at (doorX, doorY)
+        collision = true;
+        LevelManager.currentLevel.openDoorAt(doorX, doorY);
+        baseImage = activeImage;    // Change the button's image for draw
     }
 
     @Override

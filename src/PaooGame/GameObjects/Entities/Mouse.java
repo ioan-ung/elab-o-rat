@@ -47,7 +47,4 @@ public abstract class Mouse extends Entity{
         southeast = AssetManager.mouseSouthEast;
         southwest = AssetManager.mouseSouthWest;
     }
-
-    @Override
-    public void hasCollided() {}
 }

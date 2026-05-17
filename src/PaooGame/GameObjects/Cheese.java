@@ -1,8 +1,7 @@
 package PaooGame.GameObjects;
 
+import PaooGame.Data.Database;
 import PaooGame.Graphics.AssetManager;
-import PaooGame.Levels.Level;
-
 import java.awt.*;
 
 public class Cheese extends GameObject{
@@ -18,9 +17,16 @@ public class Cheese extends GameObject{
 
     @Override // Decrements cheeseLeft and sets collision
     public void hasCollided() {
-        if (collision) return;  // Return if it's already been collected
+        if (collision) return;
+        act();
+        Database.saveObjChanges(x,y); // Save interraction to DB
+    }
+
+    @Override
+    public void act() {
+        // Decrement the cheese left
         collision = true;
-        --cheeseLeft;   // Decrement the cheese left
+        --cheeseLeft;
     }
 
     @Override

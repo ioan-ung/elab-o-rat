@@ -16,6 +16,7 @@ public class TimerButton extends Button{
     public TimerButton(int x, int y, Direction direction, int doorX, int doorY, int frames) {
         // Call simple button constructor
         super(x, y, direction, doorX, doorY);
+        save = false;
         setCount = frames;
     }
 
@@ -28,12 +29,10 @@ public class TimerButton extends Button{
     @Override
     public void update() {  // Decrements the countdown
         if (countdown > 0) --countdown;
-        else {
-            if (!collision) {   // Closes the door when there's no collision if it's open
-                LevelManager.currentLevel.closeDoorAt(doorX, doorY);
-                baseImage = inactiveImage;
-            }
-            collision = true;
+        else if (collision) {   // Closes the door when there's no collision if it's open
+            LevelManager.currentLevel.closeDoorAt(doorX, doorY);
+            baseImage = inactiveImage;
+            collision = false;
         }
     }
 

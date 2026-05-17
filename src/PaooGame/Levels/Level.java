@@ -2,6 +2,7 @@ package PaooGame.Levels;
 
 import PaooGame.Camera;
 import PaooGame.CollisionChecker;
+import PaooGame.Data.Database;
 import PaooGame.Game;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.GameObjects.Entities.Entity;
@@ -18,6 +19,7 @@ import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
@@ -30,10 +32,20 @@ public abstract class Level {
     public Level(GameWindow gw, String mapPath) {
         this.gameWindow = gw;
         gameWindow.GetCanvas().requestFocusInWindow();// necesar la tranzitia intre nivele — constructorul noului nivel recapata focusul pentru canvas
-        map = TmxParser.getMap(mapPath);
 
+        map = TmxParser.getMap(mapPath);   // Loads map
         initPlayer();
         initCamera();
+    }
+
+    public void loadLevel() {
+        ArrayList<Point> collidedObjects = Database.loadObjChanges(); // Objects from last save
+        Point objCoord = new Point();
+
+        for (GameObject obj : map.gameObjects) {
+            objCoord.setLocation(obj.getX(),obj.getY());
+            if (collidedObjects.contains(objCoord)) obj.act();
+        }
     }
 
     protected void initPlayer() {

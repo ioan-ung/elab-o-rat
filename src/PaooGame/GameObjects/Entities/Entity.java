@@ -24,4 +24,9 @@ public abstract class Entity extends GameObject {
     public int getYSign() {
         return ySign;
     }
+
+    @Override
+    public void act() {}
+    @Override
+    public void hasCollided() {}
 }

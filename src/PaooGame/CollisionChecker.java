@@ -1,5 +1,6 @@
 package PaooGame;
 
+import PaooGame.Data.Database;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.GameObjects.Entities.Entity;
@@ -27,7 +28,9 @@ public class CollisionChecker {
 
         // Increment score of the player if they got cheese
         if (object instanceof Cheese && entity instanceof Player) {
-            Level.player.setScore(Level.player.getScore() + 10);
+            int score = Level.player.getScore() + 10;
+            Level.player.setScore(score);
+            Database.savePlayerScore(score);
             Game.playSoundEfx(2);
         }
         return true;

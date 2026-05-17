@@ -92,6 +92,7 @@ public class LevelManager {
         if(currentLevel == null) {
             LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
             currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+            currentLevel.loadLevel();
             Database.loadPlayerState();     // Load game from database
             return;
         }

@@ -14,6 +14,7 @@ public class BoxButton extends Button{
 
     public BoxButton(int x, int y, Direction direction, int doorX, int doorY) {
         super(x, y, direction, doorX, doorY);
+        save = false;
     }
 
 
@@ -26,12 +27,10 @@ public class BoxButton extends Button{
     @Override
     public void update() {
         if (hasBox) hasBox = false;
-        else {
-            if (!collision) {   // Closes the door if it's open when there's no collision
-                LevelManager.currentLevel.closeDoorAt(doorX, doorY);
-                baseImage = inactiveImage;
-            }
-            collision = true;
+        else if (collision) {   // Closes the door if it's open when there's no collision
+            LevelManager.currentLevel.closeDoorAt(doorX, doorY);
+            baseImage = inactiveImage;
+            collision = false;
         }
     }
 

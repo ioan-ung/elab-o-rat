@@ -3,6 +3,8 @@ package PaooGame.Data;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import java.sql.*;
@@ -12,14 +14,14 @@ public class Database {
 
     private static final String URL = "jdbc:sqlite:game.db"; // URL of database
     private static Connection conn;         // Uses only one connection initialized during initDB
-    public static int currentPlayerId = -1; //tine evidenta playerului curent
+    private static int currentPlayerId = -1; //tine evidenta playerului curent
 
     public static void initDB() {
         try {
             Class.forName("org.sqlite.JDBC");
             conn =  DriverManager.getConnection(URL);
             try (Statement stmt = conn.createStatement()) {
-
+                // Initialize Player Table
                 stmt.execute(
                         "CREATE TABLE IF NOT EXISTS player (" +
                                 "id INTEGER PRIMARY KEY, " +
@@ -31,17 +33,75 @@ public class Database {
                 );
                 stmt.execute(
                         "INSERT OR IGNORE INTO player (id, currentLevel, playerX, playerY, score, name) " +
-                                "VALUES (1, 0, 64, 480, 0, '');"
+                                "VALUES (1, 0, 0, 0, 0, '');"
+                );
+                // Initialize Game Object Table
+                stmt.execute(
+                        "CREATE TABLE IF NOT EXISTS coordinates (" +
+                                "player_id INTEGER, " +
+                                "x INTEGER, " +
+                                "y INTEGER);"
                 );
             }
         } catch (SQLException e) {
-            System.err.println("Database initialization failed!\n" + e.getMessage());
+            LOGGER.log(java.util.logging.Level.SEVERE, "Database initialization failed!", e);
         } catch (ClassNotFoundException e) {
-            System.err.println("SQLite JDBC driver JAR missing\n" + e.getMessage());
+            LOGGER.log(java.util.logging.Level.SEVERE, "SQLite JDBC driver JAR missing", e);
         }
     }
 
+    public static void saveObjChanges(int x, int y) {
+        if (currentPlayerId == -1) return;
+
+        String sql = "INSERT INTO coordinates (player_id, x, y) VALUES (?, ?, ?)";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, currentPlayerId);
+            ps.setInt(2, x);
+            ps.setInt(3, y);
+            ps.executeUpdate();
+
+            System.out.println("[Database] Map change at (" + x + ", " + y + ")");
+
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed appending map change", e);
+        }
+    }
+
+    public static ArrayList<Point> loadObjChanges() {
+        ArrayList<Point> changedTiles = new ArrayList<>();
+        if (currentPlayerId == -1) return changedTiles;
+
+        String sql = "SELECT x, y FROM coordinates WHERE player_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, currentPlayerId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) changedTiles.add(new Point(rs.getInt("x"), rs.getInt("y")));
+            }
+            System.out.println("[Database] Loaded " + changedTiles.size() + " permanent map changes.");
+
+        } catch (SQLException e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Failed loading map changes", e);
+        }
+        return changedTiles;
+    }
+
     public static void savePlayerState(int level, int x, int y, int score, String name) {
+        if (currentPlayerId == -1) return;
+
+        int oldLevel = getLevelIndex();
+        // Wipe coordinates table when going to the next level
+        if (level != oldLevel) {
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("DELETE FROM coordinates;");
+            } catch (SQLException e) {
+                LOGGER.log(java.util.logging.Level.SEVERE, "Failed wiping coordinates on level change", e);
+            }
+        }
+
         String sql = "UPDATE player SET currentLevel = ?, playerX = ?, playerY = ?, score = ?, name = ? WHERE id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -92,7 +152,7 @@ public class Database {
     }
 
     //idul se genereaza automat --metoda insert din sql
-    public static int startNewGame(String name) {
+    public static void startNewGame(String name) {
         LevelManager.currentLevel = null;
         String sql = "INSERT INTO player (currentLevel, playerX, playerY, score, name) " +
                 "VALUES (0, 64, 480, 0, ?);";
@@ -101,14 +161,19 @@ public class Database {
             ps.setString(1, name);
             ps.executeUpdate();
 
-            System.out.println("[Database] New Game");
-
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next()) currentPlayerId = keys.getInt(1);
+            else currentPlayerId = -1;
+
+            // Wipe coordinates table
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("DELETE FROM coordinates;");
+            }
+
+            System.out.println("[Database] New Game");
         } catch (SQLException e) {
             LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
         }
-        return -1;
     }
 
     public static int getLevelIndex() {
@@ -159,5 +224,4 @@ public class Database {
         }
         return result;
     }
-
 }

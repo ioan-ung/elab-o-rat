@@ -9,6 +9,8 @@ public class Spawn extends GameObject{
     }
 
     @Override
+    public void act() {}
+    @Override
     public void hasCollided() {}
     @Override
     public void update() {}

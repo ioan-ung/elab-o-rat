@@ -19,8 +19,6 @@ public class Box extends Entity{
     }
 
 
-    @Override
-    public void hasCollided() {}
 
     @Override
     public void update() {

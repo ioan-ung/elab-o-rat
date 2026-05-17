@@ -21,6 +21,7 @@ public abstract class GameObject {
 
     // Abstract methods
     public abstract void hasCollided();
+    public abstract void act();
     public abstract void update();
     protected abstract void setSprites();
 
