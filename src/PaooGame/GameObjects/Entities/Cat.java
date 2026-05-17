@@ -10,10 +10,13 @@ import java.util.List;
 
 public class Cat extends Entity {
 
-    private static final int PATH_REFRESH_RATE = 30; // frames between BFS recalculations
+    private static final int PATH_REFRESH_RATE = 30; // cat de des apelam bfs --30fps
+    private static final int HIT_COOLDOWN = 60;      // 60 frameuri=1s --intre 2 atacuri succesive
+    private static final int SCORE_PENALTY = 10;
 
     private int frameCounter = 0;
-    private List<int[]> path = new ArrayList<>(); // [col, row] tile waypoints
+    private int hitCooldown = 0;
+    private List<int[]> path = new ArrayList<>(); // (col,row) --pathul piscii
     private int waypointIndex = 0;
 
     public Cat(int x, int y) {
@@ -24,12 +27,17 @@ public class Cat extends Entity {
     }
 
     @Override
-    public void hasCollided() {}
+    public void hasCollided() {
+        if (hitCooldown > 0) return;
+        Level.player.setScore(Level.player.getScore() - SCORE_PENALTY);
+        hitCooldown = HIT_COOLDOWN;
+    }
 
     @Override
     public void update() {
         if (Level.player == null || Level.map == null) return;
 
+        if (hitCooldown > 0) hitCooldown--;
         frameCounter++;
         if (frameCounter >= PATH_REFRESH_RATE || path.isEmpty() || waypointIndex >= path.size()) {
             frameCounter = 0;

@@ -24,7 +24,6 @@ public class MazeLevel extends Level {
         super(gw, MAP_PATH);
         randomizeCheese();
         initialCheese = Cheese.getCheeseLeft();
-        spawnCat();
     }
 
     private void randomizeCheese() {
@@ -71,6 +70,8 @@ public class MazeLevel extends Level {
     @Override
     public void update() {
         super.update();
+
+        //conditia de spawn la un anumit nr de cheese
         if (!catSpawned && initialCheese - Cheese.getCheeseLeft() >= CHEESE_TO_SPAWN_CAT)
             spawnCat();
     }
