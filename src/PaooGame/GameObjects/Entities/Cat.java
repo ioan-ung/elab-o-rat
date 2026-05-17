@@ -29,7 +29,7 @@ public class Cat extends Entity {
     @Override
     public void hasCollided() {
         if (hitCooldown > 0) return;
-        Level.player.setScore(Level.player.getScore() - SCORE_PENALTY);
+        Level.player.setScore(Math.max(Level.player.getScore() - SCORE_PENALTY,0));
         hitCooldown = HIT_COOLDOWN;
     }
 
