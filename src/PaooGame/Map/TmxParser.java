@@ -134,17 +134,18 @@ public class TmxParser {
                         // Get every item of the list
                         for (int k = 0; k < items.getLength(); k++) {
                             Element itemElement = (Element) items.item(k);
-                            listItems.add(Integer.parseInt(itemElement.getAttribute("value")));
+                            listItems.add((int) Double.parseDouble(itemElement.getAttribute("value")));
                         }
                         properties[p] = listItems;  // Put the list as a property
-                    } else properties[p] = Integer.parseInt(propElement.getAttribute("value"));
+                    } else properties[p] = (int) Double.parseDouble(propElement.getAttribute("value"));
                 }
 
                 // Create and add the object
                 GameObject newObject = LevelManager.createObject(
                         type,
-                        Integer.parseInt(objElement.getAttribute("x")),
-                        Integer.parseInt(objElement.getAttribute("y")),
+                        //tiled salveaza ca double, noi folosim int
+                        (int) Double.parseDouble(objElement.getAttribute("x")),
+                        (int) Double.parseDouble(objElement.getAttribute("y")),
                         properties
                         );
 

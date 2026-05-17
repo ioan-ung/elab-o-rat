@@ -5,6 +5,7 @@ import PaooGame.Game;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Button;
 import PaooGame.GameObjects.Entities.Box;
+import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.GameObjects.Entities.NPC_Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
@@ -45,6 +46,8 @@ public class LevelManager {
                 case "Spawn": return new Spawn(x,y);
 
                 case "Box": return new Box(x,y);
+
+                case "Cat": return new Cat(x,y);
 
                 case "Cheese": return new Cheese(x,y);
 

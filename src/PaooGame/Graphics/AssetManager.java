@@ -44,6 +44,7 @@ public class AssetManager
 
     public static BufferedImage cheese;
     public static BufferedImage box;
+    public static BufferedImage cat;
 
     public static BufferedImage basicButtonWireTop;
     public static BufferedImage basicButtonWireLeft;
@@ -117,8 +118,9 @@ public class AssetManager
         doorTOpen = AssetManager.getInstance().getSprite("doorTOpen", 7, 8);
         doorBOpen = AssetManager.getInstance().getSprite("doorBOpen", 7, 7);
 
-        cheese = AssetManager.getInstance().getSprite("cheese", 9, 8);
         box = AssetManager.getInstance().getSprite("box", 8, 8);
+        cheese = AssetManager.getInstance().getSprite("cheese", 9, 8);
+        cat = AssetManager.getInstance().getSprite("cat", 10, 8);
 
 
 
