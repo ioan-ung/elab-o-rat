@@ -225,14 +225,15 @@ public class Database {
     }
 
     public static String[][] getTopPlayers(int limit) {
-        String sql = "SELECT name, score FROM player WHERE name != '' ORDER BY score DESC LIMIT " + limit + ";";
+        String sql = "SELECT name, score, currentLevel FROM player WHERE name != '' ORDER BY score DESC LIMIT " + limit + ";";
         String[][] result = new String[0][];
 
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             java.util.List<String[]> rows = new java.util.ArrayList<>();
-            while (rs.next())
+            // Only get players that finished the game
+            while (rs.next()) if (rs.getInt("currentLevel") > 2)
                 rows.add(new String[]{ rs.getString("name"), String.valueOf(rs.getInt("score")) });
             result = rows.toArray(new String[0][]);
         } catch (SQLException e) {

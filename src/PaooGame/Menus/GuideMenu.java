@@ -136,14 +136,16 @@ public class GuideMenu {
 
         // inamicul pisica - BFS pathfinding, destul de nasol daca nu stii harta
         y = drawSection(g2d, "ENEMIES", new String[]{
-            "Cat  Uses BFS pathfinding to hunt you down through the level.",
-            "     Each hit costs -10 points (score never drops below 0).",
-            "     Appears in the Maze level after you collect 3 cheese."
+            "Mice: Interacts with puzzle elements and may steal collectible cheese;",
+            "      Appears in the Tutorial and Laboratory levels inside puzzles.",
+            " Cat: Uses BFS pathfinding to hunt you down through the level;",
+            "      Each hit costs -10 points (score never drops below 0);",
+            "      Appears in the Maze level after you collect 3 cheese."
         }, contentX, y, contentW, baseFont);
 
         y = drawSection(g2d, "LEVELS", new String[]{
             "1. Tutorial     Learn movement, collect cheese, use buttons & doors.",
-            "2. Laboratory   Solve puzzles involving boxes and timer buttons.",
+            "2. Laboratory   Solve bigger and more complex puzzles.",
             "3. Maze         Face the cat enemy with randomized cheese placement."
         }, contentX, y, contentW, baseFont);
 
@@ -156,9 +158,9 @@ public class GuideMenu {
         // debug mode - de lasat doar pt testare, nu pt release (dar cine stie)
         y = drawKeyTable(g2d, "DEBUG MODE  (toggle with F3)", new String[][]{
             {"F1",    "Skip to the next level"},
-            {"SPACE", "Move player one full tile"},
+            {"SPACE", "Player speed changes to one tile per frame"},
             {"B",     "Spawn a box at the player position"},
-            {"O",     "Open all doors instantly"},
+            {"O",     "Open all doors around the player"},
             {"F6",    "Save current game state"},
             {"F7",    "Load saved game state"}
         }, contentX, y, contentW, baseFont);

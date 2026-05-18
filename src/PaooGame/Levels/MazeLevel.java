@@ -17,7 +17,7 @@ import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 public class MazeLevel extends Level {
     private static final String MAP_PATH = "/maps/Maze.tmx";
     private static final int CHEESE_TO_SPAWN_CAT = 3; // pisica apare dupa ce playerul ia 3 branze
-    private static final int NO_CHEESE = 3; // no. cheese on the map
+    private static final int NO_CHEESE = 20; // no. cheese on the map
     private final int initialCheese;
     private static boolean catSpawned = false;
     private static int catX, catY;

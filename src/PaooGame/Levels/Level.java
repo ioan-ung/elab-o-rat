@@ -4,10 +4,8 @@ import PaooGame.Data.Database;
 import PaooGame.Components.Camera;
 import PaooGame.Algorithms.CollisionChecker;
 import PaooGame.Game;
-import PaooGame.GameObjects.Entities.Box;
-import PaooGame.GameObjects.Entities.Entity;
-import PaooGame.GameObjects.Entities.NPC_Mouse;
-import PaooGame.GameObjects.Entities.Player;
+import PaooGame.GameObjects.Entities.*;
+import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.Debuger;
 import PaooGame.GameObjects.*;
 import PaooGame.GameWindow;
@@ -20,6 +18,7 @@ import PaooGame.Tiles.OpenDoorTile;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -30,6 +29,7 @@ public abstract class Level {
     protected static Camera camera;
     public static Player player;
     protected GameWindow gameWindow;
+    private static final BufferedImage redScreen = ImageLoader.LoadImage("/red-screen.png");
 
     public Level(GameWindow gw, String mapPath) {
         this.gameWindow = gw;
@@ -129,9 +129,15 @@ public abstract class Level {
         int camY = camera.getYOffset();
 
         drawLayer(g, map.tileMap, camX, camY, windowWidth, windowHeight);
-
         Graphics2D g2 = (Graphics2D) g;
 
+        if (Cat.getCooldown()>0) {
+            float alpha = (float) Cat.getCooldown()/Cat.HIT_COOLDOWN;
+            Composite ogComp = g2.getComposite();
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+            g2.drawImage(redScreen, 0, 0, windowWidth, windowHeight, null);
+            g2.setComposite(ogComp);
+        }
         g2.translate(-camX, -camY);
         // First draw non-entity game objects
         for (GameObject obj : map.gameObjects) {

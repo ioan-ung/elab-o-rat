@@ -11,18 +11,18 @@ import java.util.List;
 public class Cat extends Entity {
 
     private static final int PATH_REFRESH_RATE = 30; // cat de des apelam bfs --30fps
-    private static final int HIT_COOLDOWN = 60;      // 60 frameuri=1s --intre 2 atacuri succesive
+    public static final int HIT_COOLDOWN = 60;      // 60 frameuri=1s --intre 2 atacuri succesive
     private static final int SCORE_PENALTY = 10;
 
     private int frameCounter = 0;
-    private int hitCooldown = 0;
+    private static int hitCooldown = 0;
     private List<int[]> path = new ArrayList<>(); // (col,row) --pathul piscii
     private int waypointIndex = 0;
 
     public Cat(int x, int y) {
         super(x, y);
         speed = 2;
-        hitBox = new Rectangle(10, 10, 12, 12);
+        hitBox = new Rectangle(0, 0, 32, 32);
         setSprites();
     }
 
@@ -85,13 +85,21 @@ public class Cat extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
-        if (baseImage != null) { super.draw(g2); return; }
-        g2.setColor(new Color(255, 140, 0));
-        g2.fillRect(x * AssetManager.SCALE, y * AssetManager.SCALE, AssetManager.TILE_SIZE, AssetManager.TILE_SIZE);
+        // Placeholder when there's no image
+        if (baseImage == null) {
+            g2.setColor(new Color(255, 140, 0));
+            g2.fillRect(x * AssetManager.SCALE, y * AssetManager.SCALE, AssetManager.TILE_SIZE, AssetManager.TILE_SIZE);
+            return;
+        }
+        super.draw(g2);
     }
 
     @Override
     protected void setSprites() {
         baseImage = AssetManager.cat;
+    }
+
+    public static int getCooldown() {
+        return hitCooldown;
     }
 }
