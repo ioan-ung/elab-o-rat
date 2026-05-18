@@ -8,6 +8,7 @@ import PaooGame.Components.PlayerNameDialog;
 import PaooGame.Game;
 import PaooGame.GameManager.GameState;
 import PaooGame.GameObjects.Cheese;
+import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
@@ -144,6 +145,7 @@ public class StartMenu
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
                     Cheese.resetCheese();
+                    Cat.resetCooldown();
                 }
                 // System.out.println("New game: " + (System.nanoTime()-start)/1000_000.0); // DEBUG_A
                 break;

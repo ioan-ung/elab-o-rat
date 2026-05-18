@@ -19,7 +19,7 @@ public class MazeLevel extends Level {
     private static final int CHEESE_TO_SPAWN_CAT = 3; // pisica apare dupa ce playerul ia 3 branze
     private static final int NO_CHEESE = 20; // no. cheese on the map
     private final int initialCheese;
-    private static boolean catSpawned = false;
+    private boolean catSpawned = false;
     private static int catX, catY;
 
     public MazeLevel(GameWindow gw) {
@@ -46,7 +46,7 @@ public class MazeLevel extends Level {
     }
 
     // Spawns cat at predefined coordinates
-    private static void spawnCat() {
+    private void spawnCat() {
         Cat cat = new Cat(catX, catY);
         map.gameObjects.add(cat);
         map.gameEntities.add(cat);

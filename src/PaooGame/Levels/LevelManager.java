@@ -104,7 +104,7 @@ public class LevelManager {
             currentLevel.update();  // Update level
             return;
         }
-
+        Cat.resetCooldown();
         // If the level has been completed, go to the next one
         if(++currentLevelIndex < levelOrder.length) {
             currentLevel = getLevel(levelOrder[currentLevelIndex], gw);

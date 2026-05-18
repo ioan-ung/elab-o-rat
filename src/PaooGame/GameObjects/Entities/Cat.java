@@ -1,6 +1,7 @@
 package PaooGame.GameObjects.Entities;
 
 import PaooGame.Algorithms.Pathfinder;
+import PaooGame.Game;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.Level;
 
@@ -31,6 +32,7 @@ public class Cat extends Entity {
         if (hitCooldown > 0) return;
         Level.player.setScore(Math.max(Level.player.getScore() - SCORE_PENALTY,0));
         hitCooldown = HIT_COOLDOWN;
+        Game.playSoundEfx(5);
     }
 
     @Override
@@ -97,6 +99,10 @@ public class Cat extends Entity {
     @Override
     protected void setSprites() {
         baseImage = AssetManager.cat;
+    }
+
+    public static void resetCooldown() {
+        hitCooldown = 0;
     }
 
     public static int getCooldown() {

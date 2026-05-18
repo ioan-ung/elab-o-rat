@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class SoundPlayer {
     private Clip clip;
-    private final URL[] soundURL = new URL[5];  // Keeps track of sounds
+    private final URL[] soundURL = new URL[6];  // Keeps track of sounds
     private final URL ratsURL;                  // Used during win screen
     private final URL miceLiving, miceVenus;    // Background music
 
@@ -25,6 +25,7 @@ public class SoundPlayer {
         soundURL[2] = getClass().getResource("/sound/snd_credit_s.wav");
         soundURL[3] = getClass().getResource("/sound/snd_bigdoor_open.wav");
         soundURL[4] = getClass().getResource("/sound/snd_bell.wav");
+        soundURL[5] = getClass().getResource("/sound/mus_myemeow.wav");
         miceLiving = getClass().getResource("/sound/05 - Living Mice.wav");
         miceVenus = getClass().getResource("/sound/11 - Mice on Venus.wav");
         ratsURL = getClass().getResource("/sound/rats.wav");
