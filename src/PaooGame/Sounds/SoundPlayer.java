@@ -4,6 +4,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.BooleanControl;
 import java.net.URL;
 
 public class SoundPlayer {
@@ -14,6 +15,8 @@ public class SoundPlayer {
 
     private static final float SFX_VOLUME = -20.0f;
     private static final float MUSIC_VOLUME = -10.0f;
+
+    private boolean isMuted = false;
 
     public SoundPlayer() {
         // Get sound URLs
@@ -41,11 +44,23 @@ public class SoundPlayer {
             clip.open(ais);
             // Sets volume
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            if (i < 0) gainControl.setValue(MUSIC_VOLUME);
+            if (i < 0) {
+                gainControl.setValue(MUSIC_VOLUME);
+                BooleanControl muteControl = (BooleanControl) clip.getControl(BooleanControl.Type.MUTE);
+                muteControl.setValue(isMuted);
+            }
             else gainControl.setValue(SFX_VOLUME);
         } catch (Exception e) {
             System.out.println("Audio file exception!");
         }
+    }
+
+    public void setMuted(boolean mute) {
+        this.isMuted = mute;
+        if (clip == null) return;
+
+        BooleanControl muteControl = (BooleanControl) clip.getControl(BooleanControl.Type.MUTE);
+        muteControl.setValue(isMuted);
     }
 
     public void play() {
@@ -59,4 +74,7 @@ public class SoundPlayer {
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-}
+
+    public boolean isMuted() {
+        return isMuted;
+    }}

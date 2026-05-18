@@ -122,6 +122,7 @@ public class GuideMenu {
         y = drawKeyTable(g2d, "GAME CONTROLS", new String[][]{
             {"ESC",   "Pause / Resume the game"},
             {"ENTER", "Confirm / Return to Main Menu"},
+            {"M", "Toggle music on / off"},
             {"F4",    "Toggle fullscreen mode"}
         }, contentX, y, contentW, baseFont);
 

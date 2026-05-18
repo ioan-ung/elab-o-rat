@@ -137,6 +137,8 @@ public class Game implements Runnable {
 
         if(startMenu.getState() == GameState.PLAYING) levelManager.update(gw);
 
+        if (KeyHandler.muteKey ^ soundPlayer.isMuted()) soundPlayer.setMuted(KeyHandler.muteKey);
+
         if (KeyHandler.debugOn) {
             Debuger.reset();
             Debuger.saveLoad();
@@ -194,6 +196,7 @@ public class Game implements Runnable {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
             Debuger.drawText(g2,"Player name: " + StartMenu.getPlayerName());
+            Debuger.drawText(g2, "Music Toggle: " + soundPlayer.isMuted());
         }
         bs.show();
         // Force the OS to synchronize the graphics pipeline

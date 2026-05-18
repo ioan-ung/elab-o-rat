@@ -16,6 +16,7 @@ public class KeyHandler implements KeyListener{
     public static boolean pauseKey;             // Toggles the pause menu
     public static boolean enterKey;             // Confirm / return to menu
     public static boolean fullScreenKey;        // Switches to full screen
+    public static boolean muteKey;              // Toggles music on/off
     public boolean isUpPressed() {
         return upPressed;
     }
@@ -54,6 +55,7 @@ public class KeyHandler implements KeyListener{
 
         if (keyCode == KeyEvent.VK_ESCAPE) pauseKey = !pauseKey;
         if (keyCode == KeyEvent.VK_F4) fullScreenKey = !fullScreenKey;
+        if (keyCode == KeyEvent.VK_M) muteKey = !muteKey;
         if (keyCode == KeyEvent.VK_ENTER) enterKey = true;
 
 
