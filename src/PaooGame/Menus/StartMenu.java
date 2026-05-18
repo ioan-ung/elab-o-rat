@@ -37,13 +37,18 @@ public class StartMenu
     /*! Coordonatele butoanelor in spatiul imaginii sursa [x, y, w, h] */
 
     private final Leaderboard leaderboard = new Leaderboard();
+    private final GuideMenu guideMenu = new GuideMenu();
+    private boolean guideOpen = false;
 
     private int hoveredBtn = -1;
+    private int wndWidth, wndHeight;
     private final Canvas canvas;
     public StartMenu(Game gameInstance, Canvas canvas, int wndWidth, int wndHeight)
     {
         this.canvas = canvas;
         this.gameInstance = gameInstance;
+        this.wndWidth = wndWidth;
+        this.wndHeight = wndHeight;
         bgImage = ImageLoader.LoadImage("/MenuScreen.jpeg");
 
         buttons = new MenuButton[]{
@@ -58,9 +63,20 @@ public class StartMenu
             @Override
             public void mouseClicked(MouseEvent e)
             {
+                if (guideOpen) {
+                    if (guideMenu.isCloseClicked(e.getX(), e.getY()) ||
+                        guideMenu.isOutsidePanel(e.getX(), e.getY(), wndWidth, wndHeight)) {
+                        guideOpen = false;
+                    }
+                    return;
+                }
                 if(currentState != GameState.MENU) return;
                 handleClick(e.getX(), e.getY());
             }
+        });
+
+        canvas.addMouseWheelListener(e -> {
+            if (guideOpen) guideMenu.scroll(e.getWheelRotation());
         });
 
         canvas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
@@ -83,6 +99,14 @@ public class StartMenu
     public GameState getState() { return currentState; }
 
     public void setCurrentState() {
+        // Close guide on ESC
+        if (guideOpen) {
+            if (KeyHandler.pauseKey) {
+                guideOpen = false;
+                KeyHandler.pauseKey = false;
+            }
+            return;
+        }
         // Reset pause when in Main Menu
         if (currentState == GameState.MENU) {
             KeyHandler.pauseKey = false;
@@ -129,7 +153,10 @@ public class StartMenu
                 currentState = GameState.PLAYING;
                 canvas.requestFocusInWindow();
                 break;
-            case 2: /* TODO: optiuni */ break;
+            case 2:
+                guideOpen = true;
+                guideMenu.resetScroll();
+                break;
             case 3:
                 gameInstance.StopGame();
                 System.exit(0);
@@ -173,6 +200,9 @@ public class StartMenu
 
         // --- Leaderboard ---
         leaderboard.draw(g2d, wndWidth, wndHeight);
+
+        // --- Guide overlay ---
+        if (guideOpen) guideMenu.draw(g2d, wndWidth, wndHeight);
     }
 
     public static String getPlayerName() {
@@ -180,6 +210,8 @@ public class StartMenu
     }
 
     public void updateSize(int width, int height) { // Used during fullscreen toggle
+        this.wndWidth = width;
+        this.wndHeight = height;
         for(MenuButton b: buttons) b.updateSize(width,height);
     }
 }
