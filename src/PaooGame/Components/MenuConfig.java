@@ -14,13 +14,13 @@ public class MenuConfig {
     public static final int[][] SRC_BTNS = {
             {420, 300, 200, 75},   // New Game
             {663, 300, 200, 75},   // Continue
-            {420, 398, 200, 75},   // Options
+            {420, 398, 200, 75},   // Guide
             {663, 398, 200, 75}    // Quit Game
     };
     public static String[] buttonNames = {
             "New Game",
             "Continue",
-            "Options",
+            "Guide",
             "Quit Game"
     };
 
