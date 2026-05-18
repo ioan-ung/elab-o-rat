@@ -207,8 +207,9 @@ public class Game implements Runnable {
     }
 
     public static void playSong(int songID) {
-        // Stops last song
-        if (soundPlayer != null) soundPlayer.stop();
+        if (soundPlayer == null) return;
+            // Stops last song
+        soundPlayer.stop();
 
         // New song ID
         if (songID <= 0) return;
