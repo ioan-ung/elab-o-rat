@@ -41,6 +41,8 @@ public abstract class Level {
     }
 
     public void loadLevel() {
+        if (this instanceof MazeLevel) return; // Maze will not be loaded from DB
+
         ArrayList<Point> collidedObjects = Database.loadObjChanges(); // Objects from last save
         Point objCoord = new Point();
         Iterator<GameObject> iterator = map.gameObjects.iterator();
