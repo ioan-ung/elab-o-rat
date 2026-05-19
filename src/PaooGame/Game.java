@@ -126,7 +126,7 @@ public class Game implements Runnable {
 
     private void update(GameWindow gw)
     {
-        startMenu.setCurrentState();    // Sets correct current state
+        startMenu.setCurrentState();
 
         if (KeyHandler.fullScreenKey) {
             window.toggleFullScreen();

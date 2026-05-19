@@ -6,13 +6,13 @@ import PaooGame.Components.MenuButton;
 import PaooGame.Components.MenuConfig;
 import PaooGame.Components.PlayerNameDialog;
 import PaooGame.Game;
+import PaooGame.GameManager;
 import PaooGame.GameManager.GameState;
 import PaooGame.GameObjects.Cheese;
 import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
-import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
 import java.awt.*;
@@ -28,7 +28,6 @@ import java.awt.Canvas;
 public class StartMenu
 {
     private static String currentPlayerName = "";
-    private GameState currentState = GameState.MENU;
     private final Game gameInstance;
 
     private final BufferedImage bgImage;
@@ -71,7 +70,7 @@ public class StartMenu
                     }
                     return;
                 }
-                if(currentState != GameState.MENU) return;
+                if(GameManager.getInstance().getState() != GameState.MENU) return;
                 handleClick(e.getX(), e.getY());
             }
         });
@@ -85,7 +84,7 @@ public class StartMenu
             @Override
             public void mouseMoved(MouseEvent e)
             {
-                if(currentState != GameState.MENU) return;
+                if(GameManager.getInstance().getState() != GameState.MENU) return;
 
                 hoveredBtn = getHoveredButton(e.getX(), e.getY());
                 if(hoveredBtn != -1)
@@ -97,38 +96,22 @@ public class StartMenu
 
     }
 
-    public GameState getState() { return currentState; }
+    public GameState getState() { return GameManager.getInstance().getState(); }
+
+    private void updateGuideState() {
+        if (guideOpen && KeyHandler.pauseKey) {
+            guideOpen = false;
+            KeyHandler.pauseKey = false;
+        }
+    }
 
     public void setCurrentState() {
-        // Close guide on ESC
-        if (guideOpen) {
-            if (KeyHandler.pauseKey) {
-                guideOpen = false;
-                KeyHandler.pauseKey = false;
-            }
-            return;
+        if(guideOpen){
+            updateGuideState();
         }
-        // Reset pause when in Main Menu
-        if (currentState == GameState.MENU) {
-            KeyHandler.pauseKey = false;
-            return;
-        }
-        // Go back to Main Menu
-        if (KeyHandler.enterKey && (currentState == GameState.PAUSED || currentState == GameState.WON)) {
-            if (currentState == GameState.WON) {
-                Database.savePlayerScore(Level.player.getScore());
-                LevelManager.gameWon = false;
-                Game.playSong(1);
-            }
-            currentState = GameState.MENU;
-            return;
-        } else if (LevelManager.gameWon) { // Sets win screen
-            currentState = GameState.WON;
-            return;
-        }
-        // Toggle Pause
-        currentState = KeyHandler.pauseKey ? GameState.PAUSED : GameState.PLAYING;
+        GameManager.getInstance().updateGameState();
     }
+
 
     private void handleClick(int mx, int my)
     {
@@ -141,7 +124,7 @@ public class StartMenu
                 {
                     currentPlayerName = name;
                     Database.startNewGame(name);    // Set database to new game
-                    currentState = GameState.PLAYING;
+                    GameManager.getInstance().setState(GameState.PLAYING);
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
                     Cheese.resetCheese();
@@ -152,7 +135,7 @@ public class StartMenu
             case 1:
                 currentPlayerName = Database.resumeLastGame();
                 if (currentPlayerName.isEmpty() || LevelManager.currentLevelIndex == 3) break;
-                currentState = GameState.PLAYING;
+                GameManager.getInstance().setState(GameState.PLAYING);
                 canvas.requestFocusInWindow();
                 break;
             case 2:
