@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 
 public class Game implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
+    private static final GameManager gm = GameManager.getInstance();
 
     private volatile boolean runState;
     private GameWindow  window;
@@ -178,7 +179,7 @@ public class Game implements Runnable {
             levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
 
             // Draw player score
-            GameWindow.drawString(g2,"Score: " + Level.player.getScore(),window.getCurrentWidth()-120,0,120,30);
+            GameWindow.drawString(g2,"Score: " + gm.getScore(),window.getCurrentWidth()-120,0,120,30);
             // Draw no. cheese left only when NOT in debug mode
             if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
         }
@@ -188,14 +189,14 @@ public class Game implements Runnable {
         }
         else if(startMenu.getState() == GameState.WON) {
             levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
-            endMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight(), Level.player.getScore());
+            endMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight(), gm.getScore());
         }
 
         // DEBUG_A
         if (KeyHandler.debugOn) {
             Debuger.timeDisplay(g2,"Draw time: ",System.nanoTime()-drawStart);
             Debuger.drawText(g2,"Current Level: " + levelManager.toString());
-            Debuger.drawText(g2,"Player name: " + StartMenu.getPlayerName());
+            Debuger.drawText(g2,"Player name: " + gm.getPlayerName());
             Debuger.drawText(g2, "Music Toggle: " + soundPlayer.isMuted());
         }
         bs.show();

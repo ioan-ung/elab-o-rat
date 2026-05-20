@@ -1,6 +1,7 @@
 package PaooGame.Input;
 
 import PaooGame.Data.Database;
+import PaooGame.GameManager;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
@@ -13,6 +14,7 @@ import java.awt.*;
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public class Debuger {
+    private static final GameManager gm = GameManager.getInstance();
     private static int noMessages = 0;
     private static int total = 100;
     private static final int fontSize = 20;
@@ -63,7 +65,7 @@ public class Debuger {
 
     public static void saveLoad () {
         if(KeyHandler.save) {
-            Database.savePlayerState(LevelManager.currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
+            Database.savePlayerState(gm.getCurrentLevelIndex(), Level.player.getX(), Level.player.getY(), gm.getScore(), gm.getPlayerName());
             KeyHandler.save = false;
         }
         if(KeyHandler.load) {

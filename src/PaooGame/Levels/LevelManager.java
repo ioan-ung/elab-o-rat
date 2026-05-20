@@ -2,6 +2,8 @@ package PaooGame.Levels;
 
 import PaooGame.Data.Database;
 import PaooGame.Game;
+import PaooGame.GameManager;
+import PaooGame.GameManager.GameState;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Button;
 import PaooGame.GameObjects.Entities.Box;
@@ -18,14 +20,12 @@ import java.util.ArrayList;
 public class LevelManager {
     public static Level currentLevel;
     public static KeyHandler keyH;
-    public static int currentLevelIndex;
-    public static boolean gameWon = false;
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
             LevelType.LABORATORY,
             LevelType.MAZE
     };
-
+x
     public LevelManager(GameWindow gw) {
         LevelManager.keyH = new KeyHandler();
         gw.GetCanvas().addKeyListener(LevelManager.keyH);
@@ -92,9 +92,10 @@ public class LevelManager {
     }
 
     public void update(GameWindow gw) {
+        GameManager gm = GameManager.getInstance();
         if(currentLevel == null) {
-            LevelManager.currentLevelIndex = Database.getLevelIndex(); // Get level index from database
-            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+            gm.setCurrentLevelIndex(Database.getLevelIndex()); // Get level index from database
+            currentLevel = getLevel(levelOrder[gm.getCurrentLevelIndex()], gw);
             currentLevel.loadLevel();
             Database.loadPlayerState();     // Load game from database
             return;
@@ -106,16 +107,18 @@ public class LevelManager {
         }
         Cat.resetCooldown();
         // If the level has been completed, go to the next one
-        if(++currentLevelIndex < levelOrder.length) {
-            currentLevel = getLevel(levelOrder[currentLevelIndex], gw);
+        int nextIndex = gm.getCurrentLevelIndex() + 1;
+        gm.setCurrentLevelIndex(nextIndex);
+        if(nextIndex < levelOrder.length) {
+            currentLevel = getLevel(levelOrder[nextIndex], gw);
             Game.playSoundEfx(4);
         }
         else {
-            gameWon = true;    // Game is won when all the levels have been completed
+            GameManager.getInstance().setState(GameState.WON);
             Game.playSong(3);   // Plays from ratsURL
         }
         // Save state to DB
-        Database.savePlayerState(currentLevelIndex, Level.player.getX(), Level.player.getY(), Level.player.getScore(), StartMenu.getPlayerName());
+        Database.savePlayerState(gm.getCurrentLevelIndex(), Level.player.getX(), Level.player.getY(), gm.getScore(), gm.getPlayerName());
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {
@@ -126,7 +129,7 @@ public class LevelManager {
 
     @Override
     public String toString() {
-        switch (currentLevelIndex) {
+        switch (GameManager.getInstance().getCurrentLevelIndex()) {
             case 0: return "Tutorial";
             case 1: return "Laboratory";
             case 2: return "Maze";
