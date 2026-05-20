@@ -5,7 +5,6 @@ import PaooGame.Input.KeyHandler;
 
 public class Player extends Mouse{
     protected final KeyHandler keyH;    // Handles keyboard input
-    private int score = 0;              // Score that eventually gets put into the Leaderboard
 
     // Constructor of Player
     public Player(int x, int y, KeyHandler keyH) {
@@ -29,10 +28,4 @@ public class Player extends Mouse{
         if (!(xSign == 0 || CollisionChecker.checkTile(this, xSign,0))) x += speed * xSign;
     }
 
-    public void setScore (int score) {
-        this.score = score;
-    }
-    public int getScore () {
-        return score;
-    }
 }

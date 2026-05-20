@@ -1,5 +1,6 @@
 package PaooGame.Data;
 
+import PaooGame.GameManager;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
 
@@ -51,7 +52,7 @@ public class Database {
     }
 
     public static void saveObjChanges(int x, int y) {
-        if (LevelManager.currentLevelIndex == 2) return; // Don't save Maze changes
+        if (GameManager.getInstance().getCurrentLevelIndex() == 2) return; // Don't save Maze changes
         if (currentPlayerId == -1) return;
 
         String sql = "INSERT INTO coordinates (player_id, x, y) VALUES (?, ?, ?)";
@@ -122,7 +123,7 @@ public class Database {
         }
     }
     public static void savePlayerScore(int score) {
-        if (LevelManager.currentLevelIndex == 2) return; // Don't save Maze score
+        if (GameManager.getInstance().getCurrentLevelIndex() == 2) return; // Don't save Maze score
         String sql = "UPDATE player SET score = " +score+ " WHERE id = " + currentPlayerId;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -144,7 +145,7 @@ public class Database {
 
             if (rs.next()) {
                 Level.player.move(rs.getInt("playerX"),rs.getInt("playerY"));
-                Level.player.setScore(rs.getInt("score"));
+                GameManager.getInstance().setScore(rs.getInt("score"));
 
                 System.out.println("[Database] Loaded Player");
             }
@@ -200,7 +201,7 @@ public class Database {
 
             if (rs.next()) {
                 currentPlayerId = rs.getInt("id");
-                LevelManager.currentLevelIndex = rs.getInt("currentLevel");
+                GameManager.getInstance().setCurrentLevelIndex(rs.getInt("currentLevel"));
                 return rs.getString("name");
             }
 

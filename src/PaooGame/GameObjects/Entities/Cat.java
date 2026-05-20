@@ -2,6 +2,7 @@ package PaooGame.GameObjects.Entities;
 
 import PaooGame.Algorithms.Pathfinder;
 import PaooGame.Game;
+import PaooGame.GameManager;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Levels.Level;
 
@@ -14,6 +15,7 @@ public class Cat extends Entity {
     private static final int PATH_REFRESH_RATE = 30; // cat de des apelam bfs --30fps
     public static final int HIT_COOLDOWN = 60;      // 60 frameuri=1s --intre 2 atacuri succesive
     private static final int SCORE_PENALTY = 10;
+    private static final GameManager gm = GameManager.getInstance();
 
     private int frameCounter = 0;
     private static int hitCooldown = 0;
@@ -30,7 +32,7 @@ public class Cat extends Entity {
     @Override
     public void hasCollided() {
         if (hitCooldown > 0) return;
-        Level.player.setScore(Math.max(Level.player.getScore() - SCORE_PENALTY,0));
+        gm.subtractScore(SCORE_PENALTY);
         hitCooldown = HIT_COOLDOWN;
         Game.playSoundEfx(5);
     }

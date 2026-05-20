@@ -13,7 +13,6 @@ import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
-import PaooGame.Levels.LevelManager;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -27,7 +26,6 @@ import java.awt.Canvas;
  */
 public class StartMenu
 {
-    private static String currentPlayerName = "";
     private final Game gameInstance;
 
     private final BufferedImage bgImage;
@@ -122,7 +120,7 @@ public class StartMenu
                 // long start = System.nanoTime(); // DEBUG_A
                 if(name != null)
                 {
-                    currentPlayerName = name;
+                    GameManager.getInstance().setPlayerName(name);
                     Database.startNewGame(name);    // Set database to new game
                     GameManager.getInstance().setState(GameState.PLAYING);
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
@@ -133,8 +131,8 @@ public class StartMenu
                 // System.out.println("New game: " + (System.nanoTime()-start)/1000_000.0); // DEBUG_A
                 break;
             case 1:
-                currentPlayerName = Database.resumeLastGame();
-                if (currentPlayerName.isEmpty() || LevelManager.currentLevelIndex == 3) break;
+                GameManager.getInstance().setPlayerName(Database.resumeLastGame());
+                if (GameManager.getInstance().getPlayerName().isEmpty() || GameManager.getInstance().getCurrentLevelIndex() == 3) break;
                 GameManager.getInstance().setState(GameState.PLAYING);
                 canvas.requestFocusInWindow();
                 break;
@@ -188,10 +186,6 @@ public class StartMenu
 
         // --- Guide overlay ---
         if (guideOpen) guideMenu.draw(g2d, wndWidth, wndHeight);
-    }
-
-    public static String getPlayerName() {
-        return currentPlayerName;
     }
 
     public void updateSize(int width, int height) { // Used during fullscreen toggle
