@@ -5,7 +5,6 @@ import PaooGame.GameManager;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.Levels.Level;
 import PaooGame.Levels.LevelManager;
-import PaooGame.Menus.StartMenu;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
 
