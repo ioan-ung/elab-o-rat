@@ -1,12 +1,8 @@
 package PaooGame.Algorithms;
 
-import PaooGame.Data.Database;
-import PaooGame.Game;
-import PaooGame.GameManager;
 import PaooGame.GameObjects.*;
 import PaooGame.GameObjects.Entities.Box;
 import PaooGame.GameObjects.Entities.Entity;
-import PaooGame.GameObjects.Entities.Player;
 import PaooGame.Levels.Level;
 import PaooGame.Tiles.DoorTile;
 import PaooGame.Tiles.Tile;
@@ -16,7 +12,6 @@ import java.awt.*;
 import static PaooGame.Graphics.AssetManager.TILE_ACTUAL_SIZE;
 
 public class CollisionChecker {
-    private static final GameManager gm = GameManager.getInstance();
 
     public static boolean checkObject (GameObject object, Entity entity) {
         Rectangle entityHitbox = new Rectangle(entity.getX() + entity.getRect().x,entity.getY() + entity.getRect().y,entity.getRect().width,entity.getRect().height);
@@ -29,12 +24,6 @@ public class CollisionChecker {
         if(object instanceof Box) object.move(object.getX() + entity.getXSign() * entity.getSpeed(),object.getY() + entity.getYSign() * entity.getSpeed());
         else object.hasCollided();
 
-        // Increment score of the player if they got cheese
-        if (object instanceof Cheese && entity instanceof Player) {
-            gm.addScore(10);
-            Database.savePlayerScore(gm.getScore());
-            Game.playSoundEfx(2);
-        }
         return true;
     }
 

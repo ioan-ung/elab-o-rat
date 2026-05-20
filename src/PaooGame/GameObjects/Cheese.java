@@ -1,10 +1,13 @@
 package PaooGame.GameObjects;
 
 import PaooGame.Data.Database;
+import PaooGame.Game;
+import PaooGame.GameManager;
 import PaooGame.Graphics.AssetManager;
 import java.awt.*;
 
 public class Cheese extends GameObject{
+    private static final GameManager gm = GameManager.getInstance();
     private static int cheeseLeft = 0;   // Cheese left to collect
 
     public Cheese (int x, int y) {
@@ -15,11 +18,14 @@ public class Cheese extends GameObject{
         setSprites();
     }
 
-    @Override // Decrements cheeseLeft and sets collision
+    @Override
     public void hasCollided() {
         if (collision) return;
         act();
-        Database.saveObjChanges(x,y); // Save interraction to DB
+        gm.addScore(10);
+        Database.savePlayerScore(gm.getScore());
+        Game.playSoundEfx(2);
+        Database.saveObjChanges(x,y);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class LevelManager {
             LevelType.LABORATORY,
             LevelType.MAZE
     };
-x
+
     public LevelManager(GameWindow gw) {
         LevelManager.keyH = new KeyHandler();
         gw.GetCanvas().addKeyListener(LevelManager.keyH);
