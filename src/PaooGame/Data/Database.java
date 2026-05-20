@@ -2,7 +2,6 @@ package PaooGame.Data;
 
 import PaooGame.GameManager;
 import PaooGame.Levels.Level;
-import PaooGame.Levels.LevelManager;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -156,7 +155,6 @@ public class Database {
 
     //idul se genereaza automat --metoda insert din sql
     public static void startNewGame(String name) {
-        LevelManager.currentLevel = null;
         String sql = "INSERT INTO player (currentLevel, playerX, playerY, score, name) " +
                 "VALUES (0, 64, 480, 0, ?);";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
