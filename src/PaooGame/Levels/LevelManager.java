@@ -12,7 +12,6 @@ import PaooGame.GameObjects.Entities.NPC_Mouse;
 import PaooGame.GameWindow;
 import PaooGame.Input.KeyHandler;
 import PaooGame.Algorithms.Direction;
-import PaooGame.Menus.StartMenu;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,11 +19,14 @@ import java.util.ArrayList;
 public class LevelManager {
     public static Level currentLevel;
     public static KeyHandler keyH;
+    private static final GameManager gm = GameManager.getInstance();
     private final LevelType[] levelOrder = {
             LevelType.TUTORIAL,
             LevelType.LABORATORY,
             LevelType.MAZE
     };
+
+    public static void resetLevel() { currentLevel = null; }
 
     public LevelManager(GameWindow gw) {
         LevelManager.keyH = new KeyHandler();
@@ -92,7 +94,6 @@ public class LevelManager {
     }
 
     public void update(GameWindow gw) {
-        GameManager gm = GameManager.getInstance();
         if(currentLevel == null) {
             gm.setCurrentLevelIndex(Database.getLevelIndex()); // Get level index from database
             currentLevel = getLevel(levelOrder[gm.getCurrentLevelIndex()], gw);

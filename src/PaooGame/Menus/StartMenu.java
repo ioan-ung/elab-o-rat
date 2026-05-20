@@ -13,6 +13,7 @@ import PaooGame.GameObjects.Entities.Cat;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.KeyHandler;
+import PaooGame.Levels.LevelManager;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -26,6 +27,7 @@ import java.awt.Canvas;
  */
 public class StartMenu
 {
+    private static final GameManager gm = GameManager.getInstance();
     private final Game gameInstance;
 
     private final BufferedImage bgImage;
@@ -68,7 +70,7 @@ public class StartMenu
                     }
                     return;
                 }
-                if(GameManager.getInstance().getState() != GameState.MENU) return;
+                if(gm.getState() != GameState.MENU) return;
                 handleClick(e.getX(), e.getY());
             }
         });
@@ -82,7 +84,7 @@ public class StartMenu
             @Override
             public void mouseMoved(MouseEvent e)
             {
-                if(GameManager.getInstance().getState() != GameState.MENU) return;
+                if(gm.getState() != GameState.MENU) return;
 
                 hoveredBtn = getHoveredButton(e.getX(), e.getY());
                 if(hoveredBtn != -1)
@@ -94,7 +96,7 @@ public class StartMenu
 
     }
 
-    public GameState getState() { return GameManager.getInstance().getState(); }
+    public GameState getState() { return gm.getState(); }
 
     private void updateGuideState() {
         if (guideOpen && KeyHandler.pauseKey) {
@@ -107,7 +109,7 @@ public class StartMenu
         if(guideOpen){
             updateGuideState();
         }
-        GameManager.getInstance().updateGameState();
+        gm.updateGameState();
     }
 
 
@@ -120,9 +122,11 @@ public class StartMenu
                 // long start = System.nanoTime(); // DEBUG_A
                 if(name != null)
                 {
-                    GameManager.getInstance().setPlayerName(name);
+                    gm.setPlayerName(name);
+                    gm.setScore(0);
                     Database.startNewGame(name);    // Set database to new game
-                    GameManager.getInstance().setState(GameState.PLAYING);
+                    LevelManager.resetLevel();
+                    gm.setState(GameState.PLAYING);
                     // dupa ce dialogul se inchide focusul ramane pe JFrame; il redirectam la canvas ca tastele sa ajunga la KeyManager
                     canvas.requestFocusInWindow();
                     Cheese.resetCheese();
@@ -131,9 +135,9 @@ public class StartMenu
                 // System.out.println("New game: " + (System.nanoTime()-start)/1000_000.0); // DEBUG_A
                 break;
             case 1:
-                GameManager.getInstance().setPlayerName(Database.resumeLastGame());
-                if (GameManager.getInstance().getPlayerName().isEmpty() || GameManager.getInstance().getCurrentLevelIndex() == 3) break;
-                GameManager.getInstance().setState(GameState.PLAYING);
+                gm.setPlayerName(Database.resumeLastGame());
+                if (gm.getPlayerName().isEmpty() || gm.getCurrentLevelIndex() == 3) break;
+                gm.setState(GameState.PLAYING);
                 canvas.requestFocusInWindow();
                 break;
             case 2:

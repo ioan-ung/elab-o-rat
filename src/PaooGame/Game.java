@@ -136,7 +136,7 @@ public class Game implements Runnable {
             KeyHandler.fullScreenKey = false;
         }
 
-        if(startMenu.getState() == GameState.PLAYING) levelManager.update(gw);
+        if(gm.getState() == GameState.PLAYING) levelManager.update(gw);
 
         if (KeyHandler.muteKey ^ soundPlayer.isMuted()) soundPlayer.setMuted(KeyHandler.muteKey);
 
@@ -170,11 +170,11 @@ public class Game implements Runnable {
 
         // Clear window
         g2.clearRect(0, 0, window.getCurrentWidth(), window.getCurrentHeight());
-        if(startMenu.getState() == GameState.MENU) {
+        if(gm.getState() == GameState.MENU) {
             // Draw main menu
             startMenu.Draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
         }
-        else if(startMenu.getState() == GameState.PLAYING) {
+        else if(gm.getState() == GameState.PLAYING) {
             // Draw playing area
             levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
 
@@ -183,11 +183,11 @@ public class Game implements Runnable {
             // Draw no. cheese left only when NOT in debug mode
             if (!KeyHandler.debugOn) GameWindow.drawString(g2,"Cheese left: " + Cheese.getCheeseLeft(),0,0,180,30);
         }
-        else if(startMenu.getState() == GameState.PAUSED) {
+        else if(gm.getState() == GameState.PAUSED) {
             levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
             pauseMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
         }
-        else if(startMenu.getState() == GameState.WON) {
+        else if(gm.getState() == GameState.WON) {
             levelManager.draw(g2, window.getCurrentWidth(), window.getCurrentHeight());
             endMenu.draw(g2, window.getCurrentWidth(), window.getCurrentHeight(), gm.getScore());
         }
