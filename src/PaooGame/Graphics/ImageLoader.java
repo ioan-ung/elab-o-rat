@@ -23,15 +23,15 @@ public class ImageLoader
             /// metoda read() arunca o excpetie ce trebuie tratata
         try
         {
-                /// Clasa ImageIO contine o serie de metode statice pentru file IO.
-                /// Metoda read() are ca argument un InputStream construit avand ca referinta
-                /// directorul res, director declarat ca director de resurse in care se gasesc resursele
-                /// proiectului sub forma de fisiere sursa.
-            return ImageIO.read(ImageLoader.class.getResource(path));
+            java.net.URL url = ImageLoader.class.getResource(path);
+            if (url == null) {
+                System.err.println("[ImageLoader] Resource not found on classpath: " + path);
+                return null;
+            }
+            return ImageIO.read(url);
         }
         catch(IOException e)
         {
-                /// Afiseaza informatiile necesare depanarii.
             e.printStackTrace();
         }
         return null;
