@@ -24,7 +24,7 @@ public class Cat extends Entity {
 
     public Cat(int x, int y) {
         super(x, y);
-        speed = 2;
+        speed = 4;
         hitBox = new Rectangle(0, 0, 32, 32);
         setSprites();
     }
