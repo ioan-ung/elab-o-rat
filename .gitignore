@@ -9,3 +9,5 @@ out/
 *.zip
 game.db
 *.iml
+.vscode/
+bin/
