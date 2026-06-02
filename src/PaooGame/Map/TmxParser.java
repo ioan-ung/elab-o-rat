@@ -7,9 +7,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import PaooGame.Exceptions.AssetException.MapLoadException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -165,16 +167,16 @@ public class TmxParser {
         try (InputStream is = TmxParser.class.getResourceAsStream(mapPath)) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder        = factory.newDocumentBuilder();
-            // TMX Input Stream
-            if (is == null) {
-                System.out.println("[Playing] EROARE: TMX nu gasit: " + mapPath);
-                return null;
-            }
+            if (is == null)
+                throw new MapLoadException(mapPath);
             doc = builder.parse(is);
             doc.getDocumentElement().normalize();
+        } catch (MapLoadException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new MapLoadException(mapPath, e);
         } catch (Exception e) {
-            System.out.println("[Playing] EROARE la parsarea TMX!");
-            return null;
+            throw new MapLoadException(mapPath);
         }
         Element mapElement = (Element) doc.getElementsByTagName("map").item(0);
         map.mapWidth  = Integer.parseInt(mapElement.getAttribute("width"));

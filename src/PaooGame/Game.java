@@ -1,6 +1,9 @@
 package PaooGame;
 
 import PaooGame.Data.Database;
+import PaooGame.Exceptions.AssetException;
+import PaooGame.Exceptions.DatabaseException;
+import PaooGame.Exceptions.GameLogicException;
 import PaooGame.GameObjects.Cheese;
 import PaooGame.Graphics.AssetManager;
 import PaooGame.Graphics.FontManager;
@@ -42,19 +45,24 @@ public class Game implements Runnable {
 
     private void InitGame(String title, int width, int height)
     {
-        Database.initDB();
-        FontManager.init();
-        window = new GameWindow(title, width, height);
-        window.BuildGameWindow();
-        AssetManager.Init();   // ← 1. încarcă imaginile
-        Tile.Init();     // ← 2. creează tile-urile cu imaginile încărcate
-        levelManager = new LevelManager(window);
-        startMenu = new StartMenu(this, window.GetCanvas(), window.getCurrentWidth(), window.getCurrentHeight());
-        pauseMenu = new PauseMenu();
-        endMenu   = new EndMenu();
-        soundPlayer = new SoundPlayer();
-        sfxPlayer = new SoundPlayer();
-        playSong(1);
+        try {
+            Database.initDB();
+            FontManager.init();
+            window = new GameWindow(title, width, height);
+            window.BuildGameWindow();
+            AssetManager.Init();
+            Tile.Init();
+            levelManager = new LevelManager(window);
+            startMenu = new StartMenu(this, window.GetCanvas(), window.getCurrentWidth(), window.getCurrentHeight());
+            pauseMenu = new PauseMenu();
+            endMenu   = new EndMenu();
+            soundPlayer = new SoundPlayer();
+            sfxPlayer = new SoundPlayer();
+            playSong(1);
+        } catch (DatabaseException | AssetException | GameLogicException e) {
+            System.err.println("[Game] Eroare la initializare [" + e.getError() + "]: " + e.getMessage());
+            System.exit(1);
+        }
     }
 
     @SuppressWarnings("BusyWait")

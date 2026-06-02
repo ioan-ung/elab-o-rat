@@ -1,5 +1,8 @@
 package PaooGame.Graphics;
 
+import PaooGame.Exceptions.AssetException.ResourceLoadException;
+import PaooGame.Exceptions.GameLogicException.SpriteNotFoundException;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +38,10 @@ public class AssetManager
     }
 
     public static BufferedImage getSprite(Sprite sprite){
-        return cache.get(sprite.key);
+        BufferedImage img = cache.get(sprite.key);
+        if (img == null)
+            throw new SpriteNotFoundException(sprite.key);
+        return img;
     }
 
     public static BufferedImage getSprite(String name){
@@ -57,6 +63,8 @@ public class AssetManager
     {
         getInstance();
         BufferedImage sheetImg = ImageLoader.LoadImage("/textures/SpriteSheet.png");
+        if (sheetImg == null)
+            throw new ResourceLoadException("/textures/SpriteSheet.png");
         System.out.println("[Assets] SpriteSheet incarcat: "
                             + sheetImg.getWidth()
                             + "x"

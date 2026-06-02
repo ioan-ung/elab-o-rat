@@ -1,5 +1,7 @@
 package PaooGame.Data;
 
+import PaooGame.Exceptions.DatabaseException;
+import PaooGame.Exceptions.GameError;
 import PaooGame.GameManager;
 import PaooGame.Levels.Level;
 
@@ -44,9 +46,9 @@ public class Database {
                 );
             }
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Database initialization failed!", e);
+            throw new DatabaseException(GameError.DB_INIT_FAILED, e);
         } catch (ClassNotFoundException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "SQLite JDBC driver JAR missing", e);
+            throw new DatabaseException(GameError.DB_INIT_FAILED);
         }
     }
 
@@ -66,7 +68,7 @@ public class Database {
             System.out.println("[Database] Map change at (" + x + ", " + y + ")");
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed appending map change", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
     }
 
@@ -85,7 +87,7 @@ public class Database {
             System.out.println("[Database] Loaded " + changedTiles.size() + " permanent map changes.");
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed loading map changes", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
         return changedTiles;
     }
@@ -99,7 +101,7 @@ public class Database {
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute("DELETE FROM coordinates;");
             } catch (SQLException e) {
-                LOGGER.log(java.util.logging.Level.SEVERE, "Failed wiping coordinates on level change", e);
+                throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
             }
         }
 
@@ -118,7 +120,7 @@ public class Database {
             System.out.println("[Database] Game Saved Successfully!");
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
     }
     public static void savePlayerScore(int score) {
@@ -132,7 +134,7 @@ public class Database {
             System.out.println("[Database] Saved Player Score");
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
     }
 
@@ -149,7 +151,7 @@ public class Database {
                 System.out.println("[Database] Loaded Player");
             }
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
     }
 
@@ -173,7 +175,7 @@ public class Database {
 
             System.out.println("[Database] New Game");
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
     }
 
@@ -186,7 +188,7 @@ public class Database {
             if (rs.next()) return rs.getInt("currentLevel");
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
         return 0;
     }
@@ -204,7 +206,7 @@ public class Database {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
         return "";
     }
@@ -218,9 +220,8 @@ public class Database {
             rs.next();
             return rs.getInt(1) > 0;
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
-        return false;
     }
 
     public static String[][] getTopPlayers(int limit) {
@@ -236,7 +237,7 @@ public class Database {
                 rows.add(new String[]{ rs.getString("name"), String.valueOf(rs.getInt("score")) });
             result = rows.toArray(new String[0][]);
         } catch (SQLException e) {
-            LOGGER.log(java.util.logging.Level.SEVERE, "Failed during SQL", e);
+            throw new DatabaseException(GameError.DB_OPERATION_FAILED, e);
         }
         return result;
     }

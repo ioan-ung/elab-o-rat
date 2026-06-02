@@ -1,6 +1,8 @@
 package PaooGame.Levels;
 
 import PaooGame.Data.Database;
+import PaooGame.Exceptions.AssetException;
+import PaooGame.Exceptions.DatabaseException;
 import PaooGame.Game;
 import PaooGame.GameManager;
 import PaooGame.GameManager.GameState;
@@ -95,19 +97,25 @@ public class LevelManager {
 
     public void update(GameWindow gw) {
         if(currentLevel == null) {
-            gm.setCurrentLevelIndex(Database.getLevelIndex()); // Get level index from database
-            currentLevel = getLevel(levelOrder[gm.getCurrentLevelIndex()], gw);
-            currentLevel.loadLevel();
-            Database.loadPlayerState();     // Load game from database
+            try {
+                gm.setCurrentLevelIndex(Database.getLevelIndex());
+                currentLevel = getLevel(levelOrder[gm.getCurrentLevelIndex()], gw);
+                currentLevel.loadLevel();
+                Database.loadPlayerState();
+            } catch (AssetException e) {
+                System.err.println("[LevelManager] Harta nu a putut fi incarcata [" + e.getError() + "]: " + e.getMessage());
+                System.exit(1);
+            } catch (DatabaseException e) {
+                System.err.println("[LevelManager] Eroare DB la incarcare nivel [" + e.getError() + "]: " + e.getMessage());
+            }
             return;
         }
 
         if(!currentLevel.isCompleted()) {
-            currentLevel.update();  // Update level
+            currentLevel.update();
             return;
         }
         Cat.resetCooldown();
-        // If the level has been completed, go to the next one
         int nextIndex = gm.getCurrentLevelIndex() + 1;
         gm.setCurrentLevelIndex(nextIndex);
         if(nextIndex < levelOrder.length) {
@@ -116,10 +124,13 @@ public class LevelManager {
         }
         else {
             GameManager.getInstance().setState(GameState.WON);
-            Game.playSong(3);   // Plays from ratsURL
+            Game.playSong(3);
         }
-        // Save state to DB
-        Database.savePlayerState(gm.getCurrentLevelIndex(), Level.player.getX(), Level.player.getY(), gm.getScore(), gm.getPlayerName());
+        try {
+            Database.savePlayerState(gm.getCurrentLevelIndex(), Level.player.getX(), Level.player.getY(), gm.getScore(), gm.getPlayerName());
+        } catch (DatabaseException e) {
+            System.err.println("[LevelManager] Eroare DB la salvare stare [" + e.getError() + "]: " + e.getMessage());
+        }
     }
 
     public void draw(Graphics g, int windowWidth, int windowHeight) {

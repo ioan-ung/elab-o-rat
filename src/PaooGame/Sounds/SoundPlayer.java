@@ -1,5 +1,6 @@
 package PaooGame.Sounds;
 
+import PaooGame.Exceptions.AssetException.AudioException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -52,7 +53,7 @@ public class SoundPlayer {
             }
             else gainControl.setValue(SFX_VOLUME);
         } catch (Exception e) {
-            System.out.println("Audio file exception!");
+            throw new AudioException("sound index " + i);
         }
     }
 
