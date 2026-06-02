@@ -39,20 +39,20 @@ public class BoxButton extends Button{
         // Set sprites based on direction
         switch (direction) {
             case NORTH:
-                inactiveImage = boxButtonWireTop;
-                activeImage = AssetManager.getInstance().getSprite("boxButtonPressedWireTop", 3, 5);
+                inactiveImage = AssetManager.getSprite("boxButtonWireTop");
+                activeImage = AssetManager.getSprite("boxButtonPressedWireTop", 3, 5);
                 break;
             case EAST:
-                inactiveImage = boxButtonWireRight;
-                activeImage = AssetManager.getInstance().getSprite("boxButtonPressedWireRight", 0, 5);
+                inactiveImage = AssetManager.getSprite("boxButtonWireRight");
+                activeImage = AssetManager.getSprite("boxButtonPressedWireRight", 0, 5);
                 break;
             case SOUTH:
-                inactiveImage = boxButtonWireBottom;
-                activeImage = AssetManager.getInstance().getSprite("boxButtonPressedWireBottom", 3, 4);
+                inactiveImage = AssetManager.getSprite("boxButtonWireBottom");
+                activeImage = AssetManager.getSprite("boxButtonPressedWireBottom", 3, 4);
                 break;
             case WEST:
-                inactiveImage = boxButtonWireLeft;
-                activeImage = AssetManager.getInstance().getSprite("boxButtonPressedWireLeft", 1, 5);
+                inactiveImage = AssetManager.getSprite("boxButtonWireLeft");
+                activeImage = AssetManager.getSprite("boxButtonPressedWireLeft", 1, 5);
         }
         baseImage = inactiveImage;
     }

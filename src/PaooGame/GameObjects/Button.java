@@ -54,20 +54,20 @@ public class Button extends GameObject{
         // Set sprites based on direction
         switch (direction) {
             case NORTH:
-                baseImage = basicButtonWireTop;
-                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireTop", 5, 7);
+                baseImage = AssetManager.getSprite("basicButtonWireTop");
+                activeImage = AssetManager.getSprite("basicButtonPressedWireTop", 5, 7);
                 return;
             case EAST:
-                baseImage = basicButtonWireRight;
-                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireRight", 5, 8);
+                baseImage = AssetManager.getSprite("basicButtonWireRight");
+                activeImage = AssetManager.getSprite("basicButtonPressedWireRight", 5, 8);
                 return;
             case SOUTH:
-                baseImage = basicButtonWireBottom;
-                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireBottom", 5, 6);
+                baseImage = AssetManager.getSprite("basicButtonWireBottom");
+                activeImage = AssetManager.getSprite("basicButtonPressedWireBottom", 5, 6);
                 return;
             case WEST:
-                baseImage = basicButtonWireLeft;
-                activeImage = AssetManager.getInstance().getSprite("basicButtonPressedWireLeft", 6, 8);
+                baseImage = AssetManager.getSprite("basicButtonWireLeft");
+                activeImage = AssetManager.getSprite("basicButtonPressedWireLeft", 6, 8);
         }
     }
 }

@@ -41,20 +41,20 @@ public class TimerButton extends Button{
         // Set sprites based on direction
         switch (direction) {
             case NORTH:
-                inactiveImage = timedButtonWireTop;
-                activeImage = AssetManager.getInstance().getSprite("timedButtonPressedWireTop", 7, 5);
+                inactiveImage = AssetManager.getSprite("timedButtonWireTop");
+                activeImage = AssetManager.getSprite("timedButtonPressedWireTop", 7, 5);
                 break;
             case EAST:
-                inactiveImage = timedButtonWireRight;
-                activeImage = AssetManager.getInstance().getSprite("timedButtonPressedWireRight", 4, 5);
+                inactiveImage = AssetManager.getSprite("timedButtonWireRight");
+                activeImage = AssetManager.getSprite("timedButtonPressedWireRight", 4, 5);
                 break;
             case SOUTH:
-                inactiveImage = timedButtonWireBottom;
-                activeImage = AssetManager.getInstance().getSprite("timedButtonPressedWireBottom", 7, 4);
+                inactiveImage = AssetManager.getSprite("timedButtonWireBottom");
+                activeImage = AssetManager.getSprite("timedButtonPressedWireBottom", 7, 4);
                 break;
             case WEST:
-                inactiveImage = timedButtonWireLeft;
-                activeImage = AssetManager.getInstance().getSprite("timedButtonPressedWireLeft", 5, 5);
+                inactiveImage = AssetManager.getSprite("timedButtonWireLeft");
+                activeImage = AssetManager.getSprite("timedButtonPressedWireLeft", 5, 5);
         }
         baseImage = inactiveImage;
     }

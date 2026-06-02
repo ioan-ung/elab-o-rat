@@ -100,7 +100,7 @@ public class Cat extends Entity {
 
     @Override
     protected void setSprites() {
-        baseImage = AssetManager.cat;
+        baseImage = AssetManager.getSprite("cat");
     }
 
     public static void resetCooldown() {

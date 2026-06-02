@@ -46,7 +46,7 @@ public class Cheese extends GameObject{
 
     @Override
     protected void setSprites() {
-        baseImage = AssetManager.cheese;
+        baseImage = AssetManager.getSprite("cheese");
     }
 
     public static int getCheeseLeft() {

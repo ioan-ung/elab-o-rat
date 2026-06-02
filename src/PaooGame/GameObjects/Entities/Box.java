@@ -33,6 +33,6 @@ public class Box extends Entity{
 
     @Override
     protected void setSprites() {
-        baseImage = AssetManager.box;
+        baseImage = AssetManager.getSprite("box");
     }
 }
