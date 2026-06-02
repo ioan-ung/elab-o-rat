@@ -1,7 +1,6 @@
 package PaooGame.Tiles;
 
 import PaooGame.Graphics.AssetManager;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -33,52 +32,9 @@ public class Tile
         new OpenDoorTile(++id, AssetManager.getSprite("doorTOpen"));
         new OpenDoorTile(++id, AssetManager.getSprite("doorBOpen"));
 
-        id = 39; // Next is 40 | Wall tiles
-        new WallTile(++id, AssetManager.getSprite("wallTile0"));
-        new WallTile(++id, AssetManager.getSprite("wallTile1"));
-        new WallTile(++id, AssetManager.getSprite("wallTile2"));
-        new WallTile(++id, AssetManager.getSprite("wallTile3"));
-        new WallTile(++id, AssetManager.getSprite("wallTile4"));
-        new WallTile(++id, AssetManager.getSprite("wallTile5"));
-        new WallTile(++id, AssetManager.getSprite("wallTile6"));
-        new WallTile(++id, AssetManager.getSprite("wallTile7"));
-        new WallTile(++id, AssetManager.getSprite("wallTile8"));
-        new WallTile(++id, AssetManager.getSprite("wallTile9"));
-        new WallTile(++id, AssetManager.getSprite("wallTile10"));
-        new WallTile(++id, AssetManager.getSprite("wallTile11"));
-        new WallTile(++id, AssetManager.getSprite("wallTile12"));
-        new WallTile(++id, AssetManager.getSprite("wallTile13"));
-        new WallTile(++id, AssetManager.getSprite("wallTile14"));
-        new WallTile(++id, AssetManager.getSprite("wallTile15"));
-        new WallTile(++id, AssetManager.getSprite("wallTile16"));
-        new WallTile(++id, AssetManager.getSprite("wallTile17"));
-        new WallTile(++id, AssetManager.getSprite("wallTile18"));
-        new WallTile(++id, AssetManager.getSprite("wallTile19"));
-        new WallTile(++id, AssetManager.getSprite("wallTile20"));
-        new WallTile(++id, AssetManager.getSprite("wallTile21"));
-        new WallTile(++id, AssetManager.getSprite("wallTile22"));
-        new WallTile(++id, AssetManager.getSprite("wallTile23"));
-        new WallTile(++id, AssetManager.getSprite("wallTile24"));
-        new WallTile(++id, AssetManager.getSprite("wallTile25"));
-        new WallTile(++id, AssetManager.getSprite("wallTile26"));
-        new WallTile(++id, AssetManager.getSprite("wallTile27"));
-        new WallTile(++id, AssetManager.getSprite("wallTile28"));
-        new WallTile(++id, AssetManager.getSprite("wallTile29"));
-        new WallTile(++id, AssetManager.getSprite("wallTile30"));
-        new WallTile(++id, AssetManager.getSprite("wallTile31"));
-        new WallTile(++id, AssetManager.getSprite("wallTile32"));
-        new WallTile(++id, AssetManager.getSprite("wallTile33"));
-        new WallTile(++id, AssetManager.getSprite("wallTile34"));
-        new WallTile(++id, AssetManager.getSprite("wallTile35"));
-        new WallTile(++id, AssetManager.getSprite("wallTile36"));
-        new WallTile(++id, AssetManager.getSprite("wallTile37"));
-        new WallTile(++id, AssetManager.getSprite("wallTile38"));
-        new WallTile(++id, AssetManager.getSprite("wallTile39"));
-        new WallTile(++id, AssetManager.getSprite("wallTile40"));
-        new WallTile(++id, AssetManager.getSprite("wallTile41"));
-        new WallTile(++id, AssetManager.getSprite("wallTile42"));
-        new WallTile(++id, AssetManager.getSprite("wallTile43"));
-        new WallTile(++id, AssetManager.getSprite("wallTile44"));
+        id = 39; // Next is 40 | Wall tiles (0-44)
+        for (int i = 0; i <= 44; i++)
+            new WallTile(++id, AssetManager.getSprite("wallTile" + i));
         // Next id is 85
     }
 
