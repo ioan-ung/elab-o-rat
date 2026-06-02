@@ -50,7 +50,8 @@ public class PlayerNameDialog {
     public static String show(Component parent) {
 
         // dialog fara decoratiuni native, transparent
-        JDialog dlg = new JDialog((Frame) null, true);
+        Window ownerWindow = SwingUtilities.getWindowAncestor(parent);
+        JDialog dlg = new JDialog(ownerWindow, Dialog.ModalityType.APPLICATION_MODAL);
         dlg.setUndecorated(true);
         dlg.setBackground(new Color(0,0,0,0));
 
@@ -159,16 +160,15 @@ public class PlayerNameDialog {
         dlg.setShape(new RoundRectangle2D.Float(0, 0, dlg.getWidth(), dlg.getHeight(), 20, 20));
 
         // popup-ul urmeaza fereastra cand e mutata
-        Window owner = SwingUtilities.getWindowAncestor(parent);
         ComponentListener mover = new ComponentAdapter() {
             @Override
             public void componentMoved(ComponentEvent e) { dlg.setLocationRelativeTo(parent); }
         };
-        if (owner != null) owner.addComponentListener(mover);
+        if (ownerWindow != null) ownerWindow.addComponentListener(mover);
         // curata listener-ul cand dialogul se inchide
         dlg.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosed(WindowEvent e) { if (owner != null) owner.removeComponentListener(mover); }
+            public void windowClosed(WindowEvent e) { if (ownerWindow != null) ownerWindow.removeComponentListener(mover); }
         });
 
         SwingUtilities.invokeLater(field::requestFocusInWindow);

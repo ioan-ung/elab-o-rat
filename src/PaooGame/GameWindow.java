@@ -53,26 +53,21 @@ public class GameWindow
         windowFrame.dispose();
         isFullScreen = !isFullScreen;
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-
         if (isFullScreen) {
-            windowFrame.setUndecorated(true); // Strip borders
-            gd.setFullScreenWindow(windowFrame); // Makes fullscreen
-
-            // Gets fullscreen window dimensions
-            DisplayMode mode = gd.getDisplayMode();
-            currentWidth = mode.getWidth();
-            currentHeight = mode.getHeight();
+            windowFrame.setUndecorated(true); // elimina bara de titlu si bordura
+            // "windowed fullscreen": fereastra umple ecranul dar ramane in stiva normala de ferestre
+            // (spre deosebire de setFullScreenWindow care da control exclusiv OS-ului si blocheaza dialogurile Swing)
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            currentWidth  = screen.width;
+            currentHeight = screen.height;
+            windowFrame.setSize(currentWidth, currentHeight);
+            windowFrame.setLocation(0, 0); // coltul stanga-sus al ecranului
         } else {
-            windowFrame.setUndecorated(false); // Restore borders
-            gd.setFullScreenWindow(null); // Changes back from fullscreen
-
-            // Restores normal window dimensions
-            currentWidth = windowWidth;
+            windowFrame.setUndecorated(false); // restaureaza bara de titlu si bordura
+            currentWidth  = windowWidth;
             currentHeight = windowHeight;
             windowFrame.setSize(currentWidth, currentHeight);
-            windowFrame.setLocationRelativeTo(null); // Center
+            windowFrame.setLocationRelativeTo(null); // centreaza fereastra pe ecran
         }
 
         // Update canvas size
